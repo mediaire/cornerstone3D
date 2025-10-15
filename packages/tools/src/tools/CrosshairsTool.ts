@@ -106,6 +106,10 @@ const OPERATION = {
 class CrosshairsTool extends AnnotationTool {
   static toolName;
 
+  isFocusedOnCanvas: boolean = false;
+  toolWorldFocus: Types.Point3;
+  viewportToolConfigs: object = {}; // An object structured as "viewportId": "flags", where 1st bit in flags indicate
+  // whether the viewport should have the new crosshairs enabled, and 2nd bit whether the usual crosshairs be enabled.
   toolCenter: Types.Point3 = [0, 0, 0]; // NOTE: it is assumed that all the active/linked viewports share the same crosshair center.
   // This because the rotation operation rotates also all the other active/intersecting reference lines of the same angle
   _getReferenceLineColor?: (viewportId: string) => string;
@@ -196,6 +200,7 @@ class CrosshairsTool extends AnnotationTool {
   }: Types.IViewportId): {
     normal: Types.Point3;
     point: Types.Point3;
+    orientation: Enums.OrientationAxis | Types.OrientationVectors;
   } => {
     const enabledElement = getEnabledElementByIds(
       viewportId,
@@ -248,6 +253,7 @@ class CrosshairsTool extends AnnotationTool {
         viewport.canvas.clientWidth / 2,
         viewport.canvas.clientHeight / 2,
       ]),
+      orientation: viewport.options.orientation,
     };
   };
 
@@ -353,6 +359,52 @@ class CrosshairsTool extends AnnotationTool {
     this._computeToolCenter(viewportsInfo);
   };
 
+  _point3_IsEqual = (a: Types.Point3, b: Types.Point3) => {
+    return a[0] == b[0] && a[1] == b[1] && a[2] == b[2];
+  };
+
+  // Determines which crosshairs to enable for which viewports
+  _computeCrosshairApplication = (
+    viewportIds: Array<number>,
+    normals: Array<Types.Point3>,
+    orientations: Array<Enums.OrientationAxis | Types.OrientationVectors>
+  ) => {
+    for (let i = 0; i < viewportIds.length; i++) {
+      this.viewportToolConfigs[viewportIds[i]] = 2;
+    } // Default all viewports to just enable the usual crosshairs
+    if (viewportIds.length == 2) {
+      const nrmAB = this._point3_IsEqual(normals[0], normals[1]);
+      const acqAB = orientations[0] == orientations[1];
+
+      if (nrmAB || acqAB) {
+        this.viewportToolConfigs[viewportIds[0]] |= 1;
+        this.viewportToolConfigs[viewportIds[1]] |= 1;
+      }
+
+      if (acqAB) {
+        this.viewportToolConfigs[viewportIds[1]] &= 0b01;
+      }
+    } else if (viewportIds.length == 3) {
+      const nrmAB = this._point3_IsEqual(normals[0], normals[1]);
+      const nrmBC = this._point3_IsEqual(normals[1], normals[2]);
+
+      const acqAB = orientations[0] == orientations[1];
+      const acqBC = orientations[1] == orientations[2];
+
+      if ((nrmAB && nrmBC) || (acqAB && acqBC)) {
+        this.viewportToolConfigs[viewportIds[0]] |= 1;
+        this.viewportToolConfigs[viewportIds[1]] |= 1;
+        this.viewportToolConfigs[viewportIds[2]] |= 1;
+      }
+
+      if (acqAB && acqBC) {
+        this.viewportToolConfigs[viewportIds[0]] &= 0b01;
+        this.viewportToolConfigs[viewportIds[1]] &= 0b01;
+        this.viewportToolConfigs[viewportIds[2]] &= 0b01;
+      }
+    }
+  };
+
   /**
    * When activated, it initializes the crosshairs. It begins by computing
    * the intersection of viewports associated with the crosshairs instance.
@@ -374,20 +426,40 @@ class CrosshairsTool extends AnnotationTool {
     const [firstViewport, secondViewport, thirdViewport] = viewportsInfo;
 
     // Initialize first viewport
-    const { normal: normal1, point: point1 } =
-      this.initializeViewport(firstViewport);
+    const {
+      normal: normal1,
+      point: point1,
+      orientation: orientation1,
+    } = this.initializeViewport(firstViewport);
 
     // Initialize second viewport
-    const { normal: normal2, point: point2 } =
-      this.initializeViewport(secondViewport);
+    const {
+      normal: normal2,
+      point: point2,
+      orientation: orientation2,
+    } = this.initializeViewport(secondViewport);
 
     let normal3 = <Types.Point3>[0, 0, 0];
     let point3 = vec3.create();
+    let orientation3: Enums.OrientationAxis | Types.OrientationVectors =
+      Enums.OrientationAxis.REFORMAT;
 
     // If there are three viewports
     if (thirdViewport) {
-      ({ normal: normal3, point: point3 } =
-        this.initializeViewport(thirdViewport));
+      ({
+        normal: normal3,
+        point: point3,
+        orientation: orientation3,
+      } = this.initializeViewport(thirdViewport));
+      this._computeCrosshairApplication(
+        [
+          firstViewport.viewportId,
+          secondViewport.viewportId,
+          thirdViewport.viewportId,
+        ],
+        [normal1, normal2, normal3],
+        [orientation1, orientation2, orientation3]
+      );
     } else {
       // If there are only two views (viewport) associated with the crosshairs:
       // In this situation, we don't have a third information to find the
@@ -396,6 +468,11 @@ class CrosshairsTool extends AnnotationTool {
       vec3.add(point3, point1, point2);
       vec3.scale(point3, point3, 0.5);
       vec3.cross(normal3, normal1, normal2);
+      this._computeCrosshairApplication(
+        [firstViewport.viewportId, secondViewport.viewportId],
+        [normal1, normal2],
+        [orientation1, orientation2]
+      );
     }
 
     // Planes of each viewport
@@ -825,6 +902,82 @@ class CrosshairsTool extends AnnotationTool {
     }
 
     const annotationUID = viewportAnnotation.annotationUID;
+
+    if (this.viewportToolConfigs[viewport.id] & 0b1) {
+      let lineUID = 1;
+      const lineWidth = this.isFocusedOnCanvas ? 2.5 : 1;
+
+      const viewportColor = this._getReferenceLineColor(viewport.id);
+      const color =
+        viewportColor !== undefined ? viewportColor : 'rgb(200, 200, 200)';
+
+      let opacity = 1;
+      let handleRadius =
+        this.configuration.handleRadius *
+        (this.configuration.enableHDPIHandles ? window.devicePixelRatio : 1);
+      if (this.configuration.mobile?.enabled) {
+        handleRadius = this.configuration.mobile.handleRadius;
+        opacity = this.configuration.mobile.opacity;
+      }
+      const crossHairRadius = handleRadius * 7;
+
+      const pos =
+        typeof this.toolWorldFocus === 'undefined'
+          ? [viewport.canvas.clientWidth / 2, viewport.canvas.clientHeight / 2]
+          : viewport.worldToCanvas(this.toolWorldFocus);
+
+      drawLineSvg(
+        svgDrawingHelper,
+        annotationUID,
+        `Line${lineUID++}`,
+        [0, pos[1]],
+        [pos[0] - crossHairRadius, pos[1]],
+        {
+          color,
+          lineWidth,
+        }
+      );
+
+      drawLineSvg(
+        svgDrawingHelper,
+        annotationUID,
+        `Line${lineUID++}`,
+        [pos[0] + crossHairRadius, pos[1]],
+        [viewport.sWidth, pos[1]],
+        {
+          color,
+          lineWidth,
+        }
+      );
+
+      drawLineSvg(
+        svgDrawingHelper,
+        annotationUID,
+        `Line${lineUID++}`,
+        [pos[0], 0],
+        [pos[0], pos[1] - crossHairRadius],
+        {
+          color,
+          lineWidth,
+        }
+      );
+
+      drawLineSvg(
+        svgDrawingHelper,
+        annotationUID,
+        `Line${lineUID++}`,
+        [pos[0], pos[1] + crossHairRadius],
+        [pos[0], viewport.sHeight],
+        {
+          color,
+          lineWidth,
+        }
+      );
+    }
+
+    if (!(this.viewportToolConfigs[viewport.id] & 0b10)) {
+      return true;
+    }
 
     // Get cameras/canvases for each of these.
     // -- Get two world positions for this canvas in this line (e.g. the diagonal)
@@ -1947,6 +2100,8 @@ class CrosshairsTool extends AnnotationTool {
     state.isInteractingWithTool = true;
     const { viewport, renderingEngine } = enabledElement;
 
+    this.toolWorldFocus = jumpWorld;
+
     const annotations = this._getAnnotations(enabledElement);
 
     const delta: Types.Point3 = [0, 0, 0];
@@ -2000,6 +2155,8 @@ class CrosshairsTool extends AnnotationTool {
     // tool usage.
     state.isInteractingWithTool = !this.configuration.mobile?.enabled;
 
+    this.isFocusedOnCanvas = true;
+
     element.addEventListener(Events.MOUSE_UP, this._endCallback);
     element.addEventListener(Events.MOUSE_DRAG, this._dragCallback);
     element.addEventListener(Events.MOUSE_CLICK, this._endCallback);
@@ -2011,6 +2168,8 @@ class CrosshairsTool extends AnnotationTool {
 
   _deactivateModify = (element) => {
     state.isInteractingWithTool = false;
+
+    this.isFocusedOnCanvas = false;
 
     element.removeEventListener(Events.MOUSE_UP, this._endCallback);
     element.removeEventListener(Events.MOUSE_DRAG, this._dragCallback);
@@ -2064,6 +2223,11 @@ class CrosshairsTool extends AnnotationTool {
     ) as CrosshairsAnnotation[];
     const filteredToolAnnotations =
       this.filterInteractableAnnotationsForElement(element, annotations);
+
+    if (this.viewportToolConfigs[viewport.id] & 0b1) {
+      this.toolWorldFocus = eventDetail.currentPoints.world;
+      this.setToolCenter([0, 0, 0]);
+    }
 
     // viewport Annotation
     const viewportAnnotation = filteredToolAnnotations[0];
