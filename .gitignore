@@ -41,7 +41,6 @@ packages/docs/dist/
 packages/docs/static/examples
 packages/docs/static/test-coverage
 packages/docs/docs/examples.md
-dist/
 tsDist/
 lib/
 lib-esm/
@@ -67,3 +66,8 @@ coverage/
 CLAUDE.md
 # External repositories
 vtk-js/
+# Package build outputs (except for core, tools, nifti-volume-loader)
+packages/adapters/dist/
+packages/ai/dist/
+packages/labelmap-interpolation/dist/
+packages/polymorphic-segmentation/dist/
