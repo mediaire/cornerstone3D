@@ -1,5 +1,5 @@
 import { AnnotationTool } from './base';
-import { type Types } from '@cornerstonejs/core';
+import type { Types } from '@cornerstonejs/core';
 import { Enums } from '@cornerstonejs/core';
 import type { Annotation, AnnotationData, Annotations, EventTypes, ToolHandle, PublicToolProps, ToolProps, InteractionTypes, SVGDrawingHelper } from '../types';
 export type CrosshairsAnnotationData = AnnotationData & {
@@ -15,11 +15,17 @@ export type CrosshairsAnnotationData = AnnotationData & {
 export type CrosshairsAnnotation = Annotation & {
     data: CrosshairsAnnotationData;
 };
+declare enum CrosshairsType {
+    MPR = 1,
+    SAME_ORIENTATION = 2
+}
 declare class CrosshairsTool extends AnnotationTool {
     static toolName: any;
     isFocusedOnCanvas: boolean;
     toolWorldFocus: Types.Point3;
-    viewportToolConfigs: object;
+    viewportCrosshairsConfig: {
+        [viewportId: string]: CrosshairsType;
+    };
     toolCenter: Types.Point3;
     _getReferenceLineColor?: (viewportId: string) => string;
     _getReferenceLineControllable?: (viewportId: string) => boolean;
@@ -39,7 +45,7 @@ declare class CrosshairsTool extends AnnotationTool {
     resetCrosshairs: () => void;
     computeToolCenter: () => void;
     _point3_IsEqual: (a: Types.Point3, b: Types.Point3) => boolean;
-    _computeCrosshairApplication: (viewportIds: Array<number>, normals: Array<Types.Point3>, orientations: Array<Enums.OrientationAxis | Types.OrientationVectors>) => void;
+    _computeCrosshairApplication: (viewportIds: Array<string>, normals: Array<Types.Point3>, orientations: Array<Enums.OrientationAxis | Types.OrientationVectors>) => void;
     _computeToolCenter: (viewportsInfo: any) => void;
     setToolCenter(toolCenter: Types.Point3, suppressEvents?: boolean): void;
     addNewAnnotation: (evt: EventTypes.InteractionEventType) => CrosshairsAnnotation;

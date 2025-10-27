@@ -4,7 +4,7 @@ import vtkMatrixBuilder from '@kitware/vtk.js/Common/Core/MatrixBuilder';
 
 import { AnnotationTool } from './base';
 
-import { getRenderingEngine, type Types } from '@cornerstonejs/core';
+import type { Types } from '@cornerstonejs/core';
 import {
   getEnabledElementByIds,
   getEnabledElement,
@@ -94,6 +94,11 @@ const OPERATION = {
   SLAB: 3,
 };
 
+enum CrosshairsType {
+  MPR = 1,
+  SAME_ORIENTATION = 2,
+}
+
 /**
  * CrosshairsTool is a tool that provides reference lines between different viewports
  * of a toolGroup. Using crosshairs, you can jump to a specific location in one
@@ -108,8 +113,7 @@ class CrosshairsTool extends AnnotationTool {
 
   isFocusedOnCanvas: boolean = false;
   toolWorldFocus: Types.Point3;
-  viewportToolConfigs: object = {}; // An object structured as "viewportId": "flags", where 1st bit in flags indicate
-  // whether the viewport should have the new crosshairs enabled, and 2nd bit whether the usual crosshairs be enabled.
+  viewportCrosshairsConfig: { [viewportId: string]: CrosshairsType } = {};
   toolCenter: Types.Point3 = [0, 0, 0]; // NOTE: it is assumed that all the active/linked viewports share the same crosshair center.
   // This because the rotation operation rotates also all the other active/intersecting reference lines of the same angle
   _getReferenceLineColor?: (viewportId: string) => string;
@@ -162,11 +166,6 @@ class CrosshairsTool extends AnnotationTool {
         filterActorUIDsToSetSlabThickness: [],
         // blend mode for slabThickness modifications
         slabThicknessBlendMode: Enums.BlendModes.MAXIMUM_INTENSITY_BLEND,
-        centerPoint: {
-          enabled: false,
-          color: 'rgba(255, 255, 0, 0.5)',
-          size: 2,
-        },
         mobile: {
           enabled: false,
           opacity: 0.8,
@@ -370,42 +369,36 @@ class CrosshairsTool extends AnnotationTool {
 
   // Determines which crosshairs to enable for which viewports
   _computeCrosshairApplication = (
-    viewportIds: Array<number>,
+    viewportIds: Array<string>,
     normals: Array<Types.Point3>,
     orientations: Array<Enums.OrientationAxis | Types.OrientationVectors>
   ) => {
+    // Default all viewports to MPR crosshairs
     for (let i = 0; i < viewportIds.length; i++) {
-      this.viewportToolConfigs[viewportIds[i]] = 2;
-    } // Default all viewports to just enable the usual crosshairs
+      this.viewportCrosshairsConfig[viewportIds[i]] = CrosshairsType.MPR;
+    }
+
     if (viewportIds.length == 2) {
-      const nrmAB = this._point3_IsEqual(normals[0], normals[1]);
-      const acqAB = orientations[0] == orientations[1];
+      const normalAB = this._point3_IsEqual(normals[0], normals[1]);
+      const acquisitionAB = orientations[0] == orientations[1];
 
-      if (nrmAB || acqAB) {
-        this.viewportToolConfigs[viewportIds[0]] |= 1;
-        this.viewportToolConfigs[viewportIds[1]] |= 1;
-      }
-
-      if (acqAB) {
-        this.viewportToolConfigs[viewportIds[1]] &= 0b01;
+      if (normalAB || acquisitionAB) {
+        // Two viewports have the same orientation
+        this.viewportCrosshairsConfig[viewportIds[0]] = CrosshairsType.SAME_ORIENTATION;
+        this.viewportCrosshairsConfig[viewportIds[1]] = CrosshairsType.SAME_ORIENTATION;
       }
     } else if (viewportIds.length == 3) {
-      const nrmAB = this._point3_IsEqual(normals[0], normals[1]);
-      const nrmBC = this._point3_IsEqual(normals[1], normals[2]);
+      const normalAB = this._point3_IsEqual(normals[0], normals[1]);
+      const normalBC = this._point3_IsEqual(normals[1], normals[2]);
 
-      const acqAB = orientations[0] == orientations[1];
-      const acqBC = orientations[1] == orientations[2];
+      const acquisitionAB = orientations[0] == orientations[1];
+      const acquisitionBC = orientations[1] == orientations[2];
 
-      if ((nrmAB && nrmBC) || (acqAB && acqBC)) {
-        this.viewportToolConfigs[viewportIds[0]] |= 1;
-        this.viewportToolConfigs[viewportIds[1]] |= 1;
-        this.viewportToolConfigs[viewportIds[2]] |= 1;
-      }
-
-      if (acqAB && acqBC) {
-        this.viewportToolConfigs[viewportIds[0]] &= 0b01;
-        this.viewportToolConfigs[viewportIds[1]] &= 0b01;
-        this.viewportToolConfigs[viewportIds[2]] &= 0b01;
+      if ((normalAB && normalBC) || (acquisitionAB && acquisitionBC)) {
+        // All three viewports have the same orientation
+        this.viewportCrosshairsConfig[viewportIds[0]] = CrosshairsType.SAME_ORIENTATION;
+        this.viewportCrosshairsConfig[viewportIds[1]] = CrosshairsType.SAME_ORIENTATION;
+        this.viewportCrosshairsConfig[viewportIds[2]] = CrosshairsType.SAME_ORIENTATION;
       }
     }
   };
@@ -485,66 +478,29 @@ class CrosshairsTool extends AnnotationTool {
     const secondPlane = csUtils.planar.planeEquation(normal2, point2);
     const thirdPlane = csUtils.planar.planeEquation(normal3, point3);
 
-    // Calculating the intersection of 3 planes
-    // prettier-ignore
+    // skip intersection calculation if normals are equal
+    if (
+      vec3.equals(normal1, normal2) &&
+      vec3.equals(normal2, normal3) &&
+      vec3.equals(normal3, normal1)
+    ) {
+      return;
+    }
 
+
+    // Calculating the intersection of 3 planes
     const toolCenter = csUtils.planar.threePlaneIntersection(firstPlane, secondPlane, thirdPlane);
     this.setToolCenter(toolCenter);
   };
 
   setToolCenter(toolCenter: Types.Point3, suppressEvents = false): void {
-    // prettier-ignore
+    this.toolCenter = toolCenter;
     const viewportsInfo = this._getViewportsInfo();
 
-    viewportsInfo.map(({ renderingEngineId, viewportId }) => {
-      const renderingEngine = getRenderingEngine(renderingEngineId);
-
-      const viewport = renderingEngine.getViewport(viewportId);
-      const camera = viewport.getCamera();
-      const { focalPoint, position, viewPlaneNormal } = camera;
-
-      // Calculate the delta between the current camera focal point and the new tool center
-      const delta = [
-        toolCenter[0] - focalPoint[0],
-        toolCenter[1] - focalPoint[1],
-        toolCenter[2] - focalPoint[2],
-      ];
-
-      // Project this vector onto the view plane normal.
-      // This isolates the component of the movement that corresponds to the "scroll" (slice change).
-      const scroll =
-        delta[0] * viewPlaneNormal[0] +
-        delta[1] * viewPlaneNormal[1] +
-        delta[2] * viewPlaneNormal[2];
-
-      const scrollDelta = [
-        scroll * viewPlaneNormal[0],
-        scroll * viewPlaneNormal[1],
-        scroll * viewPlaneNormal[2],
-      ];
-
-      // Apply this "scroll" to the position and focal point of the camera.
-      const newFocalPoint: Types.Point3 = [
-        focalPoint[0] + scrollDelta[0],
-        focalPoint[1] + scrollDelta[1],
-        focalPoint[2] + scrollDelta[2],
-      ];
-      const newPosition: Types.Point3 = [
-        position[0] + scrollDelta[0],
-        position[1] + scrollDelta[1],
-        position[2] + scrollDelta[2],
-      ];
-
-      viewport.setCamera({
-        focalPoint: newFocalPoint,
-        position: newPosition,
-      });
-
-      viewport.render();
-    });
-
-    this.toolCenter = toolCenter;
-
+    // assuming all viewports are in the same rendering engine
+    triggerAnnotationRenderForViewportIds(
+      viewportsInfo.map(({ viewportId }) => viewportId)
+    );
     if (!suppressEvents) {
       triggerEvent(eventTarget, Events.CROSSHAIR_TOOL_CENTER_CHANGED, {
         toolGroupId: this.toolGroupId,
@@ -952,7 +908,7 @@ class CrosshairsTool extends AnnotationTool {
 
     const annotationUID = viewportAnnotation.annotationUID;
 
-    if (this.viewportToolConfigs[viewport.id] & 0b1) {
+    if (this.viewportCrosshairsConfig[viewport.id] === CrosshairsType.SAME_ORIENTATION) {
       let lineUID = 1;
       const lineWidth = this.isFocusedOnCanvas ? 2.5 : 1;
 
@@ -1024,7 +980,7 @@ class CrosshairsTool extends AnnotationTool {
       );
     }
 
-    if (!(this.viewportToolConfigs[viewport.id] & 0b10)) {
+    if (this.viewportCrosshairsConfig[viewport.id] === CrosshairsType.SAME_ORIENTATION) {
       return true;
     }
 
@@ -1706,31 +1662,6 @@ class CrosshairsTool extends AnnotationTool {
       );
     }
 
-    if (this.configuration.centerPoint?.enabled) {
-      const defaultColor = 'rgba(255, 255, 0, 0.5)';
-      const defaultSize = 2;
-      const maxAllowedSize = 5;
-
-      const centerPointColor =
-        this.configuration.centerPoint.color || defaultColor;
-      const centerPointSize = Math.min(
-        this.configuration.centerPoint.size || defaultSize,
-        maxAllowedSize
-      );
-
-      drawCircleSvg(
-        svgDrawingHelper,
-        annotationUID,
-        'centerPoint',
-        crosshairCenterCanvas as Types.Point2,
-        centerPointSize,
-        {
-          color: centerPointColor,
-          fill: centerPointColor,
-        }
-      );
-    }
-
     return renderStatus;
   };
 
@@ -2298,9 +2229,15 @@ class CrosshairsTool extends AnnotationTool {
     const filteredToolAnnotations =
       this.filterInteractableAnnotationsForElement(element, annotations);
 
-    if (this.viewportToolConfigs[viewport.id] & 0b1) {
+    if (this.viewportCrosshairsConfig[viewport.id] === CrosshairsType.SAME_ORIENTATION) {
+      // keep third component (slice index) for same orientation crosshairs
       this.toolWorldFocus = eventDetail.currentPoints.world;
-      this.setToolCenter([0, 0, 0]);
+      const newCenter = [
+        0,
+        0,
+        this.toolCenter[2],
+      ] as Types.Point3;
+      this.setToolCenter(newCenter);
     }
 
     // viewport Annotation
@@ -2675,6 +2612,11 @@ class CrosshairsTool extends AnnotationTool {
     const { data } = annotation;
 
     const viewport = renderingEngine.getViewport(data.viewportId);
+
+    if (!viewport || this.viewportCrosshairsConfig[viewport.id] === CrosshairsType.SAME_ORIENTATION) {
+      return;
+    }
+
     const camera = viewport.getCamera();
     const normal = camera.viewPlaneNormal;
 
