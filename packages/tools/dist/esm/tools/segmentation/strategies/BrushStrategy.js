@@ -42,6 +42,8 @@ export default class BrushStrategy {
             if (!initializedData) {
                 return;
             }
+            const { segmentationVoxelManager } = initializedData;
+            segmentationVoxelManager.resetModifiedVoxels();
             this._onInteractionStart.forEach((func) => func.call(this, initializedData));
         };
         this.addPreview = (enabledElement, operationData) => {

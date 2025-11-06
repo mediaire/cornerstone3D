@@ -284,6 +284,11 @@ export default class BrushStrategy {
       // Happens if there isn't a labelmap to apply to
       return;
     }
+
+    // before starting a new interaction, reset the modified voxels
+    const { segmentationVoxelManager } = initializedData;
+    segmentationVoxelManager.resetModifiedVoxels();
+
     this._onInteractionStart.forEach((func) =>
       func.call(this, initializedData)
     );

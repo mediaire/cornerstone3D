@@ -27,6 +27,7 @@ const DEFAULT_RLE_SIZE = 5 * 1024;
  */
 export default class VoxelManager<T> {
   public modifiedSlices = new Set<number>();
+  public modifiedVoxels = new Set<number>();
   private boundsIJK = [
     [Infinity, -Infinity],
     [Infinity, -Infinity],
@@ -126,6 +127,7 @@ export default class VoxelManager<T> {
     const changed = this._set(index, v);
     if (changed !== false) {
       this.modifiedSlices.add(k);
+      this.modifiedVoxels.add(index);
       VoxelManager.addBounds(this.boundsIJK, [i, j, k]);
     }
 
@@ -182,6 +184,7 @@ export default class VoxelManager<T> {
     if (changed !== false) {
       const pointIJK = this.toIJK(index);
       this.modifiedSlices.add(pointIJK[2]);
+      this.modifiedVoxels.add(index);
       VoxelManager.addBounds(this.boundsIJK, pointIJK);
     }
     return changed;
@@ -472,6 +475,7 @@ export default class VoxelManager<T> {
     this.map?.clear();
     this.clearBounds();
     this.modifiedSlices.clear();
+    this.modifiedVoxels.clear();
     this.points?.clear();
   }
 
@@ -508,12 +512,43 @@ export default class VoxelManager<T> {
   }
 
   /**
+   * Gets an array of modified voxel indices.
+   * @returns Array of modified voxel indices
+   */
+  public getArrayOfModifiedVoxels(): number[] {
+    return Array.from(this.modifiedVoxels);
+  }
+
+  /**
+   * Gets a map of all modified voxels organized by slice
+   * @returns Map from slice index to array of [i,j] coordinates
+   */
+  public getModifiedVoxelsPerSlice(): Map<number, Point2[]> {
+    const voxelsBySlice = new Map<number, Point2[]>();
+
+    for (const index of this.modifiedVoxels) {
+      const [i, j, k] = this.toIJK(index);
+
+      if (!voxelsBySlice.has(k)) {
+        voxelsBySlice.set(k, []);
+      }
+      voxelsBySlice.get(k)!.push([i, j]);
+    }
+
+    return voxelsBySlice;
+  }
+
+  /**
    * Resets the set of modified slices.
    * This method clears all entries from the `modifiedSlices` set,
    * effectively marking all slices as unmodified.
    */
   public resetModifiedSlices(): void {
     this.modifiedSlices.clear();
+  }
+
+  public resetModifiedVoxels(): void {
+    this.modifiedVoxels.clear();
   }
 
   /**
