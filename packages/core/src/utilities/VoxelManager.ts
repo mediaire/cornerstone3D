@@ -28,11 +28,13 @@ const DEFAULT_RLE_SIZE = 5 * 1024;
 export default class VoxelManager<T> {
   public modifiedSlices = new Set<number>();
   /**
-   * Keep track of modified voxel indices and their
-   * original values
+   * Keep track of modified voxel indices
    */
-  public modifiedIndices: number[] = [];
-  public oldValues: T[] = [];
+  public modifiedIndices: Set<number> = new Set();
+  /**
+   * Keep track of erased values (zeroed out)
+   */
+  public erasedValues: Set<T> = new Set();
   private boundsIJK = [
     [Infinity, -Infinity],
     [Infinity, -Infinity],
@@ -133,8 +135,10 @@ export default class VoxelManager<T> {
     const changed = this._set(index, v);
     if (changed !== false) {
       this.modifiedSlices.add(k);
-      this.modifiedIndices.push(index);
-      this.oldValues.push(originalValue);
+      this.modifiedIndices.add(index);
+      if (originalValue !== 0 && v === 0) {
+        this.erasedValues.add(originalValue);
+      }
       VoxelManager.addBounds(this.boundsIJK, [i, j, k]);
     }
 
@@ -192,8 +196,10 @@ export default class VoxelManager<T> {
     if (changed !== false) {
       const pointIJK = this.toIJK(index);
       this.modifiedSlices.add(pointIJK[2]);
-      this.modifiedIndices.push(index);
-      this.oldValues.push(originalValue);
+      this.modifiedIndices.add(index);
+      if (originalValue !== 0 && v === 0) {
+        this.erasedValues.add(originalValue);
+      }
       VoxelManager.addBounds(this.boundsIJK, pointIJK);
     }
     return changed;
@@ -484,8 +490,8 @@ export default class VoxelManager<T> {
     this.map?.clear();
     this.clearBounds();
     this.modifiedSlices.clear();
-    this.modifiedIndices = [];
-    this.oldValues = [];
+    this.modifiedIndices.clear();
+    this.erasedValues.clear();
     this.points?.clear();
   }
 
@@ -521,15 +527,12 @@ export default class VoxelManager<T> {
     return Array.from(this.modifiedSlices);
   }
 
-  /**
-   * @returns a map of modified voxel indices to their original values.
-   */
-  public getModifiedVoxelMap(): Map<number, T> {
-    const modifiedVoxels = new Map<number, T>();
-    this.modifiedIndices.forEach((index, i) => {
-      modifiedVoxels.set(index,  this.oldValues[i]);
-    });
-    return modifiedVoxels;
+  public getModifiedIndices(): number[] {
+    return Array.from(this.modifiedIndices);
+  }
+
+  public getErasedValues(): T[] {
+    return Array.from(this.erasedValues);
   }
 
   /**
@@ -541,9 +544,9 @@ export default class VoxelManager<T> {
     this.modifiedSlices.clear();
   }
 
-  public resetModifiedVoxels(): void {
-    this.modifiedIndices = [];
-    this.oldValues = [];
+  public resetModifiedIndices(): void {
+    this.modifiedIndices.clear();
+    this.erasedValues.clear();
   }
 
   /**

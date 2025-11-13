@@ -285,9 +285,9 @@ export default class BrushStrategy {
       return;
     }
 
-    // before starting a new interaction, reset the modified voxels
+    // before starting a new interaction, reset the modified indices
     const { segmentationVoxelManager } = initializedData;
-    segmentationVoxelManager.resetModifiedVoxels();
+    segmentationVoxelManager.resetModifiedIndices();
 
     this._onInteractionStart.forEach((func) =>
       func.call(this, initializedData)

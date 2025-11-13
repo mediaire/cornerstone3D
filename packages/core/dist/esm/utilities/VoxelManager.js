@@ -9,8 +9,8 @@ export default class VoxelManager {
     }
     constructor(dimensions, options) {
         this.modifiedSlices = new Set();
-        this.modifiedIndices = [];
-        this.oldValues = [];
+        this.modifiedIndices = new Set();
+        this.erasedValues = new Set();
         this.boundsIJK = [
             [Infinity, -Infinity],
             [Infinity, -Infinity],
@@ -28,8 +28,10 @@ export default class VoxelManager {
             const changed = this._set(index, v);
             if (changed !== false) {
                 this.modifiedSlices.add(k);
-                this.modifiedIndices.push(index);
-                this.oldValues.push(originalValue);
+                this.modifiedIndices.add(index);
+                if (originalValue !== 0 && v === 0) {
+                    this.erasedValues.add(originalValue);
+                }
                 VoxelManager.addBounds(this.boundsIJK, [i, j, k]);
             }
             return changed;
@@ -45,8 +47,10 @@ export default class VoxelManager {
             if (changed !== false) {
                 const pointIJK = this.toIJK(index);
                 this.modifiedSlices.add(pointIJK[2]);
-                this.modifiedIndices.push(index);
-                this.oldValues.push(originalValue);
+                this.modifiedIndices.add(index);
+                if (originalValue !== 0 && v === 0) {
+                    this.erasedValues.add(originalValue);
+                }
                 VoxelManager.addBounds(this.boundsIJK, pointIJK);
             }
             return changed;
@@ -311,8 +315,8 @@ export default class VoxelManager {
         this.map?.clear();
         this.clearBounds();
         this.modifiedSlices.clear();
-        this.modifiedIndices = [];
-        this.oldValues = [];
+        this.modifiedIndices.clear();
+        this.erasedValues.clear();
         this.points?.clear();
     }
     getConstructor() {
@@ -328,19 +332,18 @@ export default class VoxelManager {
     getArrayOfModifiedSlices() {
         return Array.from(this.modifiedSlices);
     }
-    getModifiedVoxelMap() {
-        const modifiedVoxels = new Map();
-        this.modifiedIndices.forEach((index, i) => {
-            modifiedVoxels.set(index, this.oldValues[i]);
-        });
-        return modifiedVoxels;
+    getModifiedIndices() {
+        return Array.from(this.modifiedIndices);
+    }
+    getErasedValues() {
+        return Array.from(this.erasedValues);
     }
     resetModifiedSlices() {
         this.modifiedSlices.clear();
     }
-    resetModifiedVoxels() {
-        this.modifiedIndices = [];
-        this.oldValues = [];
+    resetModifiedIndices() {
+        this.modifiedIndices.clear();
+        this.erasedValues.clear();
     }
     setBounds(bounds) {
         this.boundsIJK = bounds;
