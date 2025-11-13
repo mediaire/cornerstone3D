@@ -27,7 +27,10 @@ const DEFAULT_RLE_SIZE = 5 * 1024;
  */
 export default class VoxelManager<T> {
   public modifiedSlices = new Set<number>();
-  public modifiedVoxels = new Set<number>();
+  /**
+   * Maps modified voxel index -> old value at that index.
+   */
+  public modifiedVoxels = new Map<number, T>();
   private boundsIJK = [
     [Infinity, -Infinity],
     [Infinity, -Infinity],
@@ -124,10 +127,11 @@ export default class VoxelManager<T> {
    */
   public setAtIJK = (i: number, j: number, k: number, v) => {
     const index = this.toIndex([i, j, k]);
+    const originalValue = this._get(index);
     const changed = this._set(index, v);
     if (changed !== false) {
       this.modifiedSlices.add(k);
-      this.modifiedVoxels.add(index);
+      this.modifiedVoxels.set(index, originalValue);
       VoxelManager.addBounds(this.boundsIJK, [i, j, k]);
     }
 
@@ -180,11 +184,12 @@ export default class VoxelManager<T> {
    * Sets the value at the given index
    */
   public setAtIndex = (index, v) => {
+    const originalValue = this._get(index);
     const changed = this._set(index, v);
     if (changed !== false) {
       const pointIJK = this.toIJK(index);
       this.modifiedSlices.add(pointIJK[2]);
-      this.modifiedVoxels.add(index);
+      this.modifiedVoxels.set(index, originalValue);
       VoxelManager.addBounds(this.boundsIJK, pointIJK);
     }
     return changed;
@@ -516,26 +521,15 @@ export default class VoxelManager<T> {
    * @returns Array of modified voxel indices
    */
   public getArrayOfModifiedVoxels(): number[] {
-    return Array.from(this.modifiedVoxels);
+    return Array.from(this.modifiedVoxels.keys());
   }
 
   /**
-   * Gets a map of all modified voxels organized by slice
-   * @returns Map from slice index to array of [i,j] coordinates
+   * Gets a map of modified voxel indices to their original values.
+   * @returns Map of modified voxel indices to original values
    */
-  public getModifiedVoxelsPerSlice(): Map<number, Point2[]> {
-    const voxelsBySlice = new Map<number, Point2[]>();
-
-    for (const index of this.modifiedVoxels) {
-      const [i, j, k] = this.toIJK(index);
-
-      if (!voxelsBySlice.has(k)) {
-        voxelsBySlice.set(k, []);
-      }
-      voxelsBySlice.get(k)!.push([i, j]);
-    }
-
-    return voxelsBySlice;
+  public getModifiedVoxelsMap(): Map<number, T> {
+    return this.modifiedVoxels;
   }
 
   /**
