@@ -16,7 +16,6 @@ function removeRepresentation(viewportId, segmentationId, renderImmediate = fals
         return;
     }
     const { viewport } = enabledElement;
-    removeContourFromElement(viewportId, segmentationId);
     if (!renderImmediate) {
         return;
     }

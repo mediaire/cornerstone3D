@@ -1,4 +1,4 @@
-import type { Annotation, EventTypes, PublicToolProps, ToolProps, AnnotationRenderContext } from '../../types';
+import type { Annotation, EventTypes, PublicToolProps, ToolProps, AnnotationRenderContext, Annotations } from '../../types';
 import type { ContourAnnotation } from '../../types/ToolSpecificAnnotationTypes';
 import type { StyleSpecifier } from '../../types/AnnotationStyle';
 import ContourBaseTool from './ContourBaseTool';
@@ -15,6 +15,7 @@ declare abstract class ContourSegmentationBaseTool extends ContourBaseTool {
         styleSpecifier: StyleSpecifier;
     }): any;
     protected renderAnnotationInstance(renderContext: AnnotationRenderContext): boolean;
+    filterInteractableAnnotationsForElement(element: HTMLDivElement, annotations: Annotations): Annotations;
     private _getContourSegmentationStyle;
 }
 export { ContourSegmentationBaseTool as default, ContourSegmentationBaseTool };

@@ -19,7 +19,7 @@ import { addSegmentationRepresentations } from '../stateManagement/segmentation'
 const MAGNIFY_CLASSNAME = 'advancedMagnifyTool';
 const MAGNIFY_VIEWPORT_INITIAL_RADIUS = 125;
 const { Events: csEvents } = Enums;
-const isSegmentation = (actor) => actor.uid !== actor.referencedId;
+const isSegmentation = (actor) => !!actor.representationUID;
 var AdvancedMagnifyToolActions;
 (function (AdvancedMagnifyToolActions) {
     AdvancedMagnifyToolActions["ShowZoomFactorsList"] = "showZoomFactorsList";
@@ -746,7 +746,7 @@ class AdvancedMagnifyViewport {
         const actors = sourceViewport.getActors();
         const volumeInputArray = actors
             .filter((actor) => !isSegmentation(actor))
-            .map((actor) => ({ volumeId: actor.uid }));
+            .map((actor) => ({ volumeId: actor.referencedId }));
         magnifyViewport.setVolumes(volumeInputArray).then(() => {
             this._isViewportReady = true;
             this.update();

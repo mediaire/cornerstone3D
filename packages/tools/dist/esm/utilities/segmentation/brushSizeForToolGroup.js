@@ -1,6 +1,5 @@
 import { getToolGroup } from '../../store/ToolGroupManager';
 import triggerAnnotationRenderForViewportIds from '../triggerAnnotationRenderForViewportIds';
-import { getRenderingEngine } from '@cornerstonejs/core';
 import { getBrushToolInstances } from './getBrushToolInstances';
 export function setBrushSizeForToolGroup(toolGroupId, brushSize, toolName) {
     const toolGroup = getToolGroup(toolGroupId);
@@ -9,17 +8,14 @@ export function setBrushSizeForToolGroup(toolGroupId, brushSize, toolName) {
     }
     const brushBasedToolInstances = getBrushToolInstances(toolGroupId, toolName);
     brushBasedToolInstances.forEach((tool) => {
-        tool.configuration.brushSize = brushSize;
+        const minRadius = tool.configuration.minRadius;
+        const maxRadius = tool.configuration.maxRadius;
+        let newBrushSize = minRadius ? Math.max(brushSize, minRadius) : brushSize;
+        newBrushSize = maxRadius ? Math.min(newBrushSize, maxRadius) : newBrushSize;
+        tool.configuration.brushSize = newBrushSize;
         tool.invalidateBrushCursor();
     });
-    const viewportsInfo = toolGroup.getViewportsInfo();
-    const viewportsInfoArray = Object.keys(viewportsInfo).map((key) => viewportsInfo[key]);
-    if (!viewportsInfoArray.length) {
-        return;
-    }
-    const { renderingEngineId } = viewportsInfoArray[0];
     const viewportIds = toolGroup.getViewportIds();
-    const renderingEngine = getRenderingEngine(renderingEngineId);
     triggerAnnotationRenderForViewportIds(viewportIds);
 }
 export function getBrushSizeForToolGroup(toolGroupId, toolName) {

@@ -2,7 +2,8 @@ import type { BoundsIJK, Point3, PixelDataTypedArray, IImage, RGB, CPUImageData,
 import type vtkImageData from '@kitware/vtk.js/Common/DataModel/ImageData';
 export default class VoxelManager<T> {
     modifiedSlices: Set<number>;
-    modifiedVoxels: Set<number>;
+    modifiedIndices: number[];
+    oldValues: T[];
     private boundsIJK;
     map: Map<number, T> | IRLEVoxelMap<T>;
     sourceVoxelManager: IVoxelManager<T>;
@@ -75,8 +76,7 @@ export default class VoxelManager<T> {
     clear(): void;
     getConstructor(): new (length: number) => PixelDataTypedArray;
     getArrayOfModifiedSlices(): number[];
-    getArrayOfModifiedVoxels(): number[];
-    getModifiedVoxelsPerSlice(): Map<number, Point2[]>;
+    getModifiedVoxelMap(): Map<number, T>;
     resetModifiedSlices(): void;
     resetModifiedVoxels(): void;
     setBounds(bounds: BoundsIJK): void;

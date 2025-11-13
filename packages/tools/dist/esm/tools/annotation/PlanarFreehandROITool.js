@@ -259,13 +259,17 @@ class PlanarFreehandROITool extends ContourSegmentationBaseTool {
         if (!annotations || !annotations.length) {
             return;
         }
+        const baseFilteredAnnotations = super.filterInteractableAnnotationsForElement(element, annotations);
+        if (!baseFilteredAnnotations || !baseFilteredAnnotations.length) {
+            return;
+        }
         const enabledElement = getEnabledElement(element);
         const { viewport } = enabledElement;
         let annotationsToDisplay;
         if (viewport instanceof VolumeViewport) {
             const camera = viewport.getCamera();
             const { spacingInNormalDirection } = csUtils.getTargetVolumeAndSpacingInNormalDir(viewport, camera);
-            annotationsToDisplay = this.filterAnnotationsWithinSlice(annotations, camera, spacingInNormalDirection);
+            annotationsToDisplay = this.filterAnnotationsWithinSlice(baseFilteredAnnotations, camera, spacingInNormalDirection);
         }
         else {
             annotationsToDisplay = filterAnnotationsForDisplay(viewport, annotations);

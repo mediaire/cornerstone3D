@@ -9,6 +9,7 @@ import * as ToolGroupManager from './store/ToolGroupManager';
 import { defaultSegmentationStateManager } from './stateManagement/segmentation/SegmentationStateManager';
 import segmentationRepresentationModifiedListener from './eventListeners/segmentation/segmentationRepresentationModifiedListener';
 import { setConfig } from './config';
+import segmentationRemovedListener from './eventListeners/segmentation/segmentationRemovedEventListener';
 let csToolsInitialized = false;
 export function init(defaultConfiguration = {}) {
     if (csToolsInitialized) {
@@ -56,15 +57,18 @@ function _addCornerstoneToolsEventListeners() {
     eventTarget.addEventListener(TOOLS_EVENTS.SEGMENTATION_DATA_MODIFIED, segmentationDataModifiedEventListener);
     eventTarget.addEventListener(TOOLS_EVENTS.SEGMENTATION_REPRESENTATION_MODIFIED, segmentationRepresentationModifiedListener);
     eventTarget.addEventListener(TOOLS_EVENTS.SEGMENTATION_REPRESENTATION_ADDED, segmentationRepresentationModifiedListener);
+    eventTarget.addEventListener(TOOLS_EVENTS.SEGMENTATION_REMOVED, segmentationRemovedListener);
 }
 function _removeCornerstoneToolsEventListeners() {
     eventTarget.removeEventListener(TOOLS_EVENTS.ANNOTATION_COMPLETED, annotationCompletedListener);
     eventTarget.removeEventListener(TOOLS_EVENTS.ANNOTATION_MODIFIED, annotationModifiedListener);
     eventTarget.removeEventListener(TOOLS_EVENTS.ANNOTATION_SELECTION_CHANGE, annotationSelectionListener);
     eventTarget.removeEventListener(TOOLS_EVENTS.ANNOTATION_SELECTION_CHANGE, annotationSelectionListener);
+    eventTarget.removeEventListener(TOOLS_EVENTS.ANNOTATION_REMOVED, annotationRemovedListener);
     eventTarget.removeEventListener(TOOLS_EVENTS.SEGMENTATION_MODIFIED, segmentationModifiedListener);
     eventTarget.removeEventListener(TOOLS_EVENTS.SEGMENTATION_DATA_MODIFIED, segmentationDataModifiedEventListener);
     eventTarget.removeEventListener(TOOLS_EVENTS.SEGMENTATION_REPRESENTATION_MODIFIED, segmentationRepresentationModifiedListener);
     eventTarget.removeEventListener(TOOLS_EVENTS.SEGMENTATION_REPRESENTATION_ADDED, segmentationRepresentationModifiedListener);
+    eventTarget.removeEventListener(TOOLS_EVENTS.SEGMENTATION_REMOVED, segmentationRemovedListener);
 }
 export default init;

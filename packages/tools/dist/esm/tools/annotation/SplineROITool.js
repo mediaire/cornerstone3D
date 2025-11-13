@@ -4,7 +4,6 @@ import { addAnnotation, getChildAnnotations, removeAnnotation, } from '../../sta
 import { drawHandles as drawHandlesSvg, drawPolyline as drawPolylineSvg, drawLinkedTextBox as drawLinkedTextBoxSvg, } from '../../drawingSvg';
 import { state } from '../../store/state';
 import { Events, MouseBindings, KeyboardBindings, ChangeTypes, } from '../../enums';
-import { resetElementCursor } from '../../cursors/elementCursor';
 import * as math from '../../utilities/math';
 import throttle from '../../utilities/throttle';
 import { getViewportIdsWithToolToRender } from '../../utilities/viewportFilters';
@@ -170,7 +169,6 @@ class SplineROITool extends ContourSegmentationBaseTool {
             data.handles.activeHandleIndex = null;
             this._deactivateModify(element);
             this._deactivateDraw(element);
-            resetElementCursor(element);
             const enabledElement = getEnabledElement(element);
             const image = this.getTargetImageData(this.getTargetId(enabledElement.viewport));
             const { imageData, dimensions } = image;
@@ -559,7 +557,6 @@ class SplineROITool extends ContourSegmentationBaseTool {
         this.isDrawing = false;
         this._deactivateDraw(element);
         this._deactivateModify(element);
-        resetElementCursor(element);
         const { annotation, viewportIdsToRender, newAnnotation } = this.editData;
         if (newAnnotation) {
             removeAnnotation(annotation.annotationUID);

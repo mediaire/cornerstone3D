@@ -4,7 +4,6 @@ import { removeAnnotation } from '../../stateManagement/annotation/annotationSta
 import { drawHandles as drawHandlesSvg, drawLinkedTextBox as drawLinkedTextBoxSvg, } from '../../drawingSvg';
 import { state } from '../../store/state';
 import { Events, KeyboardBindings, ChangeTypes } from '../../enums';
-import { resetElementCursor } from '../../cursors/elementCursor';
 import getMouseModifierKey from '../../eventDispatchers/shared/getMouseModifier';
 import * as math from '../../utilities/math';
 import triggerAnnotationRenderForViewportIds from '../../utilities/triggerAnnotationRenderForViewportIds';
@@ -119,7 +118,6 @@ class LivewireContourTool extends ContourSegmentationBaseTool {
             data.handles.activeHandleIndex = null;
             this._deactivateModify(element);
             this._deactivateDraw(element);
-            resetElementCursor(element);
             const enabledElement = getEnabledElement(element);
             if ((this.isHandleOutsideImage &&
                 this.configuration.preventHandleOutsideImage) ||
@@ -267,7 +265,6 @@ class LivewireContourTool extends ContourSegmentationBaseTool {
             this.isDrawing = false;
             this._deactivateDraw(element);
             this._deactivateModify(element);
-            resetElementCursor(element);
             const { annotation, viewportIdsToRender, newAnnotation } = this.editData;
             if (newAnnotation) {
                 removeAnnotation(annotation.annotationUID);

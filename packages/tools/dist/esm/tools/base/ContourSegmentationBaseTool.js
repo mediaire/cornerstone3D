@@ -12,6 +12,7 @@ import { getViewportIdsWithSegmentation } from '../../stateManagement/segmentati
 import { getActiveSegmentIndex } from '../../stateManagement/segmentation/getActiveSegmentIndex';
 import { getLockedSegmentIndices } from '../../stateManagement/segmentation/segmentLocking';
 import { getSVGStyleForSegment } from '../../utilities/segmentation/getSVGStyleForSegment';
+import { defaultSegmentationStateManager } from '../../stateManagement/segmentation/SegmentationStateManager';
 class ContourSegmentationBaseTool extends ContourBaseTool {
     static { this.PreviewSegmentIndex = 255; }
     constructor(toolProps, defaultToolProps) {
@@ -98,6 +99,28 @@ class ContourSegmentationBaseTool extends ContourBaseTool {
             triggerAnnotationRenderForToolGroupIds(toolGroupIds);
         }
         return renderResult;
+    }
+    filterInteractableAnnotationsForElement(element, annotations) {
+        if (!annotations || !annotations.length) {
+            return;
+        }
+        const baseFilteredAnnotations = super.filterInteractableAnnotationsForElement(element, annotations);
+        if (!baseFilteredAnnotations || !baseFilteredAnnotations.length) {
+            return;
+        }
+        const enabledElement = getEnabledElement(element);
+        const { viewport } = enabledElement;
+        return baseFilteredAnnotations.filter((annotation) => {
+            const segmentationId = annotation?.data
+                ?.segmentation?.segmentationId;
+            if (!segmentationId) {
+                return true;
+            }
+            return !!defaultSegmentationStateManager.getSegmentationRepresentation(viewport.id, {
+                segmentationId,
+                type: SegmentationRepresentations.Contour,
+            });
+        });
     }
     _getContourSegmentationStyle(context) {
         const annotation = context.annotation;

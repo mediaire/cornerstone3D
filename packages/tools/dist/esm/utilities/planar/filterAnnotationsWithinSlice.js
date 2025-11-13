@@ -58,7 +58,7 @@ export default function filterAnnotationsWithinSlice(annotations, camera, spacin
             continue;
         }
         const point = metadata.planeRestriction?.point ||
-            data.handles.points[0] ||
+            data.handles?.points?.[0] ||
             data.contour?.polyline[0];
         if (!point) {
             annotationsWithinSlice.push(annotation);
