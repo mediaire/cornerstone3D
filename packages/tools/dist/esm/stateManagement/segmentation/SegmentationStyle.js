@@ -10,21 +10,19 @@ class SegmentationStyle {
             viewportsStyle: {},
         };
     }
-    setStyle(specifier, styles) {
+    setStyle(specifier, styles, merge = true) {
         const { viewportId, segmentationId, type, segmentIndex } = specifier;
         const currentStyles = this.getStyle(specifier);
+        const mergedStyles = merge ? { ...currentStyles, ...styles } : styles;
         let updatedStyles;
         if (!viewportId && !segmentationId) {
-            updatedStyles = {
-                ...currentStyles,
-                ...styles,
-            };
+            updatedStyles = mergedStyles;
+        }
+        else if (merge) {
+            updatedStyles = this.copyActiveToInactiveIfNotProvided(mergedStyles, type);
         }
         else {
-            updatedStyles = this.copyActiveToInactiveIfNotProvided({
-                ...currentStyles,
-                ...styles,
-            }, type);
+            updatedStyles = mergedStyles;
         }
         if (!type) {
             throw new Error('Type is required to set a style');

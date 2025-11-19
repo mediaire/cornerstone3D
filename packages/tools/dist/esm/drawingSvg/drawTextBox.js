@@ -14,9 +14,14 @@ function drawTextBox(svgDrawingHelper, annotationUID, textUID, textLines, positi
     return textGroupBoundingBox;
 }
 function _drawTextGroup(svgDrawingHelper, annotationUID, textUID, textLines = [''], position, options) {
-    const { padding, color, fontFamily, fontSize, background } = options;
+    const { padding, color, fontFamily, fontSize, background, textBoxBorderRadius, textBoxMargin, } = options;
     let textGroupBoundingBox;
     const [x, y] = [position[0] + padding, position[1] + padding];
+    const backgroundStyles = {
+        color: background,
+        textBoxBorderRadius,
+        textBoxMargin,
+    };
     const svgns = 'http://www.w3.org/2000/svg';
     const svgNodeHash = _getHash(annotationUID, 'text', textUID);
     const existingTextGroup = svgDrawingHelper.getSvgNode(svgNodeHash);
@@ -48,7 +53,7 @@ function _drawTextGroup(svgDrawingHelper, annotationUID, textUID, textLines = ['
         setAttributesIfNecessary(textAttributes, textElement);
         setAttributesIfNecessary(textGroupAttributes, existingTextGroup);
         existingTextGroup.setAttribute('data-annotation-uid', annotationUID);
-        textGroupBoundingBox = _drawTextBackground(existingTextGroup, background);
+        textGroupBoundingBox = _drawTextBackground(existingTextGroup, backgroundStyles);
         svgDrawingHelper.setNodeTouched(svgNodeHash);
     }
     else {
@@ -96,8 +101,10 @@ function _createTextSpan(text) {
     textSpanElement.textContent = text;
     return textSpanElement;
 }
-function _drawTextBackground(group, color) {
+function _drawTextBackground(group, backgroundStyles) {
+    const { color, textBoxBorderRadius = 0, textBoxMargin = 0, } = backgroundStyles;
     let element = group.querySelector('rect.background');
+    const textElement = group.querySelector('text').getBBox();
     if (!color) {
         if (element) {
             group.removeChild(element);
@@ -113,10 +120,19 @@ function _drawTextBackground(group, color) {
     const attributes = {
         x: `${bBox.x}`,
         y: `${bBox.y}`,
-        width: `${bBox.width}`,
-        height: `${bBox.height}`,
+        width: `${textElement.width + Number(textBoxMargin) * 2}`,
+        height: `${textElement.height + Number(textBoxMargin) * 2}`,
         fill: color,
+        rx: textBoxBorderRadius,
+        ry: textBoxBorderRadius,
     };
+    if (textBoxMargin) {
+        const tSpans = Array.from(group.querySelector('text').querySelectorAll('tspan'));
+        tSpans.forEach((tspan, i) => {
+            i === 0 && tspan.setAttribute('y', textBoxMargin);
+            tspan.setAttribute('x', textBoxMargin);
+        });
+    }
     setAttributesIfNecessary(attributes, element);
     return bBox;
 }

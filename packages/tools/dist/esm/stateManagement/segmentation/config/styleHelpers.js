@@ -6,8 +6,8 @@ import { triggerSegmentationRepresentationModified } from '../triggerSegmentatio
 function getStyle(specifier) {
     return segmentationStyle.getStyle(specifier);
 }
-function setStyle(specifier, style) {
-    segmentationStyle.setStyle(specifier, style);
+function setStyle(specifier, style, merge) {
+    segmentationStyle.setStyle(specifier, style, merge);
     if (!specifier.viewportId && !specifier.segmentationId) {
         const segmentations = getSegmentations();
         segmentations.forEach((segmentation) => {

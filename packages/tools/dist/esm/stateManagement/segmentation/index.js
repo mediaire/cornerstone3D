@@ -22,10 +22,11 @@ import { segmentationStyle } from './SegmentationStyle';
 import { defaultSegmentationStateManager } from './SegmentationStateManager';
 import { getCurrentLabelmapImageIdsForViewport, getLabelmapImageIdsForImageId, } from './getCurrentLabelmapImageIdForViewport';
 import { getActiveSegmentation } from './getActiveSegmentation';
+import { addSegmentationListener, addDefaultSegmentationListener, removeSegmentationListener, removeAllSegmentationListeners, } from './segmentationEventManager';
 const helpers = {
     clearSegmentValue,
     convertStackToVolumeLabelmap,
     computeVolumeLabelmapFromStack,
     convertVolumeToStackLabelmap,
 };
-export { removeSegmentationRepresentation, removeContourRepresentation, removeLabelmapRepresentation, removeSurfaceRepresentation, removeAllSegmentations, removeSegmentation, removeSegmentationRepresentations, addLabelmapRepresentationToViewport, addLabelmapRepresentationToViewportMap, addSegmentationRepresentations, removeAllSegmentationRepresentations, addContourRepresentationToViewport, addContourRepresentationToViewportMap, addSurfaceRepresentationToViewport, addSurfaceRepresentationToViewportMap, addSegmentations, updateSegmentations, state, activeSegmentation, segmentLocking, config, segmentIndex, triggerSegmentationEvents, utilities, helpers, removeSegment, getLabelmapImageIds, addRepresentationData, strategies, segmentationStyle, defaultSegmentationStateManager, getCurrentLabelmapImageIdsForViewport, getLabelmapImageIdsForImageId, getActiveSegmentation, };
+export { removeSegmentationRepresentation, removeContourRepresentation, removeLabelmapRepresentation, removeSurfaceRepresentation, removeAllSegmentations, removeSegmentation, removeSegmentationRepresentations, addLabelmapRepresentationToViewport, addLabelmapRepresentationToViewportMap, addSegmentationRepresentations, removeAllSegmentationRepresentations, addContourRepresentationToViewport, addContourRepresentationToViewportMap, addSurfaceRepresentationToViewport, addSurfaceRepresentationToViewportMap, addSegmentations, updateSegmentations, addSegmentationListener, addDefaultSegmentationListener, removeSegmentationListener, removeAllSegmentationListeners, state, activeSegmentation, segmentLocking, config, segmentIndex, triggerSegmentationEvents, utilities, helpers, removeSegment, getLabelmapImageIds, addRepresentationData, strategies, segmentationStyle, defaultSegmentationStateManager, getCurrentLabelmapImageIdsForViewport, getLabelmapImageIdsForImageId, getActiveSegmentation, };

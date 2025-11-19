@@ -1,9 +1,11 @@
+import { getEnabledElementByViewportId } from '@cornerstonejs/core';
 import CORNERSTONE_COLOR_LUT from '../../constants/COLOR_LUT';
 import { triggerAnnotationRenderForViewportIds } from '../../utilities/triggerAnnotationRenderForViewportIds';
 import { SegmentationRepresentations } from '../../enums';
-import { triggerSegmentationModified } from './triggerSegmentationEvents';
+import { triggerSegmentationModified, triggerSegmentationDataModified, } from './triggerSegmentationEvents';
 import { addColorLUT } from './addColorLUT';
 import { defaultSegmentationStateManager } from './SegmentationStateManager';
+import { addDefaultSegmentationListener } from './segmentationEventManager';
 import { getActiveSegmentIndex, setActiveSegmentIndex } from './segmentIndex';
 function internalAddSegmentationRepresentation(viewportId, representationInput) {
     const { segmentationId, config } = representationInput;
@@ -12,6 +14,10 @@ function internalAddSegmentationRepresentation(viewportId, representationInput) 
         ...config,
     };
     defaultSegmentationStateManager.addSegmentationRepresentation(viewportId, segmentationId, representationInput.type, renderingConfig);
+    const { viewport } = getEnabledElementByViewportId(viewportId) || {};
+    if (viewport) {
+        addDefaultSegmentationListener(viewport, segmentationId, representationInput.type);
+    }
     if (!getActiveSegmentIndex(segmentationId)) {
         let firstSegmentIndex = 1;
         const segmentation = defaultSegmentationStateManager.getSegmentation(segmentationId);
@@ -19,12 +25,15 @@ function internalAddSegmentationRepresentation(viewportId, representationInput) 
             const segmentKeys = Object.keys(segmentation.segments);
             if (segmentKeys.length > 0) {
                 firstSegmentIndex = segmentKeys.map((k) => Number(k)).sort()[0];
+                setActiveSegmentIndex(segmentationId, firstSegmentIndex);
             }
-            setActiveSegmentIndex(segmentationId, firstSegmentIndex);
         }
     }
     if (representationInput.type === SegmentationRepresentations.Contour) {
         triggerAnnotationRenderForViewportIds([viewportId]);
+    }
+    if (representationInput.type === SegmentationRepresentations.Surface) {
+        triggerSegmentationDataModified(segmentationId);
     }
     triggerSegmentationModified(segmentationId);
 }

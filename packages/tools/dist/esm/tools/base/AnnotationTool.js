@@ -107,6 +107,9 @@ class AnnotationTool extends AnnotationDisplayTool {
             background: this.getStyle('textBoxBackground', specifications, annotation),
             lineWidth: this.getStyle('textBoxLinkLineWidth', specifications, annotation),
             lineDash: this.getStyle('textBoxLinkLineDash', specifications, annotation),
+            textBoxBorderRadius: this.getStyle('textBoxBorderRadius', specifications, annotation),
+            textBoxMargin: this.getStyle('textBoxMargin', specifications, annotation),
+            textBoxLinkLineColor: this.getStyle('textBoxLinkLineColor', specifications, annotation),
         };
     }
     static isSuvScaled(viewport, targetId, imageId) {

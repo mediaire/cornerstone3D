@@ -48,7 +48,7 @@ async function render(viewport, representation) {
         !polySegConversionInProgress) {
         polySegConversionInProgress = true;
         const polySeg = getPolySeg();
-        labelmapData = await computeAndAddRepresentation(segmentationId, SegmentationRepresentations.Labelmap, () => polySeg.computeLabelmapData(segmentationId, { viewport }), () => null, () => {
+        labelmapData = await computeAndAddRepresentation(segmentationId, SegmentationRepresentations.Labelmap, () => polySeg.computeLabelmapData(segmentationId, { viewport }), () => {
             defaultSegmentationStateManager.processLabelmapRepresentationAddition(viewport.id, segmentationId);
             setTimeout(() => {
                 triggerSegmentationDataModified(segmentationId);
@@ -265,7 +265,11 @@ async function _addLabelmapToViewport(viewport, labelmapData, segmentationId, co
     const result = await addLabelmapToElement(viewport.element, labelmapData, segmentationId, config);
     return result || undefined;
 }
+function getUpdateFunction(viewport) {
+    return;
+}
 export default {
+    getUpdateFunction,
     render,
     removeRepresentation,
 };

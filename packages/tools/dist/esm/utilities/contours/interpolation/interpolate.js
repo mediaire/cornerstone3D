@@ -1,4 +1,4 @@
-import { triggerEvent, utilities } from '@cornerstonejs/core';
+import { eventTarget, triggerEvent, utilities } from '@cornerstonejs/core';
 import { vec3 } from 'gl-matrix';
 import createPolylineToolData from './createPolylineToolData';
 import findAnnotationsForInterpolation from './findAnnotationForInterpolation';
@@ -55,6 +55,7 @@ function startInterpolation(viewportData) {
     };
     if (interpolationList.length) {
         triggerEvent(viewportData.viewport.element, EventTypes.ANNOTATION_INTERPOLATION_PROCESS_COMPLETED, eventDetails);
+        triggerEvent(eventTarget, EventTypes.ANNOTATION_INTERPOLATION_PROCESS_COMPLETED, eventDetails);
     }
 }
 function _linearlyInterpolateBetween(indices, annotationPair, interpolationData, eventData) {

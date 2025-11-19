@@ -33,7 +33,7 @@ async function render(viewport, contourRepresentation) {
         getPolySeg()?.canComputeRequestedRepresentation(segmentationId, Representations.Contour) &&
         !polySegConversionInProgressForViewportId.get(viewport.id)) {
         polySegConversionInProgressForViewportId.set(viewport.id, true);
-        contourData = await computeAndAddRepresentation(segmentationId, Representations.Contour, () => polySeg.computeContourData(segmentationId, { viewport }), () => undefined);
+        contourData = await computeAndAddRepresentation(segmentationId, Representations.Contour, () => polySeg.computeContourData(segmentationId, { viewport }));
         polySegConversionInProgressForViewportId.set(viewport.id, false);
     }
     else if (!contourData && !getPolySeg()) {
@@ -140,7 +140,11 @@ function _checkContourNormalsMatchViewport(annotationUIDsMap, viewportNormal) {
     }
     return true;
 }
+function getUpdateFunction(viewport) {
+    return null;
+}
 export default {
+    getUpdateFunction,
     render,
     removeRepresentation,
 };

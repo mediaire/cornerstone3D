@@ -5,6 +5,7 @@ import { getSegmentationRepresentations } from './getSegmentationRepresentation'
 import { getEnabledElementByViewportId } from '@cornerstonejs/core';
 import { defaultSegmentationStateManager } from './SegmentationStateManager';
 import { surfaceDisplay } from '../../tools/displayTools/Surface';
+import { removeSegmentationListener } from './segmentationEventManager';
 function removeSegmentationRepresentation(viewportId, specifier, immediate) {
     return _removeSegmentationRepresentations(viewportId, specifier, immediate);
 }
@@ -64,6 +65,7 @@ function _removeRepresentationObject(viewportId, segmentationId, type, immediate
         else if (representation.type === SegmentationRepresentations.Surface) {
             surfaceDisplay.removeRepresentation(viewportId, representation.segmentationId, immediate);
         }
+        removeSegmentationListener(representation.segmentationId, representation.type);
     });
     const { viewport } = getEnabledElementByViewportId(viewportId) || {};
     if (viewport) {

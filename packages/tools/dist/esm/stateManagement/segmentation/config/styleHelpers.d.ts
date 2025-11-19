@@ -12,7 +12,7 @@ type SpecifierWithType<T extends SegmentationRepresentations> = BaseSpecifier & 
 };
 type StyleForType<T extends SegmentationRepresentations> = T extends SegmentationRepresentations.Labelmap ? LabelmapStyle : T extends SegmentationRepresentations.Contour ? ContourStyle : T extends SegmentationRepresentations.Surface ? SurfaceStyle : never;
 declare function getStyle<T extends SegmentationRepresentations>(specifier: SpecifierWithType<T>): StyleForType<T>;
-declare function setStyle<T extends SegmentationRepresentations>(specifier: SpecifierWithType<T>, style: StyleForType<T>): void;
+declare function setStyle<T extends SegmentationRepresentations>(specifier: SpecifierWithType<T>, style: StyleForType<T>, merge?: boolean): void;
 declare function setRenderInactiveSegmentations(viewportId: string, renderInactiveSegmentations: boolean): void;
 declare function getRenderInactiveSegmentations(viewportId: string): boolean;
 declare function resetToGlobalStyle(): void;

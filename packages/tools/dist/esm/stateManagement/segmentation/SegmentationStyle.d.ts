@@ -12,7 +12,7 @@ declare class SegmentationStyle {
         viewportId?: string;
         segmentationId?: string;
         segmentIndex?: number;
-    }, styles: RepresentationStyle): void;
+    }, styles: RepresentationStyle, merge?: boolean): void;
     private copyActiveToInactiveIfNotProvided;
     getStyle(specifier: {
         viewportId?: string;

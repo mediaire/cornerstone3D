@@ -120,7 +120,7 @@ class HeightTool extends AnnotationTool {
             this.isDrawing = true;
             const eventDetail = evt.detail;
             const { element } = eventDetail;
-            const { annotation, viewportIdsToRender, handleIndex, movingTextBox, newAnnotation } = this.editData;
+            const { annotation, viewportIdsToRender, handleIndex, movingTextBox, newAnnotation, } = this.editData;
             const { data } = annotation;
             this.createMemo(element, annotation, { newAnnotation });
             if (movingTextBox) {

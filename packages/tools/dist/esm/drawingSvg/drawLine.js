@@ -5,7 +5,7 @@ export default function drawLine(svgDrawingHelper, annotationUID, lineUID, start
     if (isNaN(start[0]) || isNaN(start[1]) || isNaN(end[0]) || isNaN(end[1])) {
         return;
     }
-    const { color = 'rgb(0, 255, 0)', width = 10, lineWidth, lineDash, markerStartId = null, markerEndId = null, shadow = false, strokeOpacity = 1, } = options;
+    const { color = 'rgb(0, 255, 0)', width = 10, lineWidth, lineDash, markerStartId = null, markerEndId = null, shadow = false, strokeOpacity = 1, textBoxLinkLineColor, } = options;
     const strokeWidth = lineWidth || width;
     const svgns = 'http://www.w3.org/2000/svg';
     const svgNodeHash = _getHash(annotationUID, 'line', lineUID);
@@ -17,7 +17,7 @@ export default function drawLine(svgDrawingHelper, annotationUID, lineUID, start
         y1: `${start[1]}`,
         x2: `${end[0]}`,
         y2: `${end[1]}`,
-        stroke: color,
+        stroke: textBoxLinkLineColor || color,
         style: dropShadowStyle,
         'stroke-width': strokeWidth,
         'stroke-dasharray': lineDash,

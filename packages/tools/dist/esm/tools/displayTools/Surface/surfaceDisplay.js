@@ -29,7 +29,7 @@ async function render(viewport, representation) {
     if (!SurfaceData &&
         getPolySeg()?.canComputeRequestedRepresentation(segmentationId, Representations.Surface)) {
         const polySeg = getPolySeg();
-        SurfaceData = await computeAndAddRepresentation(segmentationId, Representations.Surface, () => polySeg.computeSurfaceData(segmentationId, { viewport }), () => polySeg.updateSurfaceData(segmentationId, { viewport }));
+        SurfaceData = await computeAndAddRepresentation(segmentationId, Representations.Surface, () => polySeg.computeSurfaceData(segmentationId, { viewport }));
         if (!SurfaceData) {
             throw new Error(`No Surface data found for segmentationId ${segmentationId} even we tried to compute it`);
         }
@@ -69,8 +69,13 @@ async function render(viewport, representation) {
     });
     viewport.render();
 }
+function getUpdateFunction(viewport) {
+    const polySeg = getPolySeg();
+    return (segmentationId) => polySeg.updateSurfaceData(segmentationId, { viewport });
+}
 export default {
+    getUpdateFunction,
     render,
     removeRepresentation,
 };
-export { render, removeRepresentation };
+export { getUpdateFunction, render, removeRepresentation };

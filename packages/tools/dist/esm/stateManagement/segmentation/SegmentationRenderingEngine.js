@@ -1,6 +1,7 @@
 import { triggerEvent, eventTarget, Enums, getRenderingEngines, getEnabledElementByViewportId, } from '@cornerstonejs/core';
 import { SegmentationRepresentations, Events as csToolsEvents, } from '../../enums';
 import Representations from '../../enums/SegmentationRepresentations';
+import { getSegmentation } from './getSegmentation';
 import { getSegmentationRepresentations } from './getSegmentationRepresentation';
 import surfaceDisplay from '../../tools/displayTools/Surface/surfaceDisplay';
 import contourDisplay from '../../tools/displayTools/Contour/contourDisplay';
@@ -9,6 +10,7 @@ import { addTool } from '../../store/addTool';
 import { state } from '../../store/state';
 import PlanarFreehandContourSegmentationTool from '../../tools/annotation/PlanarFreehandContourSegmentationTool';
 import { getToolGroupForViewport } from '../../store/ToolGroupManager';
+import { addDefaultSegmentationListener } from './segmentationEventManager';
 const renderers = {
     [Representations.Labelmap]: labelmapDisplay,
     [Representations.Contour]: contourDisplay,
@@ -102,15 +104,19 @@ class SegmentationRenderingEngine {
         if (!viewport) {
             return;
         }
-        const viewportRenderList = [];
         const segmentationRenderList = segmentationRepresentations.map((representation) => {
             if (representation.type === SegmentationRepresentations.Contour) {
                 this._addPlanarFreeHandToolIfAbsent(viewport);
             }
             const display = renderers[representation.type];
+            const segmentation = getSegmentation(representation.segmentationId);
+            const existingRepresentation = segmentation.representationData[representation.type] !== undefined;
             try {
-                const viewportId = display.render(viewport, representation);
-                viewportRenderList.push(viewportId);
+                display.render(viewport, representation).then(() => {
+                    if (!existingRepresentation) {
+                        addDefaultSegmentationListener(viewport, representation.segmentationId, representation.type);
+                    }
+                });
             }
             catch (error) {
                 console.error(error);
