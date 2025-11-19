@@ -54,8 +54,10 @@ function internalAddSegmentationRepresentation(
       const segmentKeys = Object.keys(segmentation.segments);
       if (segmentKeys.length > 0) {
         firstSegmentIndex = segmentKeys.map((k) => Number(k)).sort()[0];
+        // override: only set active segment if there are segments available
+        setActiveSegmentIndex(segmentationId, firstSegmentIndex);
       }
-      setActiveSegmentIndex(segmentationId, firstSegmentIndex);
+      // end override
     }
   }
 
