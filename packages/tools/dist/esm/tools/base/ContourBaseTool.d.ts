@@ -4,6 +4,12 @@ import AnnotationTool from './AnnotationTool';
 import type { ContourWindingDirection } from '../../types/ContourAnnotation';
 declare abstract class ContourBaseTool extends AnnotationTool {
     constructor(toolProps: PublicToolProps, defaultToolProps: ToolProps);
+    static getContourSequence(toolData: any, metadataProvider: any): {
+        NumberOfContourPoints: number;
+        ContourImageSequence: any;
+        ContourGeometricType: string;
+        ContourData: any[];
+    };
     renderAnnotation(enabledElement: Types.IEnabledElement, svgDrawingHelper: SVGDrawingHelper): boolean;
     protected createAnnotation(evt: EventTypes.InteractionEventType): ContourAnnotation;
     protected addAnnotation(annotation: Annotation, element: HTMLDivElement): string;

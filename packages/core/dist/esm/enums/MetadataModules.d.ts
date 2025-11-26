@@ -19,6 +19,19 @@ declare enum MetadataModules {
     SOP_COMMON = "sopCommonModule",
     ULTRASOUND_ENHANCED_REGION = "ultrasoundEnhancedRegionModule",
     VOI_LUT = "voiLutModule",
-    WADO_WEB_CLIENT = "wadoWebClient"
+    FRAME_MODULE = "frameModule",
+    WADO_WEB_CLIENT = "wadoWebClient",
+    INSTANCE = "instance",
+    IMAGE_SOP_INSTANCE_REFERENCE = "ImageSopInstanceReference",
+    REFERENCED_SERIES_REFERENCE = "ReferencedSeriesReference",
+    PREDECESSOR_SEQUENCE = "PredecessorSequence",
+    STUDY_DATA = "StudyData",
+    SERIES_DATA = "SeriesData",
+    IMAGE_DATA = "ImageData",
+    RTSS_INSTANCE_DATA = "RtssInstanceData",
+    NEW_INSTANCE_DATA = "NewInstanceData",
+    RTSS_CONTOUR = "metaRTSSContour",
+    SEG_BIT = "metaSegBitmap",
+    SR_ANNOTATION = "metaSrAnnotation"
 }
 export default MetadataModules;

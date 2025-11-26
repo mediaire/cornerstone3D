@@ -1,4 +1,3 @@
-import { getEnabledElement } from '@cornerstonejs/core';
 import { addAnnotation, getAnnotations, getChildAnnotations, } from '../../stateManagement/annotation/annotationState';
 import { drawPath as drawPathSvg } from '../../drawingSvg';
 import AnnotationTool from './AnnotationTool';
@@ -7,6 +6,23 @@ import getContourHolesDataCanvas from '../../utilities/contours/getContourHolesD
 class ContourBaseTool extends AnnotationTool {
     constructor(toolProps, defaultToolProps) {
         super(toolProps, defaultToolProps);
+    }
+    static getContourSequence(toolData, metadataProvider) {
+        const { data } = toolData;
+        const ContourData = [];
+        for (const point of data.contour.polyline) {
+            for (const v of point) {
+                ContourData.push(v.toFixed(2));
+            }
+        }
+        const { referencedImageId } = toolData.metadata;
+        const ContourImageSequence = metadataProvider.get('ImageSopInstanceReference', referencedImageId);
+        return {
+            NumberOfContourPoints: ContourData.length / 3,
+            ContourImageSequence,
+            ContourGeometricType: 'CLOSED_PLANAR',
+            ContourData,
+        };
     }
     renderAnnotation(enabledElement, svgDrawingHelper) {
         let renderStatus = false;

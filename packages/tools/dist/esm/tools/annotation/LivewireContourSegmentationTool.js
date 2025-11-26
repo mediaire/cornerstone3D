@@ -4,6 +4,7 @@ import { LivewirePath } from '../../utilities/livewire/LiveWirePath';
 import { triggerAnnotationModified } from '../../stateManagement/annotation/helpers/state';
 import { ChangeTypes } from '../../enums';
 import { drawPolyline as drawPolylineSvg } from '../../drawingSvg';
+import AnnotationToPointData from '../../utilities/contours/AnnotationToPointData';
 class LivewireContourSegmentationTool extends LivewireContourTool {
     static { this.toolName = 'LivewireContourSegmentationTool'; }
     updateInterpolatedAnnotation(annotation, enabledElement) {
@@ -84,6 +85,9 @@ class LivewireContourSegmentationTool extends LivewireContourTool {
     }
     isContourSegmentationTool() {
         return true;
+    }
+    static {
+        AnnotationToPointData.register(this);
     }
 }
 export default LivewireContourSegmentationTool;

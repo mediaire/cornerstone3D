@@ -53,6 +53,9 @@ export default {
         if (!operationData) {
             return;
         }
+        if (operationData.previewSegmentIndex == null) {
+            return;
+        }
         utilities.HistoryMemo.DefaultHistoryMemo.undoIf((memo) => {
             const labelmapMemo = memo;
             if (!labelmapMemo?.voxelManager) {

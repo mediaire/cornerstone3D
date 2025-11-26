@@ -1,7 +1,8 @@
 import { utilities } from '@cornerstonejs/core';
 import { triggerSegmentationDataModified } from '../../stateManagement/segmentation/triggerSegmentationEvents';
 import PlanarFreehandROITool from './PlanarFreehandROITool';
-class PlanarFreehandContourSegmentationTool extends PlanarFreehandROITool {
+import AnnotationToPointData from '../../utilities/contours/AnnotationToPointData';
+export class PlanarFreehandContourSegmentationTool extends PlanarFreehandROITool {
     static { this.toolName = 'PlanarFreehandContourSegmentationTool'; }
     constructor(toolProps) {
         const initialProps = utilities.deepMerge({
@@ -11,6 +12,9 @@ class PlanarFreehandContourSegmentationTool extends PlanarFreehandROITool {
             },
         }, toolProps);
         super(initialProps);
+    }
+    static {
+        AnnotationToPointData.register(this);
     }
     isContourSegmentationTool() {
         return true;

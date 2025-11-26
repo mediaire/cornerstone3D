@@ -3,7 +3,7 @@ function validateAnnotation(annotation) {
     if (!annotation?.data) {
         throw new Error('Tool data is empty');
     }
-    if (!annotation.metadata || annotation.metadata.referencedImageId) {
+    if (!annotation.metadata || !annotation.metadata.referencedImageId) {
         throw new Error('Tool data is not associated with any imageId');
     }
 }
@@ -11,23 +11,25 @@ class AnnotationToPointData {
     static { this.TOOL_NAMES = {}; }
     constructor() {
     }
-    static convert(annotation, index, metadataProvider) {
+    static convert(annotation, segment, metadataProvider) {
         validateAnnotation(annotation);
         const { toolName } = annotation.metadata;
         const toolClass = AnnotationToPointData.TOOL_NAMES[toolName];
         if (!toolClass) {
             throw new Error(`Unknown tool type: ${toolName}, cannot convert to RTSSReport`);
         }
-        const ContourSequence = toolClass.getContourSequence(annotation, metadataProvider);
-        const color = [
+        const contourSequence = toolClass.getContourSequence(annotation, metadataProvider);
+        const color = segment.color?.slice(0, 3) || [
             Math.floor(Math.random() * 255),
             Math.floor(Math.random() * 255),
             Math.floor(Math.random() * 255),
         ];
         return {
-            ReferencedROINumber: index + 1,
+            ReferencedROINumber: segment.segmentIndex,
             ROIDisplayColor: color,
-            ContourSequence,
+            ContourSequence: Array.isArray(contourSequence)
+                ? contourSequence
+                : [contourSequence],
         };
     }
     static register(toolClass) {

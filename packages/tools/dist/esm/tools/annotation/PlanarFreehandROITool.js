@@ -1,4 +1,3 @@
-import { AnnotationTool } from '../base';
 import { CONSTANTS, getEnabledElement, VolumeViewport, utilities as csUtils, metaData, } from '@cornerstonejs/core';
 import { vec3 } from 'gl-matrix';
 import { getCalibratedLengthUnitsAndScale } from '../../utilities/getCalibratedUnits';

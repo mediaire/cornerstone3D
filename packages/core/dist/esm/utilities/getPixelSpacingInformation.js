@@ -14,6 +14,7 @@ const projectionRadiographSOPClassUIDs = new Set([
     '1.2.840.10008.5.1.4.1.1.12.2.1',
     '1.2.840.10008.5.1.4.1.1.12.3',
 ]);
+const alreadySeenWarn = new Set();
 function calculateRadiographicPixelSpacing(instance) {
     const { PixelSpacing, ImagerPixelSpacing, EstimatedRadiographicMagnificationFactor, PixelSpacingCalibrationType, PixelSpacingCalibrationDescription, } = instance;
     const isProjection = true;
@@ -26,7 +27,10 @@ function calculateRadiographicPixelSpacing(instance) {
     }
     if (!PixelSpacing) {
         if (!EstimatedRadiographicMagnificationFactor) {
-            console.warn('EstimatedRadiographicMagnificationFactor was not present. Unable to correct ImagerPixelSpacing.');
+            if (!alreadySeenWarn.has(instance.SeriesInstanceUID)) {
+                console.warn('EstimatedRadiographicMagnificationFactor was not present on series', instance.SeriesInstanceUID, ' Unable to correct ImagerPixelSpacing.');
+                alreadySeenWarn.add(instance.SeriesInstanceUID);
+            }
             return {
                 PixelSpacing: ImagerPixelSpacing,
                 type: CalibrationTypes.PROJECTION,
