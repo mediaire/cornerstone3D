@@ -1,5 +1,5 @@
 {
-  "name": "@mediaire/cornerstone3d-polymorphic-segmentation",
+  "name": "@cornerstonejs/polymorphic-segmentation",
   "version": "4.11.4-alpha.0",
   "description": "Polymorphic Segmentation utility for Cornerstone3D",
   "files": [
