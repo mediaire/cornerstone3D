@@ -1,5 +1,5 @@
 {
-  "name": "@cornerstonejs/ai",
+  "name": "@mediaire/cornerstone3d-ai",
   "version": "4.11.4-alpha.0",
   "description": "AI and ML Interfaces for Cornerstone3D",
   "files": [
