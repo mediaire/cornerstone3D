@@ -1,9 +1,9 @@
 import type { ContourSegmentationData } from './types';
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import type { LabelmapSegmentationData } from './types/LabelmapTypes';
 import type { SurfaceSegmentationData } from './types/SurfaceTypes';
 import type SegmentationRepresentations from './enums/SegmentationRepresentations';
-import { eventTarget, triggerEvent } from '@cornerstonejs/core';
+import { eventTarget, triggerEvent } from '@mediaire/cornerstone3d-core';
 import Events from './enums/Events';
 
 export type SurfacesInfo = {

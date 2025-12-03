@@ -1,4 +1,4 @@
-import { utilities as csUtils } from '@cornerstonejs/core';
+import { utilities as csUtils } from '@mediaire/cornerstone3d-core';
 import { vec3 } from 'gl-matrix';
 
 import type { ContourAnnotation } from '../../types/ToolSpecificAnnotationTypes';

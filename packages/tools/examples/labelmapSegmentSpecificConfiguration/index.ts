@@ -1,11 +1,11 @@
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import {
   RenderingEngine,
   Enums,
   setVolumesForViewports,
   volumeLoader,
-} from '@cornerstonejs/core';
-import * as cornerstone from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
+import * as cornerstone from '@mediaire/cornerstone3d-core';
 import {
   initDemo,
   createImageIdsAndCacheMetaData,
@@ -13,7 +13,7 @@ import {
   addSliderToToolbar,
 } from '../../../../utils/demo/helpers';
 import { fillVolumeLabelmapWithMockData } from '../../../../utils/test/testUtils';
-import * as cornerstoneTools from '@cornerstonejs/tools';
+import * as cornerstoneTools from '@mediaire/cornerstone3d-core';
 
 // This is for debugging purposes
 console.warn(

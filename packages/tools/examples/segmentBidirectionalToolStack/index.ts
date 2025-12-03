@@ -1,6 +1,6 @@
-import type { Types } from '@cornerstonejs/core';
-import { RenderingEngine, Enums, imageLoader } from '@cornerstonejs/core';
-import * as cornerstoneTools from '@cornerstonejs/tools';
+import type { Types } from '@mediaire/cornerstone3d-core';
+import { RenderingEngine, Enums, imageLoader } from '@mediaire/cornerstone3d-core';
+import * as cornerstoneTools from '@mediaire/cornerstone3d-core';
 
 import {
   initDemo,

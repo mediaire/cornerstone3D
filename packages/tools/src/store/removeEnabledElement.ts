@@ -1,5 +1,5 @@
-import type { Types } from '@cornerstonejs/core';
-import { getEnabledElement } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
+import { getEnabledElement } from '@mediaire/cornerstone3d-core';
 import {
   mouseEventListeners,
   wheelEventListener,

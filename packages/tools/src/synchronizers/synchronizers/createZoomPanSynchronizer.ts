@@ -1,5 +1,5 @@
 import { createSynchronizer } from '../../store/SynchronizerManager';
-import { Enums } from '@cornerstonejs/core';
+import { Enums } from '@mediaire/cornerstone3d-core';
 import zoomPanSyncCallback from '../callbacks/zoomPanSyncCallback';
 import type Synchronizer from '../../store/SynchronizerManager/Synchronizer';
 

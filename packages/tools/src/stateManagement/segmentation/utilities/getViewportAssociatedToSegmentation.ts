@@ -1,8 +1,8 @@
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import { vec3 } from 'gl-matrix';
 
 import type { ContourSegmentationAnnotation } from '../../../types';
-import { getEnabledElementByViewportId } from '@cornerstonejs/core';
+import { getEnabledElementByViewportId } from '@mediaire/cornerstone3d-core';
 import { getViewportIdsWithSegmentation } from '../getViewportIdsWithSegmentation';
 
 /**

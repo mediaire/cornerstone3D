@@ -1,4 +1,4 @@
-import { utilities } from '@cornerstonejs/core';
+import { utilities } from '@mediaire/cornerstone3d-core';
 import type { AnnotationRenderContext, PublicToolProps } from '../../types';
 import type { PlanarFreehandContourSegmentationAnnotation } from '../../types/ToolSpecificAnnotationTypes';
 import { triggerSegmentationDataModified } from '../../stateManagement/segmentation/triggerSegmentationEvents';

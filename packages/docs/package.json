@@ -2,7 +2,7 @@
   "name": "docs",
   "version": "3.0.0",
   "private": true,
-  "repository": "https://github.com/cornerstonejs/cornerstone3D",
+  "repository": "https://github.com/mediaire/cornerstone3D",
   "scripts": {
     "preinstall": "node preinstall.js",
     "build": "echo 'build'",
@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "@cornerstonejs/adapters": "4.12.6",
-    "@cornerstonejs/core": "4.12.6",
+    "@mediaire/cornerstone3d-core": "4.12.6",
     "@cornerstonejs/dicom-image-loader": "4.12.6",
     "@cornerstonejs/nifti-volume-loader": "4.12.6",
     "@cornerstonejs/tools": "4.12.6",

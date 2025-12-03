@@ -1,4 +1,4 @@
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 
 export type PolylineInfoWorld = {
   polyline: Types.Point3[];

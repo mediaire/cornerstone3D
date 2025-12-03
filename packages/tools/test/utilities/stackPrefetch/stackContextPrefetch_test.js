@@ -1,5 +1,5 @@
-import * as cornerstone3D from '@cornerstonejs/core';
-import * as csTools3d from '@cornerstonejs/tools';
+import * as cornerstone3D from '@mediaire/cornerstone3d-core';
+import * as csTools3d from '@mediaire/cornerstone3d-core';
 import * as testUtils from '../../../../../utils/test/testUtils';
 
 const { cache, RenderingEngine, Enums, metaData, imageLoader } = cornerstone3D;

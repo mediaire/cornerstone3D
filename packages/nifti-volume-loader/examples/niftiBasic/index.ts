@@ -1,8 +1,8 @@
-import { RenderingEngine, Enums, imageLoader } from '@cornerstonejs/core';
+import { RenderingEngine, Enums, imageLoader } from '@mediaire/cornerstone3d-core';
 import {
   cornerstoneNiftiImageLoader,
   createNiftiImageIdsAndCacheMetadata,
-} from '@cornerstonejs/nifti-volume-loader';
+} from '@mediaire/cornerstone3d-nifti-volume-loader';
 import { initDemo } from '../../../../utils/demo/helpers';
 
 // This is for debugging purposes

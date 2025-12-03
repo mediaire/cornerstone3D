@@ -3,8 +3,8 @@ import {
   getEnabledElement,
   cache,
   BaseVolumeViewport,
-} from '@cornerstonejs/core';
-import type { Types } from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 
 import BaseTool from './BaseTool';
 import { getAnnotationManager } from '../../stateManagement/annotation/annotationState';

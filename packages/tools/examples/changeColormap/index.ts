@@ -1,5 +1,5 @@
-import type { Types } from '@cornerstonejs/core';
-import { Enums, RenderingEngine, volumeLoader } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
+import { Enums, RenderingEngine, volumeLoader } from '@mediaire/cornerstone3d-core';
 import {
   addButtonToToolbar,
   addDropdownToToolbar,

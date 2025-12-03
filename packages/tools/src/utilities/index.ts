@@ -1,4 +1,4 @@
-import { utilities, triggerEvent } from '@cornerstonejs/core';
+import { utilities, triggerEvent } from '@mediaire/cornerstone3d-core';
 
 import {
   getAnnotationNearPoint,

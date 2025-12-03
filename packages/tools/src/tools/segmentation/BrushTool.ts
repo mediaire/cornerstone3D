@@ -1,5 +1,5 @@
-import { getEnabledElement, eventTarget } from '@cornerstonejs/core';
-import type { Types } from '@cornerstonejs/core';
+import { getEnabledElement, eventTarget } from '@mediaire/cornerstone3d-core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import { vec3, vec2 } from 'gl-matrix';
 import { Events, ToolModes, StrategyCallbacks } from '../../enums';
 

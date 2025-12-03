@@ -18,14 +18,14 @@
 //   eventTarget,
 //   getRenderingEngine,
 //   init as initCore,
-// } from '@cornerstonejs/core';
+// } from '@mediaire/cornerstone3d-core';
 // import {
 //   init as initTools,
 //   addTool,
 //   ToolGroupManager,
 //   SynchronizerManager,
 //   utilities as toolsUtilities,
-// } from '@cornerstonejs/tools';
+// } from '@mediaire/cornerstone3d-core';
 
 // const { calibrateImageSpacing } = toolsUtilities;
 // const { Events } = Enums;

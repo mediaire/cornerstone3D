@@ -4,14 +4,14 @@
 // So, we just fetch the entire volume by streaming.
 // We create images one by one when their corresponding slice is ready.
 // We then create the image and let Cornerstone handle the texture upload and rendering.
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import {
   Enums,
   eventTarget,
   metaData,
   triggerEvent,
   utilities,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 import * as NiftiReader from 'nifti-reader-js';
 import { Events } from './enums';
 import { modalityScaleNifti } from './helpers';

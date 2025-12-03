@@ -1,4 +1,4 @@
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import {
   RenderingEngine,
   Enums,
@@ -6,7 +6,7 @@ import {
   volumeLoader,
   setVolumesForViewports,
   utilities as csUtils,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 import {
   initDemo,
   createImageIdsAndCacheMetaData,
@@ -18,7 +18,7 @@ import {
   contourTools,
   addManipulationBindings,
 } from '../../../../utils/demo/helpers';
-import * as cornerstoneTools from '@cornerstonejs/tools';
+import * as cornerstoneTools from '@mediaire/cornerstone3d-core';
 
 const { segmentation } = cornerstoneTools;
 const { MouseBindings } = cornerstoneTools.Enums;

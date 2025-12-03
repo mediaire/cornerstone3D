@@ -1,4 +1,4 @@
-import { getEnabledElement, utilities, type Types } from '@cornerstonejs/core';
+import { getEnabledElement, utilities, type Types } from '@mediaire/cornerstone3d-core';
 import {
   resetElementCursor,
   hideElementCursor,

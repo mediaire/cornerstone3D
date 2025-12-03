@@ -1,4 +1,4 @@
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import {
   RenderingEngine,
   Enums,
@@ -7,8 +7,8 @@ import {
   getRenderingEngine,
   setVolumesForViewports,
   volumeLoader,
-} from '@cornerstonejs/core';
-import { LengthTool, ToolGroupManager } from '@cornerstonejs/tools';
+} from '@mediaire/cornerstone3d-core';
+import { LengthTool, ToolGroupManager } from '@mediaire/cornerstone3d-core';
 import {
   initDemo,
   setTitleAndDescription,

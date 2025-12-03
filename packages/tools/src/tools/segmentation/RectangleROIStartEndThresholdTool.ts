@@ -3,8 +3,8 @@ import {
   cache,
   StackViewport,
   utilities as csUtils,
-} from '@cornerstonejs/core';
-import type { Types } from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import { getCalibratedLengthUnitsAndScale } from '../../utilities/getCalibratedUnits';
 import { vec3 } from 'gl-matrix';
 import {

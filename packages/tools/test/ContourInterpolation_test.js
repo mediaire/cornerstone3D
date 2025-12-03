@@ -1,8 +1,8 @@
-// import * as cornerstone3D from '@cornerstonejs/core';
+// import * as cornerstone3D from '@mediaire/cornerstone3d-core';
 // import {
 //   utilities as toolsUtilities,
 //   segmentation,
-// } from '@cornerstonejs/tools';
+// } from '@mediaire/cornerstone3d-core';
 // import * as csTools3d from '../src/index';
 // import * as testUtils from '../../../utils/test/testUtils';
 // import EventTypes from '../src/enums/Events';

@@ -1,4 +1,4 @@
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import {
   RenderingEngine,
   Enums,
@@ -7,14 +7,14 @@ import {
   cache,
   resetInitialization,
   getRenderingEngines,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 import {
   initDemo,
   createImageIdsAndCacheMetaData,
   setTitleAndDescription,
   addDropdownToToolbar,
 } from '../../../../utils/demo/helpers';
-import * as cornerstoneTools from '@cornerstonejs/tools';
+import * as cornerstoneTools from '@mediaire/cornerstone3d-core';
 
 console.warn(
   'Click on index.ts to open source code for this example --------->'

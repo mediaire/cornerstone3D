@@ -3,7 +3,7 @@ import {
   utilities as csUtils,
   VolumeViewport,
   getEnabledElementByViewportId,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 
 import { SegmentationRepresentations } from '../../../enums';
 import { getLabelmapActorEntries } from '../../../stateManagement/segmentation/helpers/getSegmentationActor';

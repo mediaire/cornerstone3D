@@ -1,5 +1,5 @@
-import { utilities as csUtils, cache, volumeLoader } from '@cornerstonejs/core';
-import type { Types } from '@cornerstonejs/core';
+import { utilities as csUtils, cache, volumeLoader } from '@mediaire/cornerstone3d-core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import { run } from './runGrowCut';
 import type { GrowCutOptions } from './runGrowCut';
 import {

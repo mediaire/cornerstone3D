@@ -1,4 +1,4 @@
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import type { Annotation } from './AnnotationTypes';
 import type SVGDrawingHelper from './SVGDrawingHelper';
 import type { AnnotationStyle } from './AnnotationStyle';

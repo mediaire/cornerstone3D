@@ -1,5 +1,5 @@
-import { utilities } from '@cornerstonejs/core';
-import type { Types } from '@cornerstonejs/core';
+import { utilities } from '@mediaire/cornerstone3d-core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import normalizeViewportPlane from '../normalizeViewportPlane';
 
 const { RLEVoxelMap, VoxelManager } = utilities;

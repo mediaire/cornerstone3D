@@ -1,10 +1,14 @@
 {
-  "name": "@cornerstonejs/tools",
-  "version": "4.12.7-fork.0",
+  "name": "@mediaire/cornerstone3d-tools",
+  "version": "4.12.7-mediaire.1",
   "description": "Cornerstone3D Tools",
   "types": "./dist/esm/index.d.ts",
   "module": "./dist/esm/index.js",
-  "repository": "https://github.com/cornerstonejs/cornerstone3D",
+  "repository": "https://github.com/mediaire/cornerstone3D",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://npm.pkg.github.com"
+  },
   "files": [
     "./dist/"
   ],
@@ -108,8 +112,8 @@
     "canvas": "3.2.0"
   },
   "peerDependencies": {
-    "@cornerstonejs/core": "4.12.6",
     "@kitware/vtk.js": "34.15.1",
+    "@mediaire/cornerstone3d-core": "4.12.6",
     "@types/d3-array": "3.2.1",
     "@types/d3-interpolate": "3.0.4",
     "d3-array": "3.2.4",
@@ -126,5 +130,6 @@
   "funding": {
     "type": "individual",
     "url": "https://ohif.org/donate"
-  }
+  },
+  "gitHead": "2a3ee0487467114355867e761aee3aae8821311d"
 }

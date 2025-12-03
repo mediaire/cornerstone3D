@@ -1,5 +1,5 @@
-import type { Types } from '@cornerstonejs/core';
-import { cache } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
+import { cache } from '@mediaire/cornerstone3d-core';
 import { getSegmentation } from '../getSegmentation';
 import { updateStackSegmentationState } from '../helpers/updateStackSegmentationState';
 import type { LabelmapSegmentationDataVolume } from '../../../types/LabelmapTypes';

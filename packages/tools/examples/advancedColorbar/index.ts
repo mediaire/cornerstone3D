@@ -1,13 +1,13 @@
 import vtkColormaps from '@kitware/vtk.js/Rendering/Core/ColorTransferFunction/ColorMaps';
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import {
   RenderingEngine,
   Enums,
   cache,
   volumeLoader,
   getRenderingEngine,
-} from '@cornerstonejs/core';
-import { utilities as cstUtils } from '@cornerstonejs/tools';
+} from '@mediaire/cornerstone3d-core';
+import { utilities as cstUtils } from '@mediaire/cornerstone3d-core';
 import {
   initDemo,
   createImageIdsAndCacheMetaData,
@@ -16,7 +16,7 @@ import {
   setTitleAndDescription,
   addDropdownToToolbar,
 } from '../../../../utils/demo/helpers';
-import * as cornerstoneTools from '@cornerstonejs/tools';
+import * as cornerstoneTools from '@mediaire/cornerstone3d-core';
 
 const { ViewportColorbar } = cstUtils.voi.colorbar;
 const { ColorbarRangeTextPosition } = cstUtils.voi.colorbar.Enums;

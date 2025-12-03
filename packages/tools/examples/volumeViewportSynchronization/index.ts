@@ -1,17 +1,17 @@
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import {
   RenderingEngine,
   Enums,
   volumeLoader,
   setVolumesForViewports,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 import {
   initDemo,
   createImageIdsAndCacheMetaData,
   setTitleAndDescription,
   addToggleButtonToToolbar,
 } from '../../../../utils/demo/helpers';
-import * as cornerstoneTools from '@cornerstonejs/tools';
+import * as cornerstoneTools from '@mediaire/cornerstone3d-core';
 
 // This is for debugging purposes
 console.warn(

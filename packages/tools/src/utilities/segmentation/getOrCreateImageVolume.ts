@@ -3,7 +3,7 @@ import {
   volumeLoader,
   utilities as csUtils,
   type Types,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 
 /**
  * Gets an existing image volume from cache or creates a new one from the provided image IDs

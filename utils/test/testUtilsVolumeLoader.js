@@ -5,7 +5,7 @@ import {
   cache,
   volumeLoader,
   utilities,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 import {
   getVerticalBarVolume,
   getExactRegionVolume,

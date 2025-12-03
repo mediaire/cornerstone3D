@@ -8,7 +8,7 @@ import {
   BaseVolumeViewport,
   volumeLoader,
   utilities,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 import type {
   LabelmapSegmentationData,
   LabelmapSegmentationDataStack,

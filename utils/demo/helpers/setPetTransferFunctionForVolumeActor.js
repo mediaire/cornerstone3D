@@ -1,4 +1,4 @@
-import { utilities } from '@cornerstonejs/core';
+import { utilities } from '@mediaire/cornerstone3d-core';
 
 export default function setPetTransferFunction({ volumeActor }) {
   const rgbTransferFunction = volumeActor

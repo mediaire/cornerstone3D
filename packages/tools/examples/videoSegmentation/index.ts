@@ -3,9 +3,9 @@ import {
   RenderingEngine,
   imageLoader,
   utilities as csUtils,
-} from '@cornerstonejs/core';
-import * as cornerstone from '@cornerstonejs/core';
-import * as cornerstoneTools from '@cornerstonejs/tools';
+} from '@mediaire/cornerstone3d-core';
+import * as cornerstone from '@mediaire/cornerstone3d-core';
+import * as cornerstoneTools from '@mediaire/cornerstone3d-core';
 import {
   createImageIdsAndCacheMetaData,
   initDemo,

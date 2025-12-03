@@ -1,4 +1,4 @@
-import { utilities, type Types } from '@cornerstonejs/core';
+import { utilities, type Types } from '@mediaire/cornerstone3d-core';
 import type { InitializedOperationData } from '../BrushStrategy';
 import { triggerSegmentationDataModified } from '../../../../stateManagement/segmentation/events/triggerSegmentationDataModified';
 import StrategyCallbacks from '../../../../enums/StrategyCallbacks';

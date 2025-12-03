@@ -1,11 +1,11 @@
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import {
   triggerEvent,
   eventTarget,
   Enums,
   getRenderingEngines,
   getEnabledElementByViewportId,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 import {
   SegmentationRepresentations,
   Events as csToolsEvents,

@@ -1,4 +1,4 @@
-import { getWebWorkerManager } from '@cornerstonejs/core';
+import { getWebWorkerManager } from '@mediaire/cornerstone3d-core';
 import { getConfig } from '../config';
 
 let registered = false;

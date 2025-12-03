@@ -1,4 +1,4 @@
-import { type Types, utilities } from '@cornerstonejs/core';
+import { type Types, utilities } from '@mediaire/cornerstone3d-core';
 import { defaultSegmentationStateManager } from './SegmentationStateManager';
 import { getNextColorLUTIndex } from './getNextColorLUTIndex';
 import CORNERSTONE_COLOR_LUT from '../../constants/COLOR_LUT';

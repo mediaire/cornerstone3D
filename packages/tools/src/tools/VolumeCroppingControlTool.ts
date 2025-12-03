@@ -4,7 +4,7 @@ import type vtkPlane from '@kitware/vtk.js/Common/DataModel/Plane';
 
 import { AnnotationTool } from './base';
 
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import {
   getRenderingEngine,
   getEnabledElementByIds,
@@ -14,7 +14,7 @@ import {
   CONSTANTS,
   triggerEvent,
   eventTarget,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 
 import {
   getToolGroup,

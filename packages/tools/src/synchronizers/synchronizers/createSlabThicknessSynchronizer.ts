@@ -1,4 +1,4 @@
-import { Enums } from '@cornerstonejs/core';
+import { Enums } from '@mediaire/cornerstone3d-core';
 import { createSynchronizer } from '../../store/SynchronizerManager';
 import slabThicknessSyncCallback from '../callbacks/slabThicknessSyncCallback';
 import type Synchronizer from '../../store/SynchronizerManager/Synchronizer';

@@ -1,4 +1,4 @@
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import isClosed from '../math/polyline/isClosed';
 import { getSignedArea } from '../math/polyline';
 

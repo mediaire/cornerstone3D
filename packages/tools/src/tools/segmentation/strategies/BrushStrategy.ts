@@ -1,5 +1,5 @@
-import type { Types } from '@cornerstonejs/core';
-import { utilities as csUtils } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
+import { utilities as csUtils } from '@mediaire/cornerstone3d-core';
 
 import { triggerSegmentationDataModified } from '../../../stateManagement/segmentation/triggerSegmentationEvents';
 import compositions from './compositions';

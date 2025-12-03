@@ -4,8 +4,8 @@ import {
   eventTarget,
   getEnabledElement,
   getEnabledElementByIds,
-} from '@cornerstonejs/core';
-import type { Types } from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import { mat4, vec3 } from 'gl-matrix';
 import type { EventTypes, PublicToolProps, ToolProps } from '../types';
 import { BaseTool } from './base';

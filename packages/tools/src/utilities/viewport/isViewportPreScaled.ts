@@ -1,10 +1,10 @@
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import {
   cache,
   StackViewport,
   BaseVolumeViewport,
   utilities,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 
 function isViewportPreScaled(
   viewport: Types.IStackViewport | Types.IVolumeViewport,

@@ -2,7 +2,7 @@ import type {
   BaseVolumeViewport,
   Types,
   VolumeViewport3D,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 import {
   RenderingEngine,
   Enums,
@@ -10,8 +10,8 @@ import {
   volumeLoader,
   getRenderingEngine,
   eventTarget,
-} from '@cornerstonejs/core';
-import { Enums as toolsEnums } from '@cornerstonejs/tools';
+} from '@mediaire/cornerstone3d-core';
+import { Enums as toolsEnums } from '@mediaire/cornerstone3d-core';
 import {
   initDemo,
   createImageIdsAndCacheMetaData,
@@ -25,7 +25,7 @@ import {
 } from '../../../../utils/demo/helpers';
 
 import vtkCellPicker from '@kitware/vtk.js/Rendering/Core/CellPicker';
-import * as cornerstoneTools from '@cornerstonejs/tools';
+import * as cornerstoneTools from '@mediaire/cornerstone3d-core';
 import vtkActor from '@kitware/vtk.js/Rendering/Core/Actor';
 import vtkSphereSource from '@kitware/vtk.js/Filters/Sources/SphereSource';
 import vtkMapper from '@kitware/vtk.js/Rendering/Core/Mapper';

@@ -1,6 +1,6 @@
 import type { InitializedOperationData } from '../BrushStrategy';
 import StrategyCallbacks from '../../../../enums/StrategyCallbacks';
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 
 /**
  * This function determines whether to fill or erase based on what the user

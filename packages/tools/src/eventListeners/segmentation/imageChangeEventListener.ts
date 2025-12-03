@@ -1,6 +1,6 @@
 import vtkDataArray from '@kitware/vtk.js/Common/Core/DataArray';
 import vtkImageData from '@kitware/vtk.js/Common/DataModel/ImageData';
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import {
   BaseVolumeViewport,
   getEnabledElement,
@@ -8,7 +8,7 @@ import {
   getEnabledElementByIds,
   cache,
   utilities,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 import { triggerSegmentationRender } from '../../stateManagement/segmentation/SegmentationRenderingEngine';
 import { updateLabelmapSegmentationImageReferences } from '../../stateManagement/segmentation/updateLabelmapSegmentationImageReferences';
 import { getCurrentLabelmapImageIdsForViewport } from '../../stateManagement/segmentation/getCurrentLabelmapImageIdForViewport';

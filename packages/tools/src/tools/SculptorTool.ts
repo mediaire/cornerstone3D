@@ -1,5 +1,5 @@
-import { getEnabledElement, utilities } from '@cornerstonejs/core';
-import type { Types } from '@cornerstonejs/core';
+import { getEnabledElement, utilities } from '@mediaire/cornerstone3d-core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import { vec3 } from 'gl-matrix';
 
 import { BaseTool } from './base';

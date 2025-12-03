@@ -1100,15 +1100,25 @@
   resolved "https://registry.yarnpkg.com/@cornerstonejs/codec-libjpeg-turbo-8bit/-/codec-libjpeg-turbo-8bit-1.2.2.tgz#ae384b149d6655e3dd6e18b9891fab479ab5e144"
   integrity sha512-aAUMK2958YNpOb/7G6e2/aG7hExTiFTASlMt/v90XA0pRHdWiNg5ny4S5SAju0FbIw4zcMnR0qfY+yW3VG2ivg==
 
-"@cornerstonejs/codec-openjpeg@1.3.0", "@cornerstonejs/codec-openjpeg@^1.2.4":
+"@cornerstonejs/codec-openjpeg@1.3.0":
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/@cornerstonejs/codec-openjpeg/-/codec-openjpeg-1.3.0.tgz#2e5973f3e207db3d6cf47e34f74010e2f6f0a0bf"
   integrity sha512-hP8WAZ63AcaDYmHbBVTY04x424AglXsRHrI6VBdW4eTiJ76f0heWrEodT9Sb3sNwazzYuyMOIZNndJPeVSeHcw==
 
-"@cornerstonejs/codec-openjph@2.4.7", "@cornerstonejs/codec-openjph@^2.4.5":
+"@cornerstonejs/codec-openjpeg@^1.2.4":
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/@cornerstonejs/codec-openjpeg/-/codec-openjpeg-1.2.4.tgz#c7cf67a34091eb74a6676abec80a5251c412b551"
+  integrity sha512-UT2su6xZZnCPSuWf2ldzKa/2+guQ7BGgfBSKqxanggwJHh48gZqIAzekmsLyJHMMK5YDK+ti+fzvVJhBS3Xi/g==
+
+"@cornerstonejs/codec-openjph@2.4.7":
   version "2.4.7"
   resolved "https://registry.yarnpkg.com/@cornerstonejs/codec-openjph/-/codec-openjph-2.4.7.tgz#784394d05d8cf735640e9c3baa206535ee8e0376"
   integrity sha512-qvP4q4JDib7mi9r7LqKOwqz7YZ8gjtDX4ZCezeYf8+eb7MBXCz5uXAMeVF3yz9Axw4XiIMdB/pqXkm8tqCl13w==
+
+"@cornerstonejs/codec-openjph@^2.4.5":
+  version "2.4.5"
+  resolved "https://registry.yarnpkg.com/@cornerstonejs/codec-openjph/-/codec-openjph-2.4.5.tgz#8690b61a86fa53ef38a70eee9d665a79229517c0"
+  integrity sha512-MZCUy8VG0VG5Nl1l58+g+kH3LujAzLYTfJqkwpWI2gjSrGXnP6lgwyy4GmPRZWVoS40/B1LDNALK905cNWm+sg==
 
 "@cspotcode/source-map-support@^0.8.0":
   version "0.8.1"
@@ -3609,13 +3619,21 @@
     multiformats "^13.3.1"
     uint8arrays "^5.1.0"
 
-"@webassemblyjs/ast@1.14.1", "@webassemblyjs/ast@^1.11.5":
+"@webassemblyjs/ast@1.14.1":
   version "1.14.1"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.14.1.tgz#a9f6a07f2b03c95c8d38c4536a1fdfb521ff55b6"
   integrity sha512-nuBEDgQfm1ccRp/8bCQrx1frohyufl4JlbMMZ4P1wpeOfDhF6FQkxZJ1b/e+PLwr6X1Nhw6OLme5usuBWYBvuQ==
   dependencies:
     "@webassemblyjs/helper-numbers" "1.13.2"
     "@webassemblyjs/helper-wasm-bytecode" "1.13.2"
+
+"@webassemblyjs/ast@^1.11.5":
+  version "1.12.1"
+  resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.12.1.tgz#bb16a0e8b1914f979f45864c23819cc3e3f0d4bb"
+  integrity sha512-EKfMUOPRRUTy5UII4qJDGPpqfwjOmZ5jeGFwid9mnoqIFK+e0vqoi1qH56JpmZSzEL53jKnNzScdmftJyG5xWg==
+  dependencies:
+    "@webassemblyjs/helper-numbers" "1.11.6"
+    "@webassemblyjs/helper-wasm-bytecode" "1.11.6"
 
 "@webassemblyjs/floating-point-hex-parser@1.13.2":
   version "1.13.2"
@@ -6139,10 +6157,17 @@ encoding@^0.1.13:
   dependencies:
     iconv-lite "^0.6.2"
 
-end-of-stream@^1.0.0, end-of-stream@^1.1.0, end-of-stream@^1.4.1:
+end-of-stream@^1.0.0:
   version "1.4.5"
   resolved "https://registry.yarnpkg.com/end-of-stream/-/end-of-stream-1.4.5.tgz#7344d711dea40e0b74abc2ed49778743ccedb08c"
   integrity sha512-ooEGc6HP26xXq/N+GCGOT0JKCLDGrq2bQUZrQ7gyrJiZANJ/8YDTxTpQBXGMn+WbIQXNVpyWymm7KYVICQnyOg==
+  dependencies:
+    once "^1.4.0"
+
+end-of-stream@^1.1.0, end-of-stream@^1.4.1:
+  version "1.4.4"
+  resolved "https://registry.yarnpkg.com/end-of-stream/-/end-of-stream-1.4.4.tgz#5ae64a5f45057baf3626ec14da0ca5e4b2431eb0"
+  integrity sha512-+uw1inIHVPQoaVuHzRyXd21icM+cnt4CzD5rW+NC1wjOUSTOs+Te7FOv7AhN7vS9x/oIyhLP5PR1H+phQAHu5Q==
   dependencies:
     once "^1.4.0"
 

@@ -1,5 +1,5 @@
 import { glMatrix } from 'gl-matrix';
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import { distanceToPointSquared } from '../point';
 
 /**

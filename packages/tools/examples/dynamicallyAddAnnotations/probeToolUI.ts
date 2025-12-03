@@ -2,10 +2,10 @@ import {
   getEnabledElementByViewportId,
   getRenderingEngine,
   utilities,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 import type { Point2 } from '@cornerstonejs/core/types';
 import type { Point3 } from '@cornerstonejs/core/types/Point3';
-import { ProbeTool } from '@cornerstonejs/tools';
+import { ProbeTool } from '@mediaire/cornerstone3d-core';
 import { typeToIdMap, typeToStartIdMap } from './constants';
 
 function getInputValue(form: HTMLFormElement, inputId: string): number {

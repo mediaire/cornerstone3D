@@ -1,15 +1,16 @@
 {
-  "name": "@cornerstonejs/nifti-volume-loader",
-  "version": "4.12.7-fork.0",
+  "name": "@mediaire/cornerstone3d-nifti-volume-loader",
+  "version": "4.12.7-mediaire.1",
   "description": "Nifti Image Loader for Cornerstone3D",
   "module": "./dist/esm/index.js",
   "types": "./dist/esm/index.d.ts",
-  "repository": "https://github.com/cornerstonejs/cornerstone3D",
+  "repository": "https://github.com/mediaire/cornerstone3D",
   "files": [
     "dist/esm"
   ],
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://npm.pkg.github.com"
   },
   "sideEffects": false,
   "exports": {
@@ -65,7 +66,7 @@
     "nifti-reader-js": "0.6.9"
   },
   "peerDependencies": {
-    "@cornerstonejs/core": "4.12.6"
+    "@mediaire/cornerstone3d-core": "4.12.6"
   },
   "contributors": [
     {
@@ -77,5 +78,6 @@
   "funding": {
     "type": "individual",
     "url": "https://ohif.org/donate"
-  }
+  },
+  "gitHead": "2a3ee0487467114355867e761aee3aae8821311d"
 }

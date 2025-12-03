@@ -1,12 +1,12 @@
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import {
   RenderingEngine,
   Enums,
   metaData,
   setUseCPURendering,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 import cornerstoneDICOMImageLoader from '@cornerstonejs/dicom-image-loader';
-import * as cornerstoneTools from '@cornerstonejs/tools';
+import * as cornerstoneTools from '@mediaire/cornerstone3d-core';
 import htmlSetup from '../local/htmlSetup';
 import uids from '../local/uids';
 

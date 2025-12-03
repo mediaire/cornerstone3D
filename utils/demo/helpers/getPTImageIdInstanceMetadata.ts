@@ -1,4 +1,4 @@
-import { metaData } from '@cornerstonejs/core';
+import { metaData } from '@mediaire/cornerstone3d-core';
 import type { InstanceMetadata } from '@cornerstonejs/calculate-suv';
 
 export default function getPTImageIdInstanceMetadata(

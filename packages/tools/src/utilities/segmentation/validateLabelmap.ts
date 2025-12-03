@@ -1,4 +1,4 @@
-import { cache } from '@cornerstonejs/core';
+import { cache } from '@mediaire/cornerstone3d-core';
 import type { SegmentationPublicInput } from '../../types/SegmentationStateTypes';
 import type {
   LabelmapSegmentationData,

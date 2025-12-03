@@ -1,4 +1,4 @@
-import { cache } from '@cornerstonejs/core';
+import { cache } from '@mediaire/cornerstone3d-core';
 
 /**
  * Retrieves the reference volume associated with a segmentation volume.

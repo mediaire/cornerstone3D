@@ -1,18 +1,18 @@
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import {
   RenderingEngine,
   Enums,
   init as csRenderInit,
   getRenderingEngine,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 import {
   createImageIdsAndCacheMetaData,
   setTitleAndDescription,
   initProviders,
   initVolumeLoader,
 } from '../../../../utils/demo/helpers';
-import * as cornerstoneTools from '@cornerstonejs/tools';
-import { init as csToolsInit } from '@cornerstonejs/tools';
+import * as cornerstoneTools from '@mediaire/cornerstone3d-core';
+import { init as csToolsInit } from '@mediaire/cornerstone3d-core';
 import cornerstoneDICOMImageLoader from '@cornerstonejs/dicom-image-loader';
 
 const {

@@ -1,5 +1,5 @@
-import type { Types } from '@cornerstonejs/core';
-import { Enums } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
+import { Enums } from '@mediaire/cornerstone3d-core';
 import triggerAnnotationRender from '../utilities/triggerAnnotationRender';
 
 /**

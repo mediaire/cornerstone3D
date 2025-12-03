@@ -2,7 +2,7 @@ import {
   getEnabledElement,
   triggerEvent,
   getRenderingEngine,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 import { Events, ToolModes } from '../../enums';
 import { draw as drawSvg } from '../../drawingSvg';
 import getToolsWithModesForElement from '../../utilities/getToolsWithModesForElement';

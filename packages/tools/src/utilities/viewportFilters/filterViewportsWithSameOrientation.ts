@@ -1,4 +1,4 @@
-import { utilities as csUtils } from '@cornerstonejs/core';
+import { utilities as csUtils } from '@mediaire/cornerstone3d-core';
 
 export function filterViewportsWithSameOrientation(viewports, camera) {
   return viewports.filter((viewport) => {

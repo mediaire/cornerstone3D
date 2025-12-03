@@ -1,4 +1,4 @@
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 
 // ATTENTION: this is an internal function and it should not be added to "polyline"
 // namespace.

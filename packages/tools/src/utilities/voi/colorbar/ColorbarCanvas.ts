@@ -1,5 +1,5 @@
 import type { IColorMapPreset } from '@kitware/vtk.js/Rendering/Core/ColorTransferFunction/ColorMaps';
-import { utilities } from '@cornerstonejs/core';
+import { utilities } from '@mediaire/cornerstone3d-core';
 import interpolateVec3 from '../../math/vec3/interpolateVec3';
 import type { ColorbarCanvasProps } from './types/ColorbarCanvasProps';
 import type { ColorbarImageRange, ColorbarVOIRange } from './types';

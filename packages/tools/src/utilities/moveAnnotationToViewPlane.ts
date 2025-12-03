@@ -1,5 +1,5 @@
 import type { Annotation } from '../types';
-import { StackViewport, type Types } from '@cornerstonejs/core';
+import { StackViewport, type Types } from '@mediaire/cornerstone3d-core';
 import * as vec3 from 'gl-matrix/vec3';
 
 /**

@@ -3,8 +3,8 @@ import {
   getEnabledElement,
   utilities as csUtils,
   getEnabledElementByViewportId,
-} from '@cornerstonejs/core';
-import type { Types } from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import { AnnotationTool } from '../base';
 import throttle from '../../utilities/throttle';
 import {

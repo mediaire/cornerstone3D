@@ -1,6 +1,6 @@
 import { vec3 } from 'gl-matrix';
-import { CONSTANTS, metaData, utilities } from '@cornerstonejs/core';
-import type { Types } from '@cornerstonejs/core';
+import { CONSTANTS, metaData, utilities } from '@mediaire/cornerstone3d-core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import type { Annotations, Annotation } from '../../types';
 
 const { isEqual } = utilities;

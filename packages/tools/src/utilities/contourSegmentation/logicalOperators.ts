@@ -25,7 +25,7 @@
  * - addSegmentInSegmentation: Adds a new segment to the segmentation object
  */
 
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import { getAnnotation, removeAnnotation } from '../../stateManagement';
 import type {
   ContourSegmentationData,

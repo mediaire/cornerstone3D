@@ -5,7 +5,7 @@ import {
   Enums,
   triggerEvent,
   metaData,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 import { getActiveSegmentIndex } from '../../stateManagement/segmentation/getActiveSegmentIndex';
 import { getSegmentation } from '../../stateManagement/segmentation/getSegmentation';
 import { getStrategyData } from '../../tools/segmentation/strategies/utils/getStrategyData';

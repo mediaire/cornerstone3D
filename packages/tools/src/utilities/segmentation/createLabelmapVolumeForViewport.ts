@@ -3,8 +3,8 @@ import {
   volumeLoader,
   VolumeViewport,
   utilities as csUtils,
-} from '@cornerstonejs/core';
-import type { Types } from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 
 /**
  * Create a new 3D segmentation volume from the default imageData presented in

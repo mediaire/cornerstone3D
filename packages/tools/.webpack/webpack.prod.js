@@ -34,11 +34,11 @@ module.exports = (env, argv) => {
     },
     externals: [
       {
-        '@cornerstonejs/core': {
+        '@mediaire/cornerstone3d-core': {
           root: 'cornerstone3D',
-          commonjs: '@cornerstonejs/core',
-          commonjs2: '@cornerstonejs/core',
-          amd: '@cornerstonejs/core',
+          commonjs: '@mediaire/cornerstone3d-core',
+          commonjs2: '@mediaire/cornerstone3d-core',
+          amd: '@mediaire/cornerstone3d-core',
         },
         'gl-matrix': {
           root: 'window',

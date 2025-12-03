@@ -1,4 +1,4 @@
-import { getEnabledElementByViewportId } from '@cornerstonejs/core';
+import { getEnabledElementByViewportId } from '@mediaire/cornerstone3d-core';
 import type {
   RenderingConfig,
   RepresentationPublicInput,

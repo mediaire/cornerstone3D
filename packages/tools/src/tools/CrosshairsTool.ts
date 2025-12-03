@@ -4,7 +4,7 @@ import vtkMatrixBuilder from '@kitware/vtk.js/Common/Core/MatrixBuilder';
 
 import { AnnotationTool } from './base';
 
-import type { Types } from '@cornerstonejs/core';
+import { getRenderingEngine, type Types } from '@mediaire/cornerstone3d-core';
 import {
   getEnabledElementByIds,
   getEnabledElement,
@@ -13,7 +13,7 @@ import {
   CONSTANTS,
   triggerEvent,
   eventTarget,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 
 import {
   getToolGroup,

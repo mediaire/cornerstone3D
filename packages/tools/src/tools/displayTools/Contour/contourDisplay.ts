@@ -1,10 +1,10 @@
-import type { StackViewport, Types } from '@cornerstonejs/core';
+import type { StackViewport, Types } from '@mediaire/cornerstone3d-core';
 import {
   cache,
   getEnabledElementByViewportId,
   Enums,
   utilities,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 
 import Representations from '../../../enums/SegmentationRepresentations';
 import { handleContourSegmentation } from './contourHandler/handleContourSegmentation';

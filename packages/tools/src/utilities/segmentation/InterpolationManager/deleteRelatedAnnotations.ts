@@ -1,4 +1,4 @@
-import { triggerEvent } from '@cornerstonejs/core';
+import { triggerEvent } from '@mediaire/cornerstone3d-core';
 import * as annotationStateManagement from '../../../stateManagement/annotation';
 import interpolate from '../../contours/interpolation/interpolate';
 import type { InterpolationViewportData } from '../../../types/InterpolationTypes';

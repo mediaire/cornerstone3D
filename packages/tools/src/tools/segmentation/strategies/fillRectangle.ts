@@ -1,6 +1,6 @@
 import { vec3 } from 'gl-matrix';
-import { utilities as csUtils, StackViewport } from '@cornerstonejs/core';
-import type { Types, BaseVolumeViewport } from '@cornerstonejs/core';
+import { utilities as csUtils, StackViewport } from '@mediaire/cornerstone3d-core';
+import type { Types, BaseVolumeViewport } from '@mediaire/cornerstone3d-core';
 
 import { getBoundingBoxAroundShapeIJK } from '../../../utilities/boundingBox';
 import type { LabelmapToolOperationData } from '../../../types';

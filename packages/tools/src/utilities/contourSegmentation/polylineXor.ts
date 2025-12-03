@@ -1,4 +1,4 @@
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import { cleanupPolylines } from './sharedOperations';
 import arePolylinesIdentical from '../math/polyline/arePolylinesIdentical';
 import { subtractPolylineSets } from './polylineSubtract';

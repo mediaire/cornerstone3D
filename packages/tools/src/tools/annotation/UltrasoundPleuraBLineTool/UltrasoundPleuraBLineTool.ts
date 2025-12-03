@@ -4,8 +4,8 @@ import {
   utilities,
   metaData,
   getEnabledElementByViewportId,
-} from '@cornerstonejs/core';
-import type { Types } from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 
 import { AnnotationTool } from '../../base';
 import {
@@ -80,7 +80,7 @@ type FilterFunction = (imageId: string) => boolean;
  * @example
  * ```javascript
  * // Import necessary modules from Cornerstone Tools
- * import { UltrasoundPleuraBLineAnnotationTool, ToolGroupManager, Enums, addTool } from '@cornerstonejs/tools';
+ * import { UltrasoundPleuraBLineAnnotationTool, ToolGroupManager, Enums, addTool } from '@mediaire/cornerstone3d-core';
 import { canvasCoordinates } from '../../utilities/math/circle/_types';
 import { getUnknownVolumeLoaderSchema } from '../../../../core/src/loaders/volumeLoader';
 import { deriveFanGeometry } from './utils/deriveFanGeometry';

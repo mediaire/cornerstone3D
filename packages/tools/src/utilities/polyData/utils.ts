@@ -1,5 +1,5 @@
 import type vtkPolyData from '@kitware/vtk.js/Common/DataModel/PolyData';
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import { vec3 } from 'gl-matrix';
 
 /**

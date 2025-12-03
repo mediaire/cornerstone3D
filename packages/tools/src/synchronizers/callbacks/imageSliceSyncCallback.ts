@@ -1,11 +1,11 @@
 import { vec3, mat4 } from 'gl-matrix';
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import {
   getRenderingEngine,
   metaData,
   utilities,
   VolumeViewport,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 import type { Synchronizer } from '../../store';
 import areViewportsCoplanar from './areViewportsCoplanar';
 

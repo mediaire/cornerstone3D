@@ -1,4 +1,4 @@
-import { cache, Enums, eventTarget, type Types } from '@cornerstonejs/core';
+import { cache, Enums, eventTarget, type Types } from '@mediaire/cornerstone3d-core';
 import type {
   LabelmapToolOperationDataStack,
   LabelmapToolOperationDataVolume,

@@ -1,5 +1,5 @@
-import type { Types } from '@cornerstonejs/core';
-import { utilities as csUtils, getEnabledElement } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
+import { utilities as csUtils, getEnabledElement } from '@mediaire/cornerstone3d-core';
 import type { ContourSegmentationAnnotation } from '../../types/ContourSegmentationAnnotation';
 import { ContourWindingDirection } from '../../types/ContourAnnotation';
 import * as math from '../math';

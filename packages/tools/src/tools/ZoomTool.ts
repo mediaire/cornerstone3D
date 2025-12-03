@@ -1,7 +1,7 @@
 import { vec3 } from 'gl-matrix';
 import vtkMath from '@kitware/vtk.js/Common/Core/Math';
-import { getConfiguration, type Types } from '@cornerstonejs/core';
-import { Enums, getEnabledElement } from '@cornerstonejs/core';
+import { getConfiguration, type Types } from '@mediaire/cornerstone3d-core';
+import { Enums, getEnabledElement } from '@mediaire/cornerstone3d-core';
 import { BaseTool } from './base';
 import type { EventTypes, PublicToolProps, ToolProps } from '../types';
 import { Events } from '../enums';

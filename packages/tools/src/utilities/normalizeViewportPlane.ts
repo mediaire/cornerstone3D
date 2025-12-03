@@ -1,5 +1,5 @@
-import type { Types } from '@cornerstonejs/core';
-import { BaseVolumeViewport, utilities } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
+import { BaseVolumeViewport, utilities } from '@mediaire/cornerstone3d-core';
 
 const { isEqual } = utilities;
 

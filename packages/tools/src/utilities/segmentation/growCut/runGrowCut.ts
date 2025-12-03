@@ -1,5 +1,5 @@
-import { cache } from '@cornerstonejs/core';
-import type { Types } from '@cornerstonejs/core';
+import { cache } from '@mediaire/cornerstone3d-core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import shaderCode from './growCutShader';
 
 const GB = 1024 * 1024 * 1024;

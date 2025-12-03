@@ -1,5 +1,5 @@
 import type { vtkImageData } from '@kitware/vtk.js/Common/DataModel/ImageData';
-import { getOrCreateCanvas } from '@cornerstonejs/core';
+import { getOrCreateCanvas } from '@mediaire/cornerstone3d-core';
 import * as cornerstoneTools from '@cornerstonejs/tools';
 
 const { Events } = cornerstoneTools.Enums;

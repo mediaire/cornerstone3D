@@ -8,7 +8,7 @@ import type {
 } from '../../types/LabelmapTypes';
 import type { SurfaceStyle } from '../../types/SurfaceTypes';
 import * as Enums from '../../enums';
-import { utilities } from '@cornerstonejs/core';
+import { utilities } from '@mediaire/cornerstone3d-core';
 
 export type RepresentationStyle = LabelmapStyle | ContourStyle | SurfaceStyle;
 

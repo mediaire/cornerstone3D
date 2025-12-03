@@ -1,11 +1,11 @@
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import {
   BaseVolumeViewport,
   cache,
   utilities as csUtils,
   getEnabledElementByViewportId,
   volumeLoader,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 
 import { SegmentationRepresentations } from '../../enums';
 import type {

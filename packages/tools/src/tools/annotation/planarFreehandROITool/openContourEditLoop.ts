@@ -1,6 +1,6 @@
 import { vec3, vec2 } from 'gl-matrix';
-import { getEnabledElement } from '@cornerstonejs/core';
-import type { Types } from '@cornerstonejs/core';
+import { getEnabledElement } from '@mediaire/cornerstone3d-core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import { state } from '../../../store/state';
 import { Events } from '../../../enums';
 import {

@@ -1,4 +1,4 @@
-import type { Enums as coreEnums, Types } from '@cornerstonejs/core';
+import type { Enums as coreEnums, Types } from '@mediaire/cornerstone3d-core';
 import type * as Enums from '../enums';
 import type { ContourSegmentationData } from './ContourTypes';
 import type { LabelmapSegmentationData } from './LabelmapTypes';

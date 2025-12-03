@@ -1,4 +1,4 @@
-import { utilities as csUtilities } from '@cornerstonejs/core';
+import { utilities as csUtilities } from '@mediaire/cornerstone3d-core';
 
 import type { configElement } from './createElement';
 import createElement from './createElement';

@@ -1,5 +1,5 @@
-import type { Types } from '@cornerstonejs/core';
-import { utilities, cache } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
+import { utilities, cache } from '@mediaire/cornerstone3d-core';
 import { getVoxelOverlap } from '../segmentation/utilities';
 
 /**

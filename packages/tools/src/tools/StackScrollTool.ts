@@ -4,7 +4,7 @@ import {
   VolumeViewport,
   BaseVolumeViewport,
   utilities,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 import { BaseTool } from './base';
 import type { PublicToolProps, ToolProps, EventTypes } from '../types';
 

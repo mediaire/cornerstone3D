@@ -1,19 +1,19 @@
 import cornerstoneDICOMImageLoader from '@cornerstonejs/dicom-image-loader';
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import {
   RenderingEngine,
   Enums,
   volumeLoader,
   setVolumesForViewports,
   cache,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 import {
   initDemo,
   createImageIdsAndCacheMetaData,
   setTitleAndDescription,
   setPetTransferFunctionForVolumeActor,
 } from '../../../../utils/demo/helpers';
-import * as cornerstoneTools from '@cornerstonejs/tools';
+import * as cornerstoneTools from '@mediaire/cornerstone3d-core';
 import createSecondStageLayout from './createSecondStageLayout';
 import createFirstStageLayout from './createFirstStageLayout';
 

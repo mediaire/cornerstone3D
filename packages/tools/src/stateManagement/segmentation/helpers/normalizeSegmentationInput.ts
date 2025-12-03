@@ -6,8 +6,8 @@ import type {
   RepresentationData,
 } from '../../../types/SegmentationStateTypes';
 import type { ContourSegmentationData } from '../../../types/ContourTypes';
-import type { Types } from '@cornerstonejs/core';
-import { cache } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
+import { cache } from '@mediaire/cornerstone3d-core';
 import type { SurfaceSegmentationData } from '../../../types/SurfaceTypes';
 
 /**

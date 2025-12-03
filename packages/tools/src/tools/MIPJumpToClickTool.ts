@@ -1,6 +1,6 @@
 import { BaseTool } from './base';
-import { getEnabledElement, VolumeViewport } from '@cornerstonejs/core';
-import { type Types, utilities } from '@cornerstonejs/core';
+import { getEnabledElement, VolumeViewport } from '@mediaire/cornerstone3d-core';
+import { type Types, utilities } from '@mediaire/cornerstone3d-core';
 import { getPointInLineOfSightWithCriteria } from '../utilities/planar';
 import type { PublicToolProps, ToolProps } from '../types';
 import { getToolGroupForViewport } from '../store/ToolGroupManager';

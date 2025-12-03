@@ -1,5 +1,5 @@
 // Import necessary utilities and types from Cornerstone3D core
-import { utilities } from '@cornerstonejs/core';
+import { utilities } from '@mediaire/cornerstone3d-core';
 
 // Import state management functions for handling annotations
 import { addAnnotation, removeAnnotation } from '../../stateManagement';

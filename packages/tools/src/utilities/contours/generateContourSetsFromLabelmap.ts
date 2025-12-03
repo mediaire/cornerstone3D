@@ -4,7 +4,7 @@ import {
   getWebWorkerManager,
   cache,
   utilities,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 import SegmentationRepresentations from '../../enums/SegmentationRepresentations';
 import { WorkerTypes } from '../../enums';
 import { registerComputeWorker } from '../registerComputeWorker';

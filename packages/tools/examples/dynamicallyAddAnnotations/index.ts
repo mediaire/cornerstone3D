@@ -1,17 +1,17 @@
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import {
   RenderingEngine,
   Enums,
   cache,
   volumeLoader,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 import {
   initDemo,
   createImageIdsAndCacheMetaData,
   setTitleAndDescription,
   setCtTransferFunctionForVolumeActor,
 } from '../../../../utils/demo/helpers';
-import * as cornerstoneTools from '@cornerstonejs/tools';
+import * as cornerstoneTools from '@mediaire/cornerstone3d-core';
 import {
   AngleTool,
   ArrowAnnotateTool,
@@ -22,7 +22,7 @@ import {
   ProbeTool,
   RectangleROITool,
   SplineROITool,
-} from '@cornerstonejs/tools';
+} from '@mediaire/cornerstone3d-core';
 import { createToolUI } from './toolSpecificUI';
 import addDropDownToToolbar from '../../../../utils/demo/helpers/addDropdownToToolbar';
 import { STACK_VIEWPORT_ID, VOLUME_VIEWPORT_ID } from './constants';
