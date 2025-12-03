@@ -113,7 +113,7 @@
   },
   "peerDependencies": {
     "@kitware/vtk.js": "34.15.1",
-    "@mediaire/cornerstone3d-core": "4.13.1",
+    "@mediaire/cornerstone3d-core": "4.13.1-mediaire.2",
     "@types/d3-array": "3.2.1",
     "@types/d3-interpolate": "3.0.4",
     "d3-array": "3.2.4",
