@@ -3,7 +3,6 @@
   "description": "Cornerstone.js Monorepo Root",
   "private": true,
   "workspaces": [
-    "packages/adapters",
     "packages/core",
     "packages/dicomImageLoader",
     "packages/nifti-volume-loader",
@@ -15,6 +14,10 @@
     "addOns/local/*"
   ],
   "repository": "https://github.com/mediaire/cornerstone3D",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://npm.pkg.github.com"
+  },
   "sideEffects": false,
   "engines": {
     "node": ">=20",
