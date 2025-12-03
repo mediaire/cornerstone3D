@@ -50,7 +50,7 @@
   },
   "scripts": {
     "prebuild": "node ../../scripts/generate-version.js ./",
-    "build:esm": "tsc --project ./tsconfig.json",
+    "build:esm": "npx tsc --project ./tsconfig.json",
     "build:esm:watch": "tsc --project ./tsconfig.json --watch",
     "build:all": "yarn run build:esm",
     "dev": "tsc --project ./tsconfig.json --watch",
