@@ -187,7 +187,7 @@ async function runGrowCut(
     usage: GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_DST,
   });
 
-  device.queue.writeBuffer(gpuVolumePixelDataBuffer, 0, volumePixelData);
+  device.queue.writeBuffer(gpuVolumePixelDataBuffer, 0, volumePixelData as BufferSource);
 
   const gpuLabelmapBuffers = [0, 1].map(() =>
     device.createBuffer({

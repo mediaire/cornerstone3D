@@ -167,7 +167,7 @@ async function fetchAndProcessNiftiData(
   let niftiImage = null;
 
   if (NiftiReader.isCompressed(niftiBuffer)) {
-    niftiBuffer = NiftiReader.decompress(niftiBuffer);
+    niftiBuffer = NiftiReader.decompress(niftiBuffer) as ArrayBuffer;
   }
 
   if (NiftiReader.isNIFTI(niftiBuffer)) {
