@@ -384,8 +384,10 @@ class CrosshairsTool extends AnnotationTool {
 
       if (normalAB || acquisitionAB) {
         // Two viewports have the same orientation
-        this.viewportCrosshairsConfig[viewportIds[0]] = CrosshairsType.SAME_ORIENTATION;
-        this.viewportCrosshairsConfig[viewportIds[1]] = CrosshairsType.SAME_ORIENTATION;
+        this.viewportCrosshairsConfig[viewportIds[0]] =
+          CrosshairsType.SAME_ORIENTATION;
+        this.viewportCrosshairsConfig[viewportIds[1]] =
+          CrosshairsType.SAME_ORIENTATION;
       }
     } else if (viewportIds.length == 3) {
       const normalAB = this._point3_IsEqual(normals[0], normals[1]);
@@ -396,9 +398,12 @@ class CrosshairsTool extends AnnotationTool {
 
       if ((normalAB && normalBC) || (acquisitionAB && acquisitionBC)) {
         // All three viewports have the same orientation
-        this.viewportCrosshairsConfig[viewportIds[0]] = CrosshairsType.SAME_ORIENTATION;
-        this.viewportCrosshairsConfig[viewportIds[1]] = CrosshairsType.SAME_ORIENTATION;
-        this.viewportCrosshairsConfig[viewportIds[2]] = CrosshairsType.SAME_ORIENTATION;
+        this.viewportCrosshairsConfig[viewportIds[0]] =
+          CrosshairsType.SAME_ORIENTATION;
+        this.viewportCrosshairsConfig[viewportIds[1]] =
+          CrosshairsType.SAME_ORIENTATION;
+        this.viewportCrosshairsConfig[viewportIds[2]] =
+          CrosshairsType.SAME_ORIENTATION;
       }
     }
   };
@@ -487,9 +492,12 @@ class CrosshairsTool extends AnnotationTool {
       return;
     }
 
-
     // Calculating the intersection of 3 planes
-    const toolCenter = csUtils.planar.threePlaneIntersection(firstPlane, secondPlane, thirdPlane);
+    const toolCenter = csUtils.planar.threePlaneIntersection(
+      firstPlane,
+      secondPlane,
+      thirdPlane
+    );
     this.setToolCenter(toolCenter);
   };
 
@@ -908,7 +916,10 @@ class CrosshairsTool extends AnnotationTool {
 
     const annotationUID = viewportAnnotation.annotationUID;
 
-    if (this.viewportCrosshairsConfig[viewport.id] === CrosshairsType.SAME_ORIENTATION) {
+    if (
+      this.viewportCrosshairsConfig[viewport.id] ===
+      CrosshairsType.SAME_ORIENTATION
+    ) {
       let lineUID = 1;
       const lineWidth = this.isFocusedOnCanvas ? 2.5 : 1;
 
@@ -980,7 +991,10 @@ class CrosshairsTool extends AnnotationTool {
       );
     }
 
-    if (this.viewportCrosshairsConfig[viewport.id] === CrosshairsType.SAME_ORIENTATION) {
+    if (
+      this.viewportCrosshairsConfig[viewport.id] ===
+      CrosshairsType.SAME_ORIENTATION
+    ) {
       return true;
     }
 
@@ -2229,14 +2243,13 @@ class CrosshairsTool extends AnnotationTool {
     const filteredToolAnnotations =
       this.filterInteractableAnnotationsForElement(element, annotations);
 
-    if (this.viewportCrosshairsConfig[viewport.id] === CrosshairsType.SAME_ORIENTATION) {
+    if (
+      this.viewportCrosshairsConfig[viewport.id] ===
+      CrosshairsType.SAME_ORIENTATION
+    ) {
       // keep third component (slice index) for same orientation crosshairs
       this.toolWorldFocus = eventDetail.currentPoints.world;
-      const newCenter = [
-        0,
-        0,
-        this.toolCenter[2],
-      ] as Types.Point3;
+      const newCenter = [0, 0, this.toolCenter[2]] as Types.Point3;
       this.setToolCenter(newCenter);
     }
 
@@ -2613,7 +2626,11 @@ class CrosshairsTool extends AnnotationTool {
 
     const viewport = renderingEngine.getViewport(data.viewportId);
 
-    if (!viewport || this.viewportCrosshairsConfig[viewport.id] === CrosshairsType.SAME_ORIENTATION) {
+    if (
+      !viewport ||
+      this.viewportCrosshairsConfig[viewport.id] ===
+        CrosshairsType.SAME_ORIENTATION
+    ) {
       return;
     }
 

@@ -320,6 +320,11 @@ export default class BrushStrategy {
       // Happens if there isn't a labelmap to apply to
       return;
     }
+
+    // before starting a new interaction, reset the modified indices
+    const { segmentationVoxelManager } = initializedData;
+    segmentationVoxelManager.resetModifiedIndices();
+
     this._onInteractionStart.forEach((func) =>
       func.call(this, initializedData)
     );

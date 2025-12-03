@@ -27,6 +27,14 @@ const DEFAULT_RLE_SIZE = 5 * 1024;
  */
 export default class VoxelManager<T> {
   public modifiedSlices = new Set<number>();
+  /**
+   * Keep track of modified voxel indices
+   */
+  public modifiedIndices: Set<number> = new Set();
+  /**
+   * Keep track of erased values (zeroed out)
+   */
+  public erasedValues: Set<T> = new Set();
   private boundsIJK = [
     [Infinity, -Infinity],
     [Infinity, -Infinity],
@@ -123,9 +131,14 @@ export default class VoxelManager<T> {
    */
   public setAtIJK = (i: number, j: number, k: number, v) => {
     const index = this.toIndex([i, j, k]);
+    const originalValue = this._get(index);
     const changed = this._set(index, v);
     if (changed !== false) {
       this.modifiedSlices.add(k);
+      this.modifiedIndices.add(index);
+      if (originalValue !== 0 && v === 0) {
+        this.erasedValues.add(originalValue);
+      }
       VoxelManager.addBounds(this.boundsIJK, [i, j, k]);
     }
 
@@ -178,10 +191,15 @@ export default class VoxelManager<T> {
    * Sets the value at the given index
    */
   public setAtIndex = (index, v) => {
+    const originalValue = this._get(index);
     const changed = this._set(index, v);
     if (changed !== false) {
       const pointIJK = this.toIJK(index);
       this.modifiedSlices.add(pointIJK[2]);
+      this.modifiedIndices.add(index);
+      if (originalValue !== 0 && v === 0) {
+        this.erasedValues.add(originalValue);
+      }
       VoxelManager.addBounds(this.boundsIJK, pointIJK);
     }
     return changed;
@@ -472,6 +490,8 @@ export default class VoxelManager<T> {
     this.map?.clear();
     this.clearBounds();
     this.modifiedSlices.clear();
+    this.modifiedIndices.clear();
+    this.erasedValues.clear();
     this.points?.clear();
   }
 
@@ -507,6 +527,14 @@ export default class VoxelManager<T> {
     return Array.from(this.modifiedSlices);
   }
 
+  public getModifiedIndices(): number[] {
+    return Array.from(this.modifiedIndices);
+  }
+
+  public getErasedValues(): T[] {
+    return Array.from(this.erasedValues);
+  }
+
   /**
    * Resets the set of modified slices.
    * This method clears all entries from the `modifiedSlices` set,
@@ -514,6 +542,11 @@ export default class VoxelManager<T> {
    */
   public resetModifiedSlices(): void {
     this.modifiedSlices.clear();
+  }
+
+  public resetModifiedIndices(): void {
+    this.modifiedIndices.clear();
+    this.erasedValues.clear();
   }
 
   /**
