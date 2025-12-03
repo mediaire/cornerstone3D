@@ -44,4 +44,6 @@ jobs:
         run: bun run build
 
       - name: Publish packages
-        run: bun run lerna publish from-package --yes --registry https://npm.pkg.github.com
+        env:
+          HUSKY_SKIP_INSTALL: true
+        run: bun run lerna publish from-package --no-verify-access --ignore-scripts --yes --registry https://npm.pkg.github.com
