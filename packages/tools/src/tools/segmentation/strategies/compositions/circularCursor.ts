@@ -1,6 +1,6 @@
 import { vec3 } from 'gl-matrix';
 
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 
 import type { InitializedOperationData } from '../BrushStrategy';
 import type { SVGDrawingHelper } from '../../../../types';

@@ -14,33 +14,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout repo
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      # 2. Setup Node.js with Yarn
+      - uses: actions/checkout@v4
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.2.23
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 22.7.0
-          cache: "yarn"
+          cache: "bun"
           registry-url: "https://npm.pkg.github.com"
           scope: "@mediaire"
 
-      # 3. Authenticate npm with GitHub Packages
+      # authenticate npm to GitHub Packages
       - name: Configure npm auth
         run: |
           echo "@mediaire:registry=https://npm.pkg.github.com" >> ~/.npmrc
           echo "//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}" > ~/.npmrc
 
-      # 4. Install dependencies with Yarn
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: bun install --frozen-lockfile
 
-      # 5. Build packages
       - name: Build packages
-        run: yarn build
+        run: bun run build
 
-      # 6. Publish packages with Lerna via Yarn
       - name: Publish packages
-        run: yarn lerna publish from-package --yes --registry https://npm.pkg.github.com
+        run: bun run lerna publish from-package --yes --registry https://npm.pkg.github.com
