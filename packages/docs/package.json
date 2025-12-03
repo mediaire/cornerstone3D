@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "@cornerstonejs/adapters": "4.13.1",
-    "@mediaire/cornerstone3d-core": "4.12.7-mediaire.1",
+    "@mediaire/cornerstone3d-core": "4.13.1",
     "@cornerstonejs/dicom-image-loader": "4.13.1",
     "@cornerstonejs/nifti-volume-loader": "4.13.1",
     "@cornerstonejs/tools": "4.13.1",
