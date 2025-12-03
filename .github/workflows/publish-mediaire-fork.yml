@@ -27,9 +27,11 @@ jobs:
       # 3. Authenticate npm with GitHub Packages
       - name: Configure npm auth
         run: |
-          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >
+          echo "//npm.pkg.github.com/:_authToken=${{ GITHUB_TOKEN }}" >
           ~/.npmrc
           echo "@mediaire:registry=https://npm.pkg.github.com" >> ~/.npmrc
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # 4. Install dependencies with Yarn
       - name: Install dependencies
