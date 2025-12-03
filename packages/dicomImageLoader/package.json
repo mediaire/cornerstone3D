@@ -22,7 +22,8 @@
     "url": "https://github.com/mediaire/cornerstone3D.git"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://npm.pkg.github.com"
   },
   "exports": {
     ".": {
