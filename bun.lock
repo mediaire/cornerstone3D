@@ -146,7 +146,7 @@
     },
     "packages/core": {
       "name": "@mediaire/cornerstone3d-core",
-      "version": "4.13.1",
+      "version": "4.13.1-mediaire.2",
       "dependencies": {
         "@kitware/vtk.js": "34.15.1",
         "comlink": "4.4.2",
@@ -188,7 +188,7 @@
     },
     "packages/nifti-volume-loader": {
       "name": "@mediaire/cornerstone3d-nifti-volume-loader",
-      "version": "4.13.1",
+      "version": "4.13.1-mediaire.1",
       "dependencies": {
         "nifti-reader-js": "0.6.9",
       },
@@ -210,7 +210,7 @@
     },
     "packages/tools": {
       "name": "@mediaire/cornerstone3d-tools",
-      "version": "4.13.1",
+      "version": "4.13.1-mediaire.1",
       "dependencies": {
         "@types/offscreencanvas": "2019.7.3",
         "comlink": "4.4.2",
