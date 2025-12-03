@@ -1,0 +1,42 @@
+name: Publish Mediaire Packages
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish:
+    name: Publish to Mediaire GitHub Packages
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout repo
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 2. Setup Node.js with Yarn
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22.7.0
+          cache: "yarn"
+          registry-url: "https://npm.pkg.github.com"
+          scope: "@mediaire"
+
+      # 3. Authenticate npm with GitHub Packages
+      - name: Configure npm auth
+        run: |
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
+
+      # 4. Install dependencies with Yarn
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      # 5. Build packages
+      - name: Build packages
+        run: yarn build
+
+      # 6. Publish packages with Lerna via Yarn
+      - name: Publish packages
+        run: yarn lerna publish from-package --yes --registry https://npm.pkg.github.com
