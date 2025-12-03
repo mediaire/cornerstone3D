@@ -14,7 +14,7 @@
     "addOns/externals/*",
     "addOns/local/*"
   ],
-  "repository": "https://github.com/cornerstonejs/cornerstone3D",
+  "repository": "https://github.com/mediaire/cornerstone3D",
   "sideEffects": false,
   "engines": {
     "node": ">=20",

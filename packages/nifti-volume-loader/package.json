@@ -4,7 +4,7 @@
   "description": "Nifti Image Loader for Cornerstone3D",
   "module": "./dist/esm/index.js",
   "types": "./dist/esm/index.d.ts",
-  "repository": "https://github.com/cornerstonejs/cornerstone3D",
+  "repository": "https://github.com/mediaire/cornerstone3D",
   "files": [
     "dist/esm"
   ],

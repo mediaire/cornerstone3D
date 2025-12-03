@@ -2,7 +2,7 @@
   "name": "docs",
   "version": "3.0.0",
   "private": true,
-  "repository": "https://github.com/cornerstonejs/cornerstone3D",
+  "repository": "https://github.com/mediaire/cornerstone3D",
   "scripts": {
     "preinstall": "node preinstall.js",
     "build": "echo 'build'",
