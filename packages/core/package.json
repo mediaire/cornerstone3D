@@ -1,5 +1,5 @@
 {
-  "name": "@cornerstonejs/core",
+  "name": "@mediaire/cornerstone3d-core",
   "version": "4.12.7-mediaire.0",
   "description": "Cornerstone3D Core",
   "module": "./dist/esm/index.js",
@@ -100,5 +100,6 @@
   "funding": {
     "type": "individual",
     "url": "https://ohif.org/donate"
-  }
+  },
+  "gitHead": "2a3ee0487467114355867e761aee3aae8821311d"
 }

@@ -112,7 +112,7 @@
     "canvas": "3.2.0"
   },
   "peerDependencies": {
-    "@cornerstonejs/core": "4.12.6",
+    "@mediaire/cornerstone3d-core": "4.12.6",
     "@kitware/vtk.js": "34.15.1",
     "@types/d3-array": "3.2.1",
     "@types/d3-interpolate": "3.0.4",
@@ -130,5 +130,6 @@
   "funding": {
     "type": "individual",
     "url": "https://ohif.org/donate"
-  }
+  },
+  "gitHead": "2a3ee0487467114355867e761aee3aae8821311d"
 }
