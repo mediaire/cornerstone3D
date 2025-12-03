@@ -12,7 +12,7 @@ import {
   eventTarget,
   getEnabledElementByIds,
   getRenderingEngines,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 import { filterViewportsWithToolEnabled } from '../utilities/viewportFilters';
 import { getToolGroup } from '../store/ToolGroupManager';
 import { Events } from '../enums';

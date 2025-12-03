@@ -1,4 +1,4 @@
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import {
   addTool,
   PlanarFreehandContourSegmentationTool,
@@ -8,13 +8,13 @@ import {
   ToolGroupManager,
   Enums as csToolsEnums,
   segmentation,
-} from '@cornerstonejs/tools';
+} from '@mediaire/cornerstone3d-core';
 import {
   RenderingEngine,
   Enums,
   volumeLoader,
   getRenderingEngine,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 import {
   initDemo,
   createImageIdsAndCacheMetaData,

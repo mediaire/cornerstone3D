@@ -1,5 +1,5 @@
-import { getEnabledElement, triggerEvent } from '@cornerstonejs/core';
-import type { Types } from '@cornerstonejs/core';
+import { getEnabledElement, triggerEvent } from '@mediaire/cornerstone3d-core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 
 import Events from '../../enums/Events';
 import mouseMoveListener from './mouseMoveListener';

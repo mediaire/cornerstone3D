@@ -1,4 +1,4 @@
-import { getEnabledElement, StackViewport, Enums } from '@cornerstonejs/core';
+import { getEnabledElement, StackViewport, Enums } from '@mediaire/cornerstone3d-core';
 import { getToolState } from './state';
 
 export const requestType = Enums.RequestType.Prefetch;

@@ -4,7 +4,7 @@ import {
   Enums,
   setVolumesForViewports,
   volumeLoader,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 import {
   addTool,
   BrushTool,
@@ -14,7 +14,7 @@ import {
   ZoomTool,
   segmentation,
   Enums as csToolsEnums,
-} from '@cornerstonejs/tools';
+} from '@mediaire/cornerstone3d-core';
 import {
   initDemo,
   createImageIdsAndCacheMetaData,

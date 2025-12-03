@@ -1,6 +1,6 @@
-import { getEnabledElementByViewportId, utilities } from '@cornerstonejs/core';
+import { getEnabledElementByViewportId, utilities } from '@mediaire/cornerstone3d-core';
 import type { Point2 } from '@cornerstonejs/core/types';
-import { CircleROITool } from '@cornerstonejs/tools';
+import { CircleROITool } from '@mediaire/cornerstone3d-core';
 import { typeToIdMap, typeToStartIdMap, typeToEndIdMap } from './constants';
 
 function getInputValue(form: HTMLFormElement, inputId: string): number {

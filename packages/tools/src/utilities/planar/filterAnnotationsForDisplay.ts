@@ -1,9 +1,9 @@
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import {
   StackViewport,
   VolumeViewport,
   utilities as csUtils,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 
 import filterAnnotationsWithinSlice from './filterAnnotationsWithinSlice';
 import type { Annotations } from '../../types';

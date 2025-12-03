@@ -7,7 +7,7 @@ import {
   metaData,
   type Types,
   setUseCPURendering,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 import {
   initDemo,
   createImageIdsAndCacheMetaData,

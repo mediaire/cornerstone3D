@@ -1,4 +1,4 @@
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import { addColorLUT as _addColorLUT } from '../addColorLUT';
 import { getColorLUT as _getColorLUT } from '../getColorLUT';
 import { getSegmentationRepresentations } from '../getSegmentationRepresentation';

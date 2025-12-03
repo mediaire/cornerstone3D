@@ -7,7 +7,7 @@ import {
   metaData,
   utilities,
   triggerEvent,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 import { addToolState, getToolState, type StackPrefetchData } from './state';
 import {
   getStackData,

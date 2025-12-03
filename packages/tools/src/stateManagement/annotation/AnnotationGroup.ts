@@ -1,4 +1,4 @@
-import { eventTarget, triggerEvent } from '@cornerstonejs/core';
+import { eventTarget, triggerEvent } from '@mediaire/cornerstone3d-core';
 import Events from '../../enums/Events';
 import { getAnnotation } from './annotationState';
 

@@ -1,4 +1,4 @@
-import { eventTarget, type Types } from '@cornerstonejs/core';
+import { eventTarget, type Types } from '@mediaire/cornerstone3d-core';
 import { Events, SegmentationRepresentations } from '../../enums';
 import { triggerSegmentationModified } from './triggerSegmentationEvents';
 import debounce from '../../utilities/debounce';

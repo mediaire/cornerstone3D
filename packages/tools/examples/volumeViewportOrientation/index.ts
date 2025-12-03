@@ -1,17 +1,17 @@
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import {
   RenderingEngine,
   Enums,
   volumeLoader,
   getRenderingEngine,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 import {
   ToolGroupManager,
   addTool,
   Enums as csToolsEnums,
   ZoomTool,
   StackScrollTool,
-} from '@cornerstonejs/tools';
+} from '@mediaire/cornerstone3d-core';
 import {
   initDemo,
   createImageIdsAndCacheMetaData,

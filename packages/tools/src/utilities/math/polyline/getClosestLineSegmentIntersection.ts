@@ -1,5 +1,5 @@
 import { vec2 } from 'gl-matrix';
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import areLineSegmentsIntersecting from './areLineSegmentsIntersecting';
 
 /**

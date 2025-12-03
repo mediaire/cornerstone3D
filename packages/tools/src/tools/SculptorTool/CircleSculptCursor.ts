@@ -1,6 +1,6 @@
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import { vec2, vec3 } from 'gl-matrix';
-import { getEnabledElement } from '@cornerstonejs/core';
+import { getEnabledElement } from '@mediaire/cornerstone3d-core';
 import type { ISculptToolShape } from '../../types/ISculptToolShape';
 import type { SculptData, SculptIntersect } from '../SculptorTool';
 import { distancePointToContour } from '../distancePointToContour';

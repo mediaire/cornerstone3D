@@ -1,4 +1,4 @@
-import { utilities, getWebWorkerManager } from '@cornerstonejs/core';
+import { utilities, getWebWorkerManager } from '@mediaire/cornerstone3d-core';
 import {
   triggerWorkerProgress,
   getSegmentationDataForWorker,

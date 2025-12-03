@@ -1,5 +1,5 @@
 import { vec3 } from 'gl-matrix';
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 
 function _getAreaVector(polyline: Types.Point3[]): Types.Point3 {
   const vecArea = vec3.create();

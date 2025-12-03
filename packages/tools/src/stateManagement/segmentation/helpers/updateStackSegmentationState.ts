@@ -1,4 +1,4 @@
-import { cache, eventTarget } from '@cornerstonejs/core';
+import { cache, eventTarget } from '@mediaire/cornerstone3d-core';
 import { Events, SegmentationRepresentations } from '../../../enums';
 import { getSegmentation } from '../getSegmentation';
 import type { LabelmapSegmentationDataVolume } from '../../../types/LabelmapTypes';

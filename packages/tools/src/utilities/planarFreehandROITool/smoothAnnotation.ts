@@ -1,4 +1,4 @@
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import { mat4, vec3 } from 'gl-matrix';
 import type { PlanarFreehandROIAnnotation } from '../../types/ToolSpecificAnnotationTypes';
 import interpolateSegmentPoints from './interpolation/interpolateSegmentPoints';

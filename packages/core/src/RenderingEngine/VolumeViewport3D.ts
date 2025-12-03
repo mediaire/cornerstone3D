@@ -10,7 +10,7 @@ import type vtkVolume from '@kitware/vtk.js/Rendering/Core/Volume';
 import type { ViewportInput } from '../types/IViewport';
 import type { ImageActor } from '../types/IActor';
 import BaseVolumeViewport from './BaseVolumeViewport';
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 /**
  * An object representing a 3-dimensional volume viewport. VolumeViewport3Ds are used to render
  * 3D volumes in their entirety, and not just load a single slice at a time.

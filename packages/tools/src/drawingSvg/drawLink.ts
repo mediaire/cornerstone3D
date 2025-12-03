@@ -1,4 +1,4 @@
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 
 import drawLine from './drawLine';
 import findClosestPoint from '../utilities/math/vec2/findClosestPoint';

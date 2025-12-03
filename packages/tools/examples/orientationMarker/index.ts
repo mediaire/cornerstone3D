@@ -1,4 +1,4 @@
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import {
   RenderingEngine,
   Enums,
@@ -6,16 +6,16 @@ import {
   setVolumesForViewports,
   CONSTANTS,
   utilities,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 import {
   initDemo,
   createImageIdsAndCacheMetaData,
   setTitleAndDescription,
 } from '../../../../utils/demo/helpers';
-import * as cornerstoneTools from '@cornerstonejs/tools';
+import * as cornerstoneTools from '@mediaire/cornerstone3d-core';
 import addDropDownToToolbar from '../../../../utils/demo/helpers/addDropdownToToolbar';
 import setPetTransferFunction from '../../../../utils/demo/helpers/setPetTransferFunctionForVolumeActor';
-import { VolumeRotateTool } from '@cornerstonejs/tools';
+import { VolumeRotateTool } from '@mediaire/cornerstone3d-core';
 
 async function getImageStacks() {
   const wadoRsRoot1 = 'https://d14fa38qiwhyfd.cloudfront.net/dicomweb';

@@ -1,4 +1,4 @@
-import { geometryLoader, Enums } from '@cornerstonejs/core';
+import { geometryLoader, Enums } from '@mediaire/cornerstone3d-core';
 import downloadSurfaces, { downloadOneSurface } from './downloadSurfacesData';
 import type { SurfaceData } from '@cornerstonejs/core/types';
 

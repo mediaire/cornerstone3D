@@ -1,4 +1,4 @@
-import { Enums, Types } from '@cornerstonejs/core';
+import { Enums, Types } from '@mediaire/cornerstone3d-core';
 
 const seconds = (time) => `${(time || 0).toFixed(1)} s`;
 

@@ -6,13 +6,13 @@ import {
   setVolumesForViewports,
   eventTarget,
   imageLoader,
-} from '@cornerstonejs/core';
-import * as cornerstoneTools from '@cornerstonejs/tools';
+} from '@mediaire/cornerstone3d-core';
+import * as cornerstoneTools from '@mediaire/cornerstone3d-core';
 import {
   Enums as NiftiEnums,
   cornerstoneNiftiImageLoader,
   createNiftiImageIdsAndCacheMetadata,
-} from '@cornerstonejs/nifti-volume-loader';
+} from '@mediaire/cornerstone3d-nifti-volume-loader';
 
 import { addDropdownToToolbar, initDemo } from '../../../../utils/demo/helpers';
 

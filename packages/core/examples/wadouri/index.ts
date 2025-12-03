@@ -1,10 +1,10 @@
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import {
   RenderingEngine,
   Enums,
   getRenderingEngine,
   init as csRenderInit,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 
 import { init as initLoader } from '@cornerstonejs/dicom-image-loader';
 import {

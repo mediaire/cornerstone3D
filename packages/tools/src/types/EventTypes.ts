@@ -1,4 +1,4 @@
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import type { Annotation } from './AnnotationTypes';
 import type IPoints from './IPoints';
 import type ITouchPoints from './ITouchPoints';

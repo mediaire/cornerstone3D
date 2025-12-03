@@ -1,5 +1,5 @@
-import type { Types } from '@cornerstonejs/core';
-import { RenderingEngine, Enums, eventTarget } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
+import { RenderingEngine, Enums, eventTarget } from '@mediaire/cornerstone3d-core';
 import {
   addButtonToToolbar,
   initDemo,
@@ -7,7 +7,7 @@ import {
   createImageIdsAndCacheMetaData,
   getLocalUrl,
 } from '../../../../utils/demo/helpers';
-import * as cornerstoneTools from '@cornerstonejs/tools';
+import * as cornerstoneTools from '@mediaire/cornerstone3d-core';
 
 // This is for debugging purposes
 console.warn(

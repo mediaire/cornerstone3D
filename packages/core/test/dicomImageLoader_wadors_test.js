@@ -1,5 +1,5 @@
 // @ts-check
-import { cache, imageLoader, metaData } from '@cornerstonejs/core';
+import { cache, imageLoader, metaData } from '@mediaire/cornerstone3d-core';
 import {
   init as dicomImageLoaderInit,
   wadors,

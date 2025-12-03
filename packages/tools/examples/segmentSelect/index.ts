@@ -1,6 +1,6 @@
-import { Enums, RenderingEngine, imageLoader } from '@cornerstonejs/core';
-import * as cornerstone from '@cornerstonejs/core';
-import * as cornerstoneTools from '@cornerstonejs/tools';
+import { Enums, RenderingEngine, imageLoader } from '@mediaire/cornerstone3d-core';
+import * as cornerstone from '@mediaire/cornerstone3d-core';
+import * as cornerstoneTools from '@mediaire/cornerstone3d-core';
 import {
   addManipulationBindings,
   createImageIdsAndCacheMetaData,

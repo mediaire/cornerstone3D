@@ -1,9 +1,9 @@
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import {
   utilities as csUtils,
   StackViewport,
   VolumeViewport,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 
 function extractWindowLevelRegionToolData(
   viewport: Types.IVolumeViewport | Types.IStackViewport

@@ -4,7 +4,7 @@ import {
   VolumeViewport,
   cache,
   utilities,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 import type { EventTypes } from '../types';
 
 // Todo: should move to configuration

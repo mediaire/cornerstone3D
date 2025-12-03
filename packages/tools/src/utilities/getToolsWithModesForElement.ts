@@ -1,5 +1,5 @@
 import type { ToolModes } from '../enums';
-import { getEnabledElement } from '@cornerstonejs/core';
+import { getEnabledElement } from '@mediaire/cornerstone3d-core';
 import { getToolGroupForViewport } from '../store/ToolGroupManager';
 
 type ModesFilter = Array<ToolModes>;

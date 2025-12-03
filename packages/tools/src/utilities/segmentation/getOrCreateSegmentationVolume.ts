@@ -3,7 +3,7 @@ import {
   volumeLoader,
   utilities,
   type Types,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 import { getSegmentation } from '../../stateManagement/segmentation/getSegmentation';
 import type {
   LabelmapSegmentationDataStack,

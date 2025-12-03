@@ -1,6 +1,6 @@
 import { addAnnotation } from '../../../../stateManagement/annotation/annotationState';
-import type { Types, StackViewport } from '@cornerstonejs/core';
-import { cache, utilities } from '@cornerstonejs/core';
+import type { Types, StackViewport } from '@mediaire/cornerstone3d-core';
+import { cache, utilities } from '@mediaire/cornerstone3d-core';
 import { getClosestImageIdForStackViewport } from '../../../../utilities/annotationHydration';
 
 import { addContourSegmentationAnnotation } from '../../../../utilities/contourSegmentation';

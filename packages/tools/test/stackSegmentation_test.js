@@ -1,4 +1,4 @@
-import * as cornerstone3D from '@cornerstonejs/core';
+import * as cornerstone3D from '@mediaire/cornerstone3d-core';
 import * as csTools3d from '../src/index';
 import * as testUtils from '../../../utils/test/testUtils';
 import * as imageURI_64_64_10_5_1_1_0_SEG_Mocked from './groundTruth/imageURI_64_64_10_5_1_1_0_SEG_Mocked.png';

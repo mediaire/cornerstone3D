@@ -1,4 +1,4 @@
-import { eventTarget } from '@cornerstonejs/core';
+import { eventTarget } from '@mediaire/cornerstone3d-core';
 import Events from '../enums/Events';
 import InterpolationManager from '../utilities/segmentation/InterpolationManager/InterpolationManager';
 

@@ -1,4 +1,4 @@
-import { getEnabledElement, utilities } from '@cornerstonejs/core';
+import { getEnabledElement, utilities } from '@mediaire/cornerstone3d-core';
 import type {
   Annotation,
   EventTypes,

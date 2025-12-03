@@ -1,4 +1,4 @@
-import { utilities, cache } from '@cornerstonejs/core';
+import { utilities, cache } from '@mediaire/cornerstone3d-core';
 import StrategyCallbacks from '../../../../enums/StrategyCallbacks';
 import getOrCreateSegmentationVolume from '../../../../utilities/segmentation/getOrCreateSegmentationVolume';
 

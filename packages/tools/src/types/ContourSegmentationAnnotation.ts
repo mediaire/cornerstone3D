@@ -1,4 +1,4 @@
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import type { ContourAnnotation } from './ContourAnnotation';
 // Import the type so it isn't recursive imports
 

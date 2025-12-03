@@ -1,4 +1,4 @@
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import distanceToPointSquared from './distanceToPointSquared';
 
 type Point = Types.Point2 | Types.Point3;

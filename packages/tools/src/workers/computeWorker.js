@@ -1,5 +1,5 @@
 import { expose } from 'comlink';
-import { utilities } from '@cornerstonejs/core';
+import { utilities } from '@mediaire/cornerstone3d-core';
 import SegmentStatsCalculator from '../utilities/segmentation/SegmentStatsCalculator';
 import { getSegmentLargestBidirectional } from '../utilities/segmentation';
 import vtkImageMarchingSquares from '@kitware/vtk.js/Filters/General/ImageMarchingSquares';

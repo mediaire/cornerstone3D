@@ -5,7 +5,7 @@ import {
   cache,
   volumeLoader,
   setUseCPURendering,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 import {
   describe,
   it,

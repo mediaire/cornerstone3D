@@ -1,12 +1,12 @@
-import type { Types } from '@cornerstonejs/core';
-import { eventTarget, RenderingEngine, Enums } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
+import { eventTarget, RenderingEngine, Enums } from '@mediaire/cornerstone3d-core';
 import {
   initDemo,
   createImageIdsAndCacheMetaData,
   setTitleAndDescription,
   addDropdownToToolbar,
 } from '../../../../utils/demo/helpers';
-import * as cornerstoneTools from '@cornerstonejs/tools';
+import * as cornerstoneTools from '@mediaire/cornerstone3d-core';
 import { KeyboardBindings } from '../../src/enums';
 import { StackScrollOutOfBoundsEvent } from 'core/src/types/EventTypes';
 

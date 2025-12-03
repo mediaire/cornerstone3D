@@ -1,5 +1,5 @@
 import { vec3 } from 'gl-matrix';
-import { utilities as csUtils } from '@cornerstonejs/core';
+import { utilities as csUtils } from '@mediaire/cornerstone3d-core';
 
 const { isEqual } = csUtils;
 

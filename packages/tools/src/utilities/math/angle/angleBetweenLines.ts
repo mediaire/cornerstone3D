@@ -1,4 +1,4 @@
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import { vec2, vec3 } from 'gl-matrix';
 
 type Line2D = [Types.Point2, Types.Point2];

@@ -1,4 +1,4 @@
-import { utilities as csUtils } from '@cornerstonejs/core';
+import { utilities as csUtils } from '@mediaire/cornerstone3d-core';
 import { annotation, utilities as cstUtils } from '@cornerstonejs/tools';
 
 export function addMockContourSegmentation({

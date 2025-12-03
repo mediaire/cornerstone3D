@@ -1,4 +1,4 @@
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import * as mathLine from '../line';
 
 const DEFAULT_EPSILON = 0.1;

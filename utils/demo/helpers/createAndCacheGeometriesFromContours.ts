@@ -1,4 +1,4 @@
-import { geometryLoader, Enums } from '@cornerstonejs/core';
+import { geometryLoader, Enums } from '@mediaire/cornerstone3d-core';
 import assetsURL from '../../assets/assetsURL.json';
 
 /**

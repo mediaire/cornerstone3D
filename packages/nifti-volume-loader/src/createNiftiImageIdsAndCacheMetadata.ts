@@ -1,5 +1,5 @@
 import * as NiftiReader from 'nifti-reader-js';
-import { eventTarget, triggerEvent, utilities } from '@cornerstonejs/core';
+import { eventTarget, triggerEvent, utilities } from '@mediaire/cornerstone3d-core';
 import type { mat3 } from 'gl-matrix';
 import { rasToLps } from './helpers/convert';
 import Events from './enums/Events';

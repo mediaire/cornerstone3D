@@ -1,5 +1,5 @@
-import { BaseVolumeViewport, cache, utilities } from '@cornerstonejs/core';
-import type { Types } from '@cornerstonejs/core';
+import { BaseVolumeViewport, cache, utilities } from '@mediaire/cornerstone3d-core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import { SegmentationRepresentations } from '../../enums';
 import {
   getSegmentation,

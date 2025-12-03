@@ -1,9 +1,9 @@
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import {
   BaseVolumeViewport,
   getRenderingEngine,
   StackViewport,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 
 /**
  * Synchronizer callback to synchronize the voi of volumeActors of identical volumes

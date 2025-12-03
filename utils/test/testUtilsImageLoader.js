@@ -1,4 +1,4 @@
-import { cache, utilities } from '@cornerstonejs/core';
+import { cache, utilities } from '@mediaire/cornerstone3d-core';
 import { decodeImageIdInfo } from './testUtils';
 import {
   getVerticalBarImage,

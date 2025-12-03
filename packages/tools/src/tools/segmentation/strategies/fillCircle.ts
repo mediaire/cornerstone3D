@@ -1,7 +1,7 @@
 import { vec3 } from 'gl-matrix';
 import type { ReadonlyVec3 } from 'gl-matrix';
-import { utilities as csUtils } from '@cornerstonejs/core';
-import type { Types } from '@cornerstonejs/core';
+import { utilities as csUtils } from '@mediaire/cornerstone3d-core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import type vtkImageData from '@kitware/vtk.js/Common/DataModel/ImageData';
 
 import { getBoundingBoxAroundShapeIJK } from '../../../utilities/boundingBox';

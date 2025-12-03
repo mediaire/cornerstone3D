@@ -1,4 +1,4 @@
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import {
   eventTarget,
   VolumeViewport,
@@ -7,7 +7,7 @@ import {
   utilities,
   getEnabledElement,
   cache,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 import { Colorbar } from './Colorbar';
 import type { ViewportColorbarProps, ColorbarVOIRange } from './types';
 import { getVOIMultipliers } from '../../getVOIMultipliers';

@@ -2,7 +2,7 @@ import {
   VolumeViewport,
   getEnabledElementByViewportId,
   StackViewport,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 
 import type { SegmentationDataModifiedEventType } from '../../../types/EventTypes';
 import { SegmentationRepresentations } from '../../../enums';

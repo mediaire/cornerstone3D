@@ -1,10 +1,10 @@
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import {
   RenderingEngine,
   volumeLoader,
   Enums,
   utilities as csUtils,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 // TODO -> A load of the utilities in cornerstone tools are just about the volumes and should be in core instead
 import {
   initDemo,

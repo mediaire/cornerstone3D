@@ -1,5 +1,5 @@
-import type { Types } from '@cornerstonejs/core';
-import { getRenderingEngine } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
+import { getRenderingEngine } from '@mediaire/cornerstone3d-core';
 import type { Synchronizer } from '../../store';
 
 /**

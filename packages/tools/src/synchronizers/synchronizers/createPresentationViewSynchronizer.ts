@@ -1,4 +1,4 @@
-import { Enums, type Types } from '@cornerstonejs/core';
+import { Enums, type Types } from '@mediaire/cornerstone3d-core';
 import { createSynchronizer } from '../../store/SynchronizerManager';
 import presentationViewSyncCallback from '../callbacks/presentationViewSyncCallback';
 import type Synchronizer from '../../store/SynchronizerManager/Synchronizer';

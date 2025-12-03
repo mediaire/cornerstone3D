@@ -7,8 +7,8 @@ import {
   getRenderingEngines,
   getEnabledElementByIds,
   Settings,
-} from '@cornerstonejs/core';
-import { type Types, utilities } from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
+import { type Types, utilities } from '@mediaire/cornerstone3d-core';
 import type {
   ToolActivatedEventDetail,
   ToolModeChangedEventDetail,

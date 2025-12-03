@@ -11,7 +11,7 @@ import type vtkVolumeMapper from '@kitware/vtk.js/Rendering/Core/VolumeMapper';
 
 import { BaseTool } from './base';
 
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import {
   getRenderingEngine,
   getEnabledElementByIds,
@@ -19,7 +19,7 @@ import {
   Enums,
   triggerEvent,
   eventTarget,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 
 import { getToolGroup } from '../store/ToolGroupManager';
 import { Events } from '../enums';

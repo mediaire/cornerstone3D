@@ -1,4 +1,4 @@
-import { utilities } from '@cornerstonejs/core';
+import { utilities } from '@mediaire/cornerstone3d-core';
 import type { ContourSegmentationAnnotation } from '../../types';
 import { addAnnotation, getAnnotation } from '../../stateManagement';
 import { getViewportAssociatedToSegmentation } from '../../stateManagement/segmentation/utilities/getViewportAssociatedToSegmentation';

@@ -1,4 +1,4 @@
-import { Enums } from '@cornerstonejs/core';
+import { Enums } from '@mediaire/cornerstone3d-core';
 
 const { CalibrationTypes } = Enums;
 const PIXEL_UNITS = 'px';

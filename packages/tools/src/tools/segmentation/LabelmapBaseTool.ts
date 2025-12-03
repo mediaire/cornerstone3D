@@ -6,8 +6,8 @@ import {
   eventTarget,
   BaseVolumeViewport,
   StackViewport,
-} from '@cornerstonejs/core';
-import type { Types } from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 
 import { BaseTool } from '../base';
 import type { LabelmapSegmentationDataVolume } from '../../types/LabelmapTypes';

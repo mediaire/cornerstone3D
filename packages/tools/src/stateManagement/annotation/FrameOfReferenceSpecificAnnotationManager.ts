@@ -7,13 +7,13 @@ import type {
 
 import type { AnnotationGroupSelector, IAnnotationManager } from '../../types';
 
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import {
   Enums,
   eventTarget,
   getEnabledElement,
   utilities,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 
 /**
  * This is the default annotation manager. It stores annotations by default

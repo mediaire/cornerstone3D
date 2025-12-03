@@ -1,4 +1,4 @@
-import { getEnabledElementByViewportId } from '@cornerstonejs/core';
+import { getEnabledElementByViewportId } from '@mediaire/cornerstone3d-core';
 import triggerAnnotationRender from './triggerAnnotationRender';
 
 export function triggerAnnotationRenderForViewportIds(

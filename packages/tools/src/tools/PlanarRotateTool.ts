@@ -1,5 +1,5 @@
-import type { Types } from '@cornerstonejs/core';
-import { BaseVolumeViewport, getEnabledElement } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
+import { BaseVolumeViewport, getEnabledElement } from '@mediaire/cornerstone3d-core';
 import { mat4, vec3 } from 'gl-matrix';
 import { BaseTool } from './base';
 import angleBetweenLines from '../utilities/math/angle/angleBetweenLines';

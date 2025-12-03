@@ -6,7 +6,7 @@ import {
   eventTarget,
   createVolumeActor,
   type Types,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 import { Events, SegmentationRepresentations } from '../../../enums';
 import type vtkVolumeMapper from '@kitware/vtk.js/Rendering/Core/VolumeMapper';
 import type vtkVolume from '@kitware/vtk.js/Rendering/Core/Volume';

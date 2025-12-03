@@ -3,7 +3,7 @@ import {
   eventTarget,
   utilities,
   getRenderingEngine,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 import PlanarFreehandContourSegmentationTool from '../annotation/PlanarFreehandContourSegmentationTool';
 import BrushTool from './BrushTool';
 import * as segmentation from '../../stateManagement/segmentation';

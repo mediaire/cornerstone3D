@@ -1,5 +1,5 @@
-import type { Types } from '@cornerstonejs/core';
-import { cache } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
+import { cache } from '@mediaire/cornerstone3d-core';
 import { segmentLargestUSOutlineFromBuffer } from './segmentLargestUSOutlineFromBuffer';
 import { generateConvexHullFromContour } from './generateConvexHullFromContour';
 import { calculateFanShapeCorners } from './calculateFanShapeCorners';

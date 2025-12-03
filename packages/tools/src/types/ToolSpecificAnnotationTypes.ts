@@ -1,4 +1,4 @@
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import type { Annotation, AnnotationData } from './AnnotationTypes';
 import type { ISpline } from './';
 import type { ContourSegmentationAnnotationData } from './ContourSegmentationAnnotation';

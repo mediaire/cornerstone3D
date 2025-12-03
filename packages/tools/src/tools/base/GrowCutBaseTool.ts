@@ -7,7 +7,7 @@ import {
   volumeLoader,
   imageLoader,
   ImageVolume,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 import { BaseTool } from '../base';
 import { SegmentationRepresentations } from '../../enums';
 import type { EventTypes, PublicToolProps, ToolProps } from '../../types';

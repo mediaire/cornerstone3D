@@ -1,4 +1,4 @@
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import { point } from '../math';
 import interpolateSegmentPoints from './interpolation/interpolateSegmentPoints';
 

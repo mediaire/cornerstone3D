@@ -3,7 +3,7 @@ import labelmapDisplay from '../../tools/displayTools/Labelmap/labelmapDisplay';
 import contourDisplay from '../../tools/displayTools/Contour/contourDisplay';
 
 import { getSegmentationRepresentations } from './getSegmentationRepresentation';
-import { getEnabledElementByViewportId } from '@cornerstonejs/core';
+import { getEnabledElementByViewportId } from '@mediaire/cornerstone3d-core';
 import { defaultSegmentationStateManager } from './SegmentationStateManager';
 import { surfaceDisplay } from '../../tools/displayTools/Surface';
 import { removeSegmentationListener } from './segmentationEventManager';

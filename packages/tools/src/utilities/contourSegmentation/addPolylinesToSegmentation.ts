@@ -13,8 +13,8 @@
  * @returns The updated annotationUIDsMap
  */
 
-import type { Types } from '@cornerstonejs/core';
-import { utilities } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
+import { utilities } from '@mediaire/cornerstone3d-core';
 import { addAnnotation } from '../../stateManagement';
 import type { PolylineInfoWorld } from './polylineInfoTypes';
 

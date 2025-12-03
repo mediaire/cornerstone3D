@@ -1,9 +1,9 @@
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import {
   RenderingEngine,
   Enums,
   getRenderingEngine,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 import {
   initDemo,
   createImageIdsAndCacheMetaData,
@@ -27,7 +27,7 @@ import {
   Enums as csToolsEnums,
   annotation,
   addTool,
-} from '@cornerstonejs/tools';
+} from '@mediaire/cornerstone3d-core';
 
 // This is for debugging purposes
 console.warn(

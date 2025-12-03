@@ -1,11 +1,11 @@
-import type { Types } from '@cornerstonejs/core';
-import type { Types as csToolTypes } from '@cornerstonejs/tools';
+import type { Types } from '@mediaire/cornerstone3d-core';
+import type { Types as csToolTypes } from '@mediaire/cornerstone3d-core';
 import {
   Enums,
   getRenderingEngine,
   RenderingEngine,
-} from '@cornerstonejs/core';
-import * as cornerstoneTools from '@cornerstonejs/tools';
+} from '@mediaire/cornerstone3d-core';
+import * as cornerstoneTools from '@mediaire/cornerstone3d-core';
 import {
   addButtonToToolbar,
   addDropdownToToolbar,

@@ -1,5 +1,5 @@
 import type { IDistance, IPoints, ITouchPoints } from '../../types';
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 
 /**
  * Returns the difference between multiple `IPoints` instances.

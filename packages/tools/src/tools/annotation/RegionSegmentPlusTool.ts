@@ -2,8 +2,8 @@ import {
   cache,
   utilities as csUtils,
   getEnabledElement,
-} from '@cornerstonejs/core';
-import type { Types } from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import type { EventTypes, PublicToolProps, ToolProps } from '../../types';
 
 import { growCut } from '../../utilities/segmentation';

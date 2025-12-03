@@ -3,7 +3,7 @@ import {
   setupTestEnvironment,
 } from '../../../utils/test/testUtils';
 import * as csTools from '../src/index';
-import * as cornerstone3D from '@cornerstonejs/core';
+import * as cornerstone3D from '@mediaire/cornerstone3d-core';
 
 const annotationManager = csTools.annotation.state.getAnnotationManager();
 

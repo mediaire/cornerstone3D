@@ -19,7 +19,7 @@ import {
   init as initCore,
   setUseCPURendering,
   getRenderingEngines,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 import {
   init as initTools,
   addTool,

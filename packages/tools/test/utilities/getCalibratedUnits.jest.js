@@ -1,4 +1,4 @@
-import { Enums } from '@cornerstonejs/core';
+import { Enums } from '@mediaire/cornerstone3d-core';
 import { getCalibratedLengthUnitsAndScale } from '../../src/utilities/getCalibratedUnits';
 
 const { CalibrationTypes } = Enums;

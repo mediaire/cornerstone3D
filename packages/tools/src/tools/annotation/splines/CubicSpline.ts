@@ -1,6 +1,6 @@
 import type { mat4 } from 'gl-matrix';
 import { vec4 } from 'gl-matrix';
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import { Spline } from './Spline';
 import * as math from '../../../utilities/math';
 import type { SplineCurveSegment, SplineLineSegment } from '../../../types';

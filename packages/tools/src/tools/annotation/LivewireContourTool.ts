@@ -6,8 +6,8 @@ import {
   utilities,
   triggerEvent,
   eventTarget,
-} from '@cornerstonejs/core';
-import type { Types } from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 
 import { removeAnnotation } from '../../stateManagement/annotation/annotationState';
 import {

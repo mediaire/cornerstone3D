@@ -1,5 +1,5 @@
 import { state } from '../store/state';
-import { getEnabledElement } from '@cornerstonejs/core';
+import { getEnabledElement } from '@mediaire/cornerstone3d-core';
 import type { SVGDrawingHelper } from '../types';
 
 const VIEWPORT_ELEMENT = 'viewport-element';

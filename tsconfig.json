@@ -3,16 +3,16 @@
   "compilerOptions": {
     "baseUrl": "./packages",
     "paths": {
-      "@cornerstonejs/core": ["core/src"],
-      "@cornerstonejs/tools": ["tools/src"],
-      "@cornerstonejs/dicomImageLoader": ["dicomImageLoader/src"],
-      "@cornerstonejs/nifti-volume-loader": ["nifti-volume-loader/src"],
-      "@cornerstonejs/ai": ["ai/src"],
-      "@cornerstonejs/labelmap-interpolation": ["labelmap-interpolation/src"],
-      "@cornerstonejs/polymorphic-segmentation": [
+      "@mediaire/cornerstone3d-core": ["core/src"],
+      "@mediaire/cornerstone3d-tools": ["tools/src"],
+      "@mediaire/cornerstone3d-dicomImageLoader": ["dicomImageLoader/src"],
+      "@mediaire/cornerstone3d-nifti-volume-loader": ["nifti-volume-loader/src"],
+      "@mediaire/cornerstone3d-ai": ["ai/src"],
+      "@mediaire/cornerstone3d-labelmap-interpolation": ["labelmap-interpolation/src"],
+      "@mediaire/cornerstone3d-polymorphic-segmentation": [
         "polymorphic-segmentation/src"
       ],
-      "@cornerstonejs/adapters": ["adapters/src"]
+      "@mediaire/cornerstone3d-adapters": ["adapters/src"]
     }
   }
 }

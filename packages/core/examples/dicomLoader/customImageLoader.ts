@@ -1,4 +1,4 @@
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 //import cornerstoneDICOMImageLoader from '@cornerstonejs/dicom-image-loader';
 import cornerstoneDICOMImageLoader from '../../../dicomImageLoader/src';
 import dicomParser from 'dicom-parser';

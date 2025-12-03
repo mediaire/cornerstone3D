@@ -1,5 +1,5 @@
-import { utilities, Enums } from '@cornerstonejs/core';
-import type { Types } from '@cornerstonejs/core';
+import { utilities, Enums } from '@mediaire/cornerstone3d-core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 
 const { calibratedPixelSpacingMetadataProvider } = utilities;
 

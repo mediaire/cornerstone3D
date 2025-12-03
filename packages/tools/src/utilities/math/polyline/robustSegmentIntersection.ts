@@ -1,4 +1,4 @@
-import { utilities, type Types } from '@cornerstonejs/core';
+import { utilities, type Types } from '@mediaire/cornerstone3d-core';
 import { vec2 } from 'gl-matrix';
 
 // Epsilon for floating point comparisons

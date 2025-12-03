@@ -1,4 +1,4 @@
-import { getEnabledElement } from '@cornerstonejs/core';
+import { getEnabledElement } from '@mediaire/cornerstone3d-core';
 import { state } from '../../../store/state';
 import { Events } from '../../../enums';
 import { hideElementCursor } from '../../../cursors/elementCursor';

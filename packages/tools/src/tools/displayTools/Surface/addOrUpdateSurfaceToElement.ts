@@ -1,4 +1,4 @@
-import { utilities, type Types } from '@cornerstonejs/core';
+import { utilities, type Types } from '@mediaire/cornerstone3d-core';
 import vtkMapper from '@kitware/vtk.js/Rendering/Core/Mapper';
 import vtkActor from '@kitware/vtk.js/Rendering/Core/Actor';
 import vtkPolyData from '@kitware/vtk.js/Common/DataModel/PolyData';

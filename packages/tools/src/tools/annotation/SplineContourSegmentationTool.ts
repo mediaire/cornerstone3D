@@ -1,4 +1,4 @@
-import { eventTarget, utilities } from '@cornerstonejs/core';
+import { eventTarget, utilities } from '@mediaire/cornerstone3d-core';
 import type { PublicToolProps } from '../../types';
 import SplineROITool from './SplineROITool';
 import { Events } from '../../enums';

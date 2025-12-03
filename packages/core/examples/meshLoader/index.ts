@@ -1,14 +1,14 @@
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import {
   RenderingEngine,
   Enums,
   init as csRenderInit,
   geometryLoader,
   eventTarget,
-} from '@cornerstonejs/core';
+} from '@mediaire/cornerstone3d-core';
 import { setTitleAndDescription } from '../../../../utils/demo/helpers';
-import { init as csToolsInit } from '@cornerstonejs/tools';
-import * as cornerstoneTools from '@cornerstonejs/tools';
+import { init as csToolsInit } from '@mediaire/cornerstone3d-core';
+import * as cornerstoneTools from '@mediaire/cornerstone3d-core';
 
 geometryLoader.setOptions({
   beforeSend(xhr) {

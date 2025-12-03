@@ -7,7 +7,7 @@ Nifti volume loader for the cornerstone3D framework.
 You can inject custom headers to the requests made by the loader. This is useful for authentication purposes.
 
 ```js
-import { init } from '@cornerstonejs/nifti-volume-loader';
+import { init } from '@mediaire/cornerstone3d-nifti-volume-loader';
 
 niftiInit({
   beforeSend: (xhr, headers, url) => {

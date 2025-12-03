@@ -1,4 +1,4 @@
-import { cache, utilities as csUtils } from '@cornerstonejs/core';
+import { cache, utilities as csUtils } from '@mediaire/cornerstone3d-core';
 import StrategyCallbacks from '../../../../enums/StrategyCallbacks';
 import { getSegmentation } from '../../../../stateManagement/segmentation/getSegmentation';
 import type { LabelmapSegmentationDataStack } from '../../../../types';

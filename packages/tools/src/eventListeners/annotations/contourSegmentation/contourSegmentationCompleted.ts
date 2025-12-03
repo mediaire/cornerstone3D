@@ -1,4 +1,4 @@
-import { eventTarget, triggerEvent, type Types } from '@cornerstonejs/core';
+import { eventTarget, triggerEvent, type Types } from '@mediaire/cornerstone3d-core';
 import type { ContourSegmentationAnnotation } from '../../../types/ContourSegmentationAnnotation';
 import getViewportsForAnnotation from '../../../utilities/getViewportsForAnnotation';
 import { getAllAnnotations } from '../../../stateManagement/annotation/annotationState';

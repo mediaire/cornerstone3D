@@ -1,5 +1,5 @@
-import { getEnabledElements, utilities as csUtils } from '@cornerstonejs/core';
-import type { Types } from '@cornerstonejs/core';
+import { getEnabledElements, utilities as csUtils } from '@mediaire/cornerstone3d-core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import type { Annotation } from '../types';
 
 const { isEqual } = csUtils;

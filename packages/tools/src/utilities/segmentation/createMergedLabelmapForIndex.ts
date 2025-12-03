@@ -1,5 +1,5 @@
-import type { Types } from '@cornerstonejs/core';
-import { volumeLoader, utilities as csUtils, cache } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
+import { volumeLoader, utilities as csUtils, cache } from '@mediaire/cornerstone3d-core';
 
 /**
  * Given a list of labelmaps (with the possibility of overlapping regions), and
