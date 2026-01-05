@@ -1,6 +1,6 @@
 {
   "name": "root",
-  "description": "Cornerstone.js Monorepo Root",
+  "description": "Cornerstone.js Mediaire Fork Monorepo Root",
   "private": true,
   "workspaces": [
     "packages/core",
@@ -16,7 +16,7 @@
   "repository": "https://github.com/mediaire/cornerstone3D",
   "publishConfig": {
     "access": "public",
-    "registry": "https://npm.pkg.github.com"
+    "registry": "https://registry.npmjs.org"
   },
   "sideEffects": false,
   "engines": {
