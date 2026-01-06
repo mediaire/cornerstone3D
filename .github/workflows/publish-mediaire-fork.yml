@@ -44,4 +44,4 @@ jobs:
       - name: Publish packages
         env:
           HUSKY_SKIP_INSTALL: true
-        run: bun run lerna publish from-package --yes
+        run: bun run lerna publish from-package --yes --ignore-scripts
