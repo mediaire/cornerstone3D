@@ -1,6 +1,6 @@
 {
   "name": "@mediaire/cornerstone3d-tools",
-  "version": "4.13.1-mediaire.2",
+  "version": "4.15.2",
   "description": "Cornerstone3D Tools",
   "types": "./dist/esm/index.d.ts",
   "module": "./dist/esm/index.js",
@@ -112,6 +112,7 @@
     "canvas": "3.2.0"
   },
   "peerDependencies": {
+    "@cornerstonejs/core": "4.15.2",
     "@kitware/vtk.js": "34.15.1",
     "@mediaire/cornerstone3d-core": "4.13.1-mediaire.2",
     "@types/d3-array": "3.2.1",
