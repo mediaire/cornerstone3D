@@ -26,7 +26,6 @@ jobs:
         with:
           node-version: 24 # we need npm 11.5.1+ for trusted publishing
           registry-url: https://registry.npmjs.org
-          always-auth: false # do not write .npmrc with auth token
 
       - name: Install system dependencies
         run: |
@@ -39,14 +38,9 @@ jobs:
       - name: Build
         run: bun run build
 
-      - name: Verify npm auth
-        run: |
-          cat /home/runner/work/_temp/.npmrc || true
-          env | grep -i token || true
-          npm whoami
-          npm config get registry
-
       - name: Publish packages
         env:
           HUSKY_SKIP_INSTALL: true
-        run: npm publish --workspaces --if-present --provenance
+        run: npm publish --workspaces --if-present --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
