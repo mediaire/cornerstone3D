@@ -9,6 +9,7 @@ env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 permissions:
+  contents: read
   id-token: write # Required for OIDC (npm trusted publishing)
 
 jobs:
@@ -43,4 +44,4 @@ jobs:
       - name: Publish packages
         env:
           HUSKY_SKIP_INSTALL: true
-        run: bun run lerna publish from-package --no-verify-access --ignore-scripts --yes --registry https://registry.npmjs.org
+        run: bun run lerna publish from-package --yes
