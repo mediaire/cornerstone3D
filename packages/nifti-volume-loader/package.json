@@ -66,7 +66,7 @@
     "nifti-reader-js": "0.6.9"
   },
   "peerDependencies": {
-    "@mediaire/cornerstone3d-core": "4.15.2"
+    "@mediaire/cornerstone3d-core": "4.13.1-mediaire.2"
   },
   "contributors": [
     {
