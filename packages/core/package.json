@@ -8,8 +8,7 @@
     "url": "https://github.com/mediaire/cornerstone3D"
   },
   "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org"
+    "access": "public"
   },
   "files": [
     "./dist/"

@@ -6,9 +6,5 @@
     "packages/nifti-volume-loader"
   ],
   "npmClient": "yarn",
-  "command": {
-    "publish": {
-      "registry": "https://registry.npmjs.org"
-    }
-  }
+  "private": false
 }
