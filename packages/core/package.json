@@ -4,7 +4,9 @@
   "description": "Cornerstone3D Core",
   "module": "./dist/esm/index.js",
   "types": "./dist/esm/index.d.ts",
-  "repository": "https://github.com/mediaire/cornerstone3D",
+  "repository": {
+    "url": "https://github.com/mediaire/cornerstone3D"
+  },
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org"
@@ -86,6 +88,7 @@
   },
   "dependencies": {
     "@kitware/vtk.js": "34.15.1",
+    "@mediaire/cornerstone3d-core": "^4.13.1-mediaire.2",
     "comlink": "4.4.2",
     "gl-matrix": "3.4.3",
     "loglevel": "1.9.2"
