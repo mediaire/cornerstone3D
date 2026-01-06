@@ -5,6 +5,5 @@
     "packages/tools",
     "packages/nifti-volume-loader"
   ],
-  "npmClient": "yarn",
-  "private": false
+  "npmClient": "yarn"
 }
