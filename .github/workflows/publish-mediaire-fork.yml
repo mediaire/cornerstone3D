@@ -27,6 +27,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 24 # we need npm 11.5.1+ for trusted publishing
+          always-auth: false # do not write .npmrc with auth token
 
       - name: Install system dependencies
         run: |
@@ -38,6 +39,10 @@ jobs:
 
       - name: Build
         run: bun run build
+
+      - name: Authenticate with npm via OIDC
+        run: |
+          npm login --scope=@mediaire --registry=https://registry.npmjs.org --auth-type=oidc
 
       - name: Verify npm auth
         run: |
