@@ -1,3 +1,7 @@
+⚠️ This is a fork of the
+[@cornerstonejs/core](https://www.npmjs.com/package/@cornerstonejs/core) package
+that adds some custom features on top.
+
 # @cornerstonejs/core
 
 Cornerstone is a set of JavaScript libraries that can be used to build web-based medical imaging applications. It provides a framework to build radiology applications such as the [OHIF Viewer](https://ohif.org/).

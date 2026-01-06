@@ -1,3 +1,5 @@
+⚠️ This is a fork of the [@cornerstonejs/nifti-volume-loader](https://www.npmjs.com/package/@cornerstonejs/nifti-volume-loader) package that adds some custom features on top.
+
 # @cornerstonejs/nifti-volume-loader
 
 Nifti volume loader for the cornerstone3D framework.
