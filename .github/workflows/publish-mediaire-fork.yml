@@ -27,7 +27,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 24 # we need npm 11.5.1+ for trusted publishing
-          registry-url: https://registry.npmjs.org/
 
       - name: Install system dependencies
         run: |
@@ -42,6 +41,7 @@ jobs:
 
       - name: Verify npm auth
         run: |
+          env | grep -i token || true
           npm whoami
           npm config get registry
 
