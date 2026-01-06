@@ -5,9 +5,6 @@ on:
     branches:
       - main
 
-env:
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
 permissions:
   contents: read
   id-token: write # Required for OIDC (npm trusted publishing)
@@ -16,6 +13,8 @@ jobs:
   publish:
     name: Publish to Mediaire GitHub Packages
     runs-on: ubuntu-latest
+    env:
+      NPM_CONFIG_PROVENANCE: true
 
     steps:
       - uses: actions/checkout@v4
@@ -23,12 +22,19 @@ jobs:
         uses: oven-sh/setup-bun@v2
         with:
           bun-version: 1.2.23
-      - name: Setup Node.js for npmjs
+
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 24.12.0
-          registry-url: "https://registry.npmjs.org"
-          scope: "@mediaire"
+          node-version: 24.12.0 # we need npm 11.5.1+ for trusted publishing
+          check-latest: true
+
+      - name: Debug npm config
+        run: |
+          echo "registry=$(npm config get registry)"
+          echo "scoped-registry=$(npm config get @mediaire:registry || true)"
+          echo "has_authToken=$(npm config get //registry.npmjs.org/:_authToken || true)"
+          test -n "${ACTIONS_ID_TOKEN_REQUEST_URL}" && echo "OIDC env present" || echo "OIDC env missing"
 
       - name: Install system dependencies
         run: |
@@ -44,4 +50,11 @@ jobs:
       - name: Publish packages
         env:
           HUSKY_SKIP_INSTALL: true
-        run: npx lerna publish from-package --yes --ignore-scripts --no-verify-access
+        run: |
+          # Ensure no token-based auth is used
+          unset NODE_AUTH_TOKEN || true
+          [ -n "${NPM_CONFIG_USERCONFIG}" ] && rm -f "${NPM_CONFIG_USERCONFIG}" || true
+          npm config delete //registry.npmjs.org/:_authToken || true
+          # Optional sanity check
+          npm whoami || true
+          npx lerna publish from-package --yes --ignore-scripts
