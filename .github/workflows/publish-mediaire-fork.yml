@@ -41,6 +41,7 @@ jobs:
 
       - name: Verify npm auth
         run: |
+          cat /home/runner/work/_temp/.npmrc || true
           env | grep -i token || true
           npm whoami
           npm config get registry
