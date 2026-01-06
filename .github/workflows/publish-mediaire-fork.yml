@@ -41,6 +41,5 @@ jobs:
       - name: Publish packages
         env:
           HUSKY_SKIP_INSTALL: true
-        run: npm publish --workspaces --if-present --access public
-        env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --workspaces --if-present --access public
