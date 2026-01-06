@@ -42,4 +42,4 @@ jobs:
         env:
           HUSKY_SKIP_INSTALL: true
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npm publish --workspaces --if-present --access public
+        run: npm publish --workspaces --if-present --access public --ignore-scripts
