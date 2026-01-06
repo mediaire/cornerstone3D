@@ -88,7 +88,6 @@
   },
   "dependencies": {
     "@kitware/vtk.js": "34.15.1",
-    "@mediaire/cornerstone3d-core": "^4.13.1-mediaire.2",
     "comlink": "4.4.2",
     "gl-matrix": "3.4.3",
     "loglevel": "1.9.2"
@@ -104,5 +103,5 @@
     "type": "individual",
     "url": "https://ohif.org/donate"
   },
-  "gitHead": "bc42011ed25fd8016fa98a0e2c3cdad932b609ba"
+  "gitHead": "166d6f32027e38d3175f449ab18df125186437e6"
 }
