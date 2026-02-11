@@ -41,5 +41,4 @@ jobs:
       - name: Publish packages
         env:
           HUSKY_SKIP_INSTALL: true
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npx lerna publish from-package --yes --ignore-scripts
