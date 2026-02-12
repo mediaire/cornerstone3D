@@ -15,7 +15,7 @@ import {
   addSliderToToolbar,
   setCtTransferFunctionForVolumeActor,
 } from '../../../../utils/demo/helpers';
-import * as cornerstoneTools from '@mediaire/cornerstone3d-core';
+import * as cornerstoneTools from '@mediaire/cornerstone3d-tools';
 
 // This is for debugging purposes
 console.warn(
