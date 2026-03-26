@@ -1,5 +1,5 @@
 import type { ClippingPlane } from './types';
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 
 /**
  * Creates a deep copy of an array of clipping planes.

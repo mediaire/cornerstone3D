@@ -1,5 +1,5 @@
 import { vec2, vec3 } from 'gl-matrix';
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import liangBarksyClip from '../math/vec2/liangBarksyClip';
 import { LINE_EXTENSION_DISTANCE, MIN_LINE_LENGTH_PIXELS } from './constants';
 

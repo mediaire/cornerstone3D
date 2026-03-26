@@ -3,9 +3,9 @@ import {
   getEnabledElementByIds,
   Enums,
   eventTarget,
-} from '@cornerstonejs/core';
-import type { Types } from '@cornerstonejs/core';
-import type { Point3 } from '@cornerstonejs/core/types';
+} from '@mediaire/cornerstone3d-core';
+import type { Types } from '@mediaire/cornerstone3d-core';
+import type { Point3 } from '@mediaire/cornerstone3d-core/types';
 import { getToolGroup } from '../store/ToolGroupManager';
 import * as ToolsEnums from '../enums';
 import { vec3, mat4, quat } from 'gl-matrix';

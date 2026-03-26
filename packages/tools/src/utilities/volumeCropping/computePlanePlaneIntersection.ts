@@ -1,6 +1,6 @@
 import { vec3 } from 'gl-matrix';
 import vtkMath from '@kitware/vtk.js/Common/Core/Math';
-import type { Types } from '@cornerstonejs/core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import type { ClippingPlane } from './types';
 import { PARALLEL_PLANE_TOLERANCE } from './constants';
 

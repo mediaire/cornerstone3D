@@ -1,8 +1,8 @@
 import vtkCellPicker from '@kitware/vtk.js/Rendering/Core/CellPicker';
 import vtkActor from '@kitware/vtk.js/Rendering/Core/Actor';
 import type vtkRenderer from '@kitware/vtk.js/Rendering/Core/Renderer';
-import { Enums } from '@cornerstonejs/core';
-import type { Types } from '@cornerstonejs/core';
+import { Enums } from '@mediaire/cornerstone3d-core';
+import type { Types } from '@mediaire/cornerstone3d-core';
 import vtkAnnotatedRhombicuboctahedronActor from '../AnnotatedRhombicuboctahedronActor';
 
 export interface OrientationControllerConfig {
