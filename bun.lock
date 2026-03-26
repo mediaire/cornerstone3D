@@ -209,6 +209,7 @@
         "lodash.get": "4.4.2",
       },
       "devDependencies": {
+        "@mediaire/cornerstone3d-core": "*",
         "canvas": "3.2.0",
       },
       "peerDependencies": {
