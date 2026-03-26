@@ -94,11 +94,6 @@ const OPERATION = {
   SLAB: 3,
 };
 
-enum CrosshairsType {
-  MPR = 1,
-  SAME_ORIENTATION = 2,
-}
-
 /**
  * CrosshairsTool is a tool that provides reference lines between different viewports
  * of a toolGroup. Using crosshairs, you can jump to a specific location in one
@@ -111,15 +106,22 @@ enum CrosshairsType {
 class CrosshairsTool extends AnnotationTool {
   static toolName;
 
-  isFocusedOnCanvas: boolean = false;
-  toolWorldFocus: Types.Point3;
-  viewportCrosshairsConfig: { [viewportId: string]: CrosshairsType } = {};
   toolCenter: Types.Point3 = [0, 0, 0]; // NOTE: it is assumed that all the active/linked viewports share the same crosshair center.
   // This because the rotation operation rotates also all the other active/intersecting reference lines of the same angle
   _getReferenceLineColor?: (viewportId: string) => string;
   _getReferenceLineControllable?: (viewportId: string) => boolean;
   _getReferenceLineDraggableRotatable?: (viewportId: string) => boolean;
   _getReferenceLineSlabThicknessControlsOn?: (viewportId: string) => boolean;
+  _volumeViewportNewVolumeListeners = new Map<
+    string,
+    {
+      element: HTMLDivElement;
+      handler: EventListener;
+    }
+  >();
+  _toolGroupViewportAddedListener: EventListener | null = null;
+  _toolGroupViewportRemovedListener: EventListener | null = null;
+  _ignoreFiredEvents = false;
 
   constructor(
     toolProps: PublicToolProps = {},
@@ -166,6 +168,11 @@ class CrosshairsTool extends AnnotationTool {
         filterActorUIDsToSetSlabThickness: [],
         // blend mode for slabThickness modifications
         slabThicknessBlendMode: Enums.BlendModes.MAXIMUM_INTENSITY_BLEND,
+        centerPoint: {
+          enabled: false,
+          color: 'rgba(255, 255, 0, 0.5)',
+          size: 2,
+        },
         mobile: {
           enabled: false,
           opacity: 0.8,
@@ -204,7 +211,6 @@ class CrosshairsTool extends AnnotationTool {
   }: Types.IViewportId): {
     normal: Types.Point3;
     point: Types.Point3;
-    orientation: Enums.OrientationAxis | Types.OrientationVectors;
   } => {
     const enabledElement = getEnabledElementByIds(
       viewportId,
@@ -257,7 +263,6 @@ class CrosshairsTool extends AnnotationTool {
         viewport.canvas.clientWidth / 2,
         viewport.canvas.clientHeight / 2,
       ]),
-      orientation: viewport.options.orientation,
     };
   };
 
@@ -267,34 +272,34 @@ class CrosshairsTool extends AnnotationTool {
     return viewports;
   };
 
+  _reinitializeListenersAndCenter = (): void => {
+    this._unbindToolGroupViewportListeners();
+    this._clearAllVolumeListenersAndViewportState();
+    this._bindToolGroupViewportListeners();
+    this._syncVolumeListenersWithToolGroup();
+    this._computeToolCenter(this._getViewportsInfo());
+  };
+
   onSetToolActive() {
-    const viewportsInfo = this._getViewportsInfo();
-
-    // Upon new setVolumes on viewports we need to update the crosshairs
-    // reference points in the new space, so we subscribe to the event
-    // and update the reference points accordingly.
-    this._unsubscribeToViewportNewVolumeSet(viewportsInfo);
-    this._subscribeToViewportNewVolumeSet(viewportsInfo);
-
-    this._computeToolCenter(viewportsInfo);
+    this._reinitializeListenersAndCenter();
   }
 
   onSetToolPassive() {
-    const viewportsInfo = this._getViewportsInfo();
-
-    this._computeToolCenter(viewportsInfo);
+    this._reinitializeListenersAndCenter();
   }
 
   onSetToolEnabled() {
-    const viewportsInfo = this._getViewportsInfo();
-
-    this._computeToolCenter(viewportsInfo);
+    this._reinitializeListenersAndCenter();
   }
 
   onSetToolDisabled() {
     const viewportsInfo = this._getViewportsInfo();
 
-    this._unsubscribeToViewportNewVolumeSet(viewportsInfo);
+    this._unbindToolGroupViewportListeners();
+    this._clearAllVolumeListenersAndViewportState();
+    this._ignoreFiredEvents = false;
+    this.editData = null;
+    state.isInteractingWithTool = false;
 
     // Crosshairs annotations in the state
     // has no value when the tool is disabled
@@ -329,6 +334,9 @@ class CrosshairsTool extends AnnotationTool {
         viewportId,
         renderingEngineId
       );
+      if (!enabledElement) {
+        continue;
+      }
       const viewport = enabledElement.viewport as Types.IVolumeViewport;
       const resetPan = true;
       const resetZoom = true;
@@ -363,51 +371,6 @@ class CrosshairsTool extends AnnotationTool {
     this._computeToolCenter(viewportsInfo);
   };
 
-  _point3_IsEqual = (a: Types.Point3, b: Types.Point3) => {
-    return a[0] == b[0] && a[1] == b[1] && a[2] == b[2];
-  };
-
-  // Determines which crosshairs to enable for which viewports
-  _computeCrosshairApplication = (
-    viewportIds: Array<string>,
-    normals: Array<Types.Point3>,
-    orientations: Array<Enums.OrientationAxis | Types.OrientationVectors>
-  ) => {
-    // Default all viewports to MPR crosshairs
-    for (let i = 0; i < viewportIds.length; i++) {
-      this.viewportCrosshairsConfig[viewportIds[i]] = CrosshairsType.MPR;
-    }
-
-    if (viewportIds.length == 2) {
-      const normalAB = this._point3_IsEqual(normals[0], normals[1]);
-      const acquisitionAB = orientations[0] == orientations[1];
-
-      if (normalAB || acquisitionAB) {
-        // Two viewports have the same orientation
-        this.viewportCrosshairsConfig[viewportIds[0]] =
-          CrosshairsType.SAME_ORIENTATION;
-        this.viewportCrosshairsConfig[viewportIds[1]] =
-          CrosshairsType.SAME_ORIENTATION;
-      }
-    } else if (viewportIds.length == 3) {
-      const normalAB = this._point3_IsEqual(normals[0], normals[1]);
-      const normalBC = this._point3_IsEqual(normals[1], normals[2]);
-
-      const acquisitionAB = orientations[0] == orientations[1];
-      const acquisitionBC = orientations[1] == orientations[2];
-
-      if ((normalAB && normalBC) || (acquisitionAB && acquisitionBC)) {
-        // All three viewports have the same orientation
-        this.viewportCrosshairsConfig[viewportIds[0]] =
-          CrosshairsType.SAME_ORIENTATION;
-        this.viewportCrosshairsConfig[viewportIds[1]] =
-          CrosshairsType.SAME_ORIENTATION;
-        this.viewportCrosshairsConfig[viewportIds[2]] =
-          CrosshairsType.SAME_ORIENTATION;
-      }
-    }
-  };
-
   /**
    * When activated, it initializes the crosshairs. It begins by computing
    * the intersection of viewports associated with the crosshairs instance.
@@ -425,90 +388,80 @@ class CrosshairsTool extends AnnotationTool {
       return;
     }
 
-    // Todo: handle two same view viewport, or more than 3 viewports
-    const [firstViewport, secondViewport, thirdViewport] = viewportsInfo;
+    viewportsInfo.forEach((viewportInfo) => {
+      this.initializeViewport(viewportInfo);
+    });
 
-    // Initialize first viewport
-    const {
-      normal: normal1,
-      point: point1,
-      orientation: orientation1,
-    } = this.initializeViewport(firstViewport);
-
-    // Initialize second viewport
-    const {
-      normal: normal2,
-      point: point2,
-      orientation: orientation2,
-    } = this.initializeViewport(secondViewport);
-
-    let normal3 = <Types.Point3>[0, 0, 0];
-    let point3 = vec3.create();
-    let orientation3: Enums.OrientationAxis | Types.OrientationVectors =
-      Enums.OrientationAxis.REFORMAT;
-
-    // If there are three viewports
-    if (thirdViewport) {
-      ({
-        normal: normal3,
-        point: point3,
-        orientation: orientation3,
-      } = this.initializeViewport(thirdViewport));
-      this._computeCrosshairApplication(
-        [
-          firstViewport.viewportId,
-          secondViewport.viewportId,
-          thirdViewport.viewportId,
-        ],
-        [normal1, normal2, normal3],
-        [orientation1, orientation2, orientation3]
-      );
-    } else {
-      // If there are only two views (viewport) associated with the crosshairs:
-      // In this situation, we don't have a third information to find the
-      // exact intersection, and we "assume" the third view is looking at
-      // a location in between the first and second view centers
-      vec3.add(point3, point1, point2);
-      vec3.scale(point3, point3, 0.5);
-      vec3.cross(normal3, normal1, normal2);
-      this._computeCrosshairApplication(
-        [firstViewport.viewportId, secondViewport.viewportId],
-        [normal1, normal2],
-        [orientation1, orientation2]
-      );
-    }
-
-    // Planes of each viewport
-    const firstPlane = csUtils.planar.planeEquation(normal1, point1);
-    const secondPlane = csUtils.planar.planeEquation(normal2, point2);
-    const thirdPlane = csUtils.planar.planeEquation(normal3, point3);
-
-    // skip intersection calculation if normals are equal
-    if (
-      vec3.equals(normal1, normal2) &&
-      vec3.equals(normal2, normal3) &&
-      vec3.equals(normal3, normal1)
-    ) {
-      return;
-    }
-
-    // Calculating the intersection of 3 planes
-    const toolCenter = csUtils.planar.threePlaneIntersection(
-      firstPlane,
-      secondPlane,
-      thirdPlane
-    );
-    this.setToolCenter(toolCenter);
+    this._recomputeToolCenterFromAbsoluteCameras({
+      emitEvent: true,
+      updateViewportCameras: true,
+    });
   };
 
   setToolCenter(toolCenter: Types.Point3, suppressEvents = false): void {
-    this.toolCenter = toolCenter;
     const viewportsInfo = this._getViewportsInfo();
+    const previousIgnoreFiredEvents = this._ignoreFiredEvents;
+    this._ignoreFiredEvents = true;
+    try {
+      viewportsInfo.forEach(({ renderingEngineId, viewportId }) => {
+        const renderingEngine = getRenderingEngine(renderingEngineId);
+        if (!renderingEngine) {
+          return;
+        }
 
-    // assuming all viewports are in the same rendering engine
-    triggerAnnotationRenderForViewportIds(
-      viewportsInfo.map(({ viewportId }) => viewportId)
-    );
+        const viewport = renderingEngine.getViewport(viewportId);
+        if (!viewport) {
+          return;
+        }
+
+        const camera = viewport.getCamera();
+        const { focalPoint, position, viewPlaneNormal } = camera;
+
+        // Calculate the delta between the current camera focal point and the new tool center
+        const delta = [
+          toolCenter[0] - focalPoint[0],
+          toolCenter[1] - focalPoint[1],
+          toolCenter[2] - focalPoint[2],
+        ];
+
+        // Project this vector onto the view plane normal.
+        // This isolates the component of the movement that corresponds to the "scroll" (slice change).
+        const scroll =
+          delta[0] * viewPlaneNormal[0] +
+          delta[1] * viewPlaneNormal[1] +
+          delta[2] * viewPlaneNormal[2];
+
+        const scrollDelta = [
+          scroll * viewPlaneNormal[0],
+          scroll * viewPlaneNormal[1],
+          scroll * viewPlaneNormal[2],
+        ];
+
+        // Apply this "scroll" to the position and focal point of the camera.
+        const newFocalPoint: Types.Point3 = [
+          focalPoint[0] + scrollDelta[0],
+          focalPoint[1] + scrollDelta[1],
+          focalPoint[2] + scrollDelta[2],
+        ];
+        const newPosition: Types.Point3 = [
+          position[0] + scrollDelta[0],
+          position[1] + scrollDelta[1],
+          position[2] + scrollDelta[2],
+        ];
+
+        viewport.setCamera({
+          focalPoint: newFocalPoint,
+          position: newPosition,
+        });
+
+        viewport.render();
+      });
+    } finally {
+      this._ignoreFiredEvents = previousIgnoreFiredEvents;
+    }
+
+    this.toolCenter = toolCenter;
+
     if (!suppressEvents) {
       triggerEvent(eventTarget, Events.CROSSHAIR_TOOL_CENTER_CHANGED, {
         toolGroupId: this.toolGroupId,
@@ -533,6 +486,12 @@ class CrosshairsTool extends AnnotationTool {
 
     const { currentPoints } = eventDetail;
     const jumpWorld = currentPoints.world;
+
+    this._syncVolumeListenersWithToolGroup();
+    this._recomputeToolCenterFromAbsoluteCameras({
+      emitEvent: false,
+      updateViewportCameras: false,
+    });
 
     const enabledElement = getEnabledElement(element);
     const { viewport } = enabledElement;
@@ -689,8 +648,26 @@ class CrosshairsTool extends AnnotationTool {
     const eventDetail = evt.detail;
     const { element } = eventDetail;
     const enabledElement = getEnabledElement(element);
+    if (!enabledElement) {
+      return;
+    }
+
     const { renderingEngine } = enabledElement;
     const viewport = enabledElement.viewport as Types.IVolumeViewport;
+    this._syncVolumeListenersWithToolGroup();
+
+    if (this._ignoreFiredEvents) {
+      return;
+    }
+
+    const isSourceInToolGroup = this._getViewportsInfo().some(
+      ({ viewportId, renderingEngineId }) =>
+        viewportId === viewport.id && renderingEngineId === renderingEngine.id
+    );
+
+    if (!isSourceInToolGroup) {
+      return;
+    }
 
     const annotations = this._getAnnotations(enabledElement);
     const filteredToolAnnotations =
@@ -700,86 +677,18 @@ class CrosshairsTool extends AnnotationTool {
     const viewportAnnotation =
       filteredToolAnnotations[0] as CrosshairsAnnotation;
 
-    if (!viewportAnnotation) {
-      return;
-    }
-
-    // -- Update the camera of other linked viewports containing the same volumeId that
-    //    have the same camera in case of translation
-    // -- Update the crosshair center in world coordinates in annotation.
-    // This is necessary because other tools can modify the position of the slices,
-    // e.g. stackScroll tool at wheel scroll. So we update the coordinates of the center always here.
-    // NOTE: rotation and slab thickness handles are created/updated in renderTool.
     const currentCamera = viewport.getCamera();
-    const oldCameraPosition = viewportAnnotation.metadata.cameraPosition;
-    const deltaCameraPosition: Types.Point3 = [0, 0, 0];
-    vtkMath.subtract(
-      currentCamera.position,
-      oldCameraPosition,
-      deltaCameraPosition
-    );
-
-    const oldCameraFocalPoint = viewportAnnotation.metadata.cameraFocalPoint;
-    const deltaCameraFocalPoint: Types.Point3 = [0, 0, 0];
-    vtkMath.subtract(
-      currentCamera.focalPoint,
-      oldCameraFocalPoint,
-      deltaCameraFocalPoint
-    );
-
-    // updated cached "previous" camera position and focal point
-    viewportAnnotation.metadata.cameraPosition = [...currentCamera.position];
-    viewportAnnotation.metadata.cameraFocalPoint = [
-      ...currentCamera.focalPoint,
-    ];
-
-    const viewportControllable = this._getReferenceLineControllable(
-      viewport.id
-    );
-    const viewportDraggableRotatable = this._getReferenceLineDraggableRotatable(
-      viewport.id
-    );
-    if (
-      !csUtils.isEqual(currentCamera.position, oldCameraPosition, 1e-3) &&
-      viewportControllable &&
-      viewportDraggableRotatable
-    ) {
-      // Is camera Modified a TRANSLATION or ROTATION?
-      let isRotation = false;
-
-      // This is guaranteed to be the same diff for both position and focal point
-      // if the camera is modified by pan, zoom, or scroll BUT for rotation of
-      // crosshairs handles it will be different.
-      const cameraModifiedSameForPosAndFocalPoint = csUtils.isEqual(
-        deltaCameraPosition,
-        deltaCameraFocalPoint,
-        1e-3
-      );
-
-      // NOTE: it is a translation if the the focal point and camera position shifts are the same
-      if (!cameraModifiedSameForPosAndFocalPoint) {
-        isRotation = true;
-      }
-
-      const cameraModifiedInPlane =
-        Math.abs(
-          vtkMath.dot(deltaCameraPosition, currentCamera.viewPlaneNormal)
-        ) < 1e-2;
-
-      // TRANSLATION
-      // NOTE1: if the camera modified is a result of a pan or zoom don't update the crosshair center
-      // NOTE2: rotation handles are updates in renderTool
-      if (!isRotation && !cameraModifiedInPlane) {
-        this.toolCenter[0] += deltaCameraPosition[0];
-        this.toolCenter[1] += deltaCameraPosition[1];
-        this.toolCenter[2] += deltaCameraPosition[2];
-
-        triggerEvent(eventTarget, Events.CROSSHAIR_TOOL_CENTER_CHANGED, {
-          toolGroupId: this.toolGroupId,
-          toolCenter: this.toolCenter,
-        });
-      }
+    if (viewportAnnotation) {
+      viewportAnnotation.metadata.cameraPosition = [...currentCamera.position];
+      viewportAnnotation.metadata.cameraFocalPoint = [
+        ...currentCamera.focalPoint,
+      ];
     }
+
+    this._recomputeToolCenterFromAbsoluteCameras({
+      emitEvent: true,
+      updateViewportCameras: false,
+    });
 
     // AutoPan modification
     if (this.configuration.autoPan?.enabled) {
@@ -915,88 +824,6 @@ class CrosshairsTool extends AnnotationTool {
     }
 
     const annotationUID = viewportAnnotation.annotationUID;
-
-    if (
-      this.viewportCrosshairsConfig[viewport.id] ===
-      CrosshairsType.SAME_ORIENTATION
-    ) {
-      let lineUID = 1;
-      const lineWidth = this.isFocusedOnCanvas ? 2.5 : 1;
-
-      const viewportColor = this._getReferenceLineColor(viewport.id);
-      const color =
-        viewportColor !== undefined ? viewportColor : 'rgb(200, 200, 200)';
-
-      let opacity = 1;
-      let handleRadius =
-        this.configuration.handleRadius *
-        (this.configuration.enableHDPIHandles ? window.devicePixelRatio : 1);
-      if (this.configuration.mobile?.enabled) {
-        handleRadius = this.configuration.mobile.handleRadius;
-        opacity = this.configuration.mobile.opacity;
-      }
-      const crossHairRadius = handleRadius * 7;
-
-      const pos =
-        typeof this.toolWorldFocus === 'undefined'
-          ? [viewport.canvas.clientWidth / 2, viewport.canvas.clientHeight / 2]
-          : viewport.worldToCanvas(this.toolWorldFocus);
-
-      drawLineSvg(
-        svgDrawingHelper,
-        annotationUID,
-        `Line${lineUID++}`,
-        [0, pos[1]],
-        [pos[0] - crossHairRadius, pos[1]],
-        {
-          color,
-          lineWidth,
-        }
-      );
-
-      drawLineSvg(
-        svgDrawingHelper,
-        annotationUID,
-        `Line${lineUID++}`,
-        [pos[0] + crossHairRadius, pos[1]],
-        [viewport.sWidth, pos[1]],
-        {
-          color,
-          lineWidth,
-        }
-      );
-
-      drawLineSvg(
-        svgDrawingHelper,
-        annotationUID,
-        `Line${lineUID++}`,
-        [pos[0], 0],
-        [pos[0], pos[1] - crossHairRadius],
-        {
-          color,
-          lineWidth,
-        }
-      );
-
-      drawLineSvg(
-        svgDrawingHelper,
-        annotationUID,
-        `Line${lineUID++}`,
-        [pos[0], pos[1] + crossHairRadius],
-        [pos[0], viewport.sHeight],
-        {
-          color,
-          lineWidth,
-        }
-      );
-    }
-
-    if (
-      this.viewportCrosshairsConfig[viewport.id] ===
-      CrosshairsType.SAME_ORIENTATION
-    ) {
-      return true;
-    }
 
     // Get cameras/canvases for each of these.
     // -- Get two world positions for this canvas in this line (e.g. the diagonal)
@@ -1676,6 +1503,31 @@ class CrosshairsTool extends AnnotationTool {
       );
     }
 
+    if (this.configuration.centerPoint?.enabled) {
+      const defaultColor = 'rgba(255, 255, 0, 0.5)';
+      const defaultSize = 2;
+      const maxAllowedSize = 5;
+
+      const centerPointColor =
+        this.configuration.centerPoint.color || defaultColor;
+      const centerPointSize = Math.min(
+        this.configuration.centerPoint.size || defaultSize,
+        maxAllowedSize
+      );
+
+      drawCircleSvg(
+        svgDrawingHelper,
+        annotationUID,
+        'centerPoint',
+        crosshairCenterCanvas as Types.Point2,
+        centerPointSize,
+        {
+          color: centerPointColor,
+          fill: centerPointColor,
+        }
+      );
+    }
+
     return renderStatus;
   };
 
@@ -1696,39 +1548,30 @@ class CrosshairsTool extends AnnotationTool {
     return toolGroupAnnotations;
   };
 
-  _onNewVolume = () => {
-    const viewportsInfo = this._getViewportsInfo();
-    this._computeToolCenter(viewportsInfo);
+  _onNewVolume = (_evt?: Event) => {
+    this._syncVolumeListenersWithToolGroup();
+    this._recomputeToolCenterFromAbsoluteCameras({
+      emitEvent: true,
+      updateViewportCameras: false,
+    });
   };
 
-  _unsubscribeToViewportNewVolumeSet(viewportsInfo) {
-    viewportsInfo.forEach(({ viewportId, renderingEngineId }) => {
-      const { viewport } = getEnabledElementByIds(
-        viewportId,
-        renderingEngineId
-      );
-      const { element } = viewport;
-
-      element.removeEventListener(
-        Enums.Events.VOLUME_VIEWPORT_NEW_VOLUME,
-        this._onNewVolume
-      );
-    });
+  /**
+   * @deprecated No longer manages per-viewport listeners directly.
+   * Listener lifecycle is now handled by _syncVolumeListenersWithToolGroup.
+   * Will be removed in a future version.
+   */
+  _unsubscribeToViewportNewVolumeSet(_viewportsInfo) {
+    this._syncVolumeListenersWithToolGroup();
   }
 
-  _subscribeToViewportNewVolumeSet(viewports) {
-    viewports.forEach(({ viewportId, renderingEngineId }) => {
-      const { viewport } = getEnabledElementByIds(
-        viewportId,
-        renderingEngineId
-      );
-      const { element } = viewport;
-
-      element.addEventListener(
-        Enums.Events.VOLUME_VIEWPORT_NEW_VOLUME,
-        this._onNewVolume
-      );
-    });
+  /**
+   * @deprecated No longer manages per-viewport listeners directly.
+   * Listener lifecycle is now handled by _syncVolumeListenersWithToolGroup.
+   * Will be removed in a future version.
+   */
+  _subscribeToViewportNewVolumeSet(_viewports) {
+    this._syncVolumeListenersWithToolGroup();
   }
 
   _autoPanViewportIfNecessary(
@@ -1794,10 +1637,16 @@ class CrosshairsTool extends AnnotationTool {
       focalPoint[2] - deltaPointsWorld[2],
     ];
 
-    viewport.setCamera({
-      focalPoint: updatedFocalPoint,
-      position: updatedPosition,
-    });
+    const previousIgnoreFiredEvents = this._ignoreFiredEvents;
+    this._ignoreFiredEvents = true;
+    try {
+      viewport.setCamera({
+        focalPoint: updatedFocalPoint,
+        position: updatedPosition,
+      });
+    } finally {
+      this._ignoreFiredEvents = previousIgnoreFiredEvents;
+    }
 
     viewport.render();
   }
@@ -1807,7 +1656,8 @@ class CrosshairsTool extends AnnotationTool {
       return false;
     }
 
-    viewportIdArrayOne.forEach((id) => {
+    for (let index = 0; index < viewportIdArrayOne.length; index++) {
+      const id = viewportIdArrayOne[index];
       let itemFound = false;
       for (let i = 0; i < viewportIdArrayTwo.length; ++i) {
         if (id === viewportIdArrayTwo[i]) {
@@ -1818,7 +1668,7 @@ class CrosshairsTool extends AnnotationTool {
       if (itemFound === false) {
         return false;
       }
-    });
+    }
 
     return true;
   };
@@ -2119,8 +1969,6 @@ class CrosshairsTool extends AnnotationTool {
     state.isInteractingWithTool = true;
     const { viewport, renderingEngine } = enabledElement;
 
-    this.toolWorldFocus = jumpWorld;
-
     const annotations = this._getAnnotations(enabledElement);
 
     const delta: Types.Point3 = [0, 0, 0];
@@ -2162,6 +2010,10 @@ class CrosshairsTool extends AnnotationTool {
       viewportsAnnotationsToUpdate,
       delta
     );
+    this._recomputeToolCenterFromAbsoluteCameras({
+      emitEvent: true,
+      updateViewportCameras: false,
+    });
 
     state.isInteractingWithTool = false;
 
@@ -2169,12 +2021,16 @@ class CrosshairsTool extends AnnotationTool {
   };
 
   _activateModify = (element) => {
+    this._syncVolumeListenersWithToolGroup();
+    this._recomputeToolCenterFromAbsoluteCameras({
+      emitEvent: false,
+      updateViewportCameras: false,
+    });
+
     // mobile sometimes has lingering interaction even when touchEnd triggers
     // this check allows for multiple handles to be active which doesn't affect
     // tool usage.
     state.isInteractingWithTool = !this.configuration.mobile?.enabled;
-
-    this.isFocusedOnCanvas = true;
 
     element.addEventListener(Events.MOUSE_UP, this._endCallback);
     element.addEventListener(Events.MOUSE_DRAG, this._dragCallback);
@@ -2187,8 +2043,6 @@ class CrosshairsTool extends AnnotationTool {
 
   _deactivateModify = (element) => {
     state.isInteractingWithTool = false;
-
-    this.isFocusedOnCanvas = false;
 
     element.removeEventListener(Events.MOUSE_UP, this._endCallback);
     element.removeEventListener(Events.MOUSE_DRAG, this._dragCallback);
@@ -2203,10 +2057,16 @@ class CrosshairsTool extends AnnotationTool {
     const eventDetail = evt.detail;
     const { element } = eventDetail;
 
-    this.editData.annotation.data.handles.activeOperation = null;
-    this.editData.annotation.data.activeViewportIds = [];
+    if (this.editData?.annotation?.data) {
+      this.editData.annotation.data.handles.activeOperation = null;
+      this.editData.annotation.data.activeViewportIds = [];
+    }
 
     this._deactivateModify(element);
+    this._recomputeToolCenterFromAbsoluteCameras({
+      emitEvent: true,
+      updateViewportCameras: false,
+    });
 
     resetElementCursor(element);
 
@@ -2242,16 +2102,6 @@ class CrosshairsTool extends AnnotationTool {
     ) as CrosshairsAnnotation[];
     const filteredToolAnnotations =
       this.filterInteractableAnnotationsForElement(element, annotations);
-
-    if (
-      this.viewportCrosshairsConfig[viewport.id] ===
-      CrosshairsType.SAME_ORIENTATION
-    ) {
-      // keep third component (slice index) for same orientation crosshairs
-      this.toolWorldFocus = eventDetail.currentPoints.world;
-      const newCenter = [0, 0, this.toolCenter[2]] as Types.Point3;
-      this.setToolCenter(newCenter);
-    }
 
     // viewport Annotation
     const viewportAnnotation = filteredToolAnnotations[0];
@@ -2297,6 +2147,10 @@ class CrosshairsTool extends AnnotationTool {
         viewportsAnnotationsToUpdate,
         delta
       );
+      this._recomputeToolCenterFromAbsoluteCameras({
+        emitEvent: true,
+        updateViewportCameras: false,
+      });
     } else if (handles.activeOperation === OPERATION.ROTATE) {
       // ROTATION
       const otherViewportAnnotations =
@@ -2369,34 +2223,44 @@ class CrosshairsTool extends AnnotationTool {
       const otherViewportsIds = [];
       // update camera for the other viewports.
       // NOTE: The lines then are rendered by the onCameraModified
-      viewportsAnnotationsToUpdate.forEach((annotation) => {
-        const { data } = annotation;
-        data.handles.toolCenter = center;
+      const previousIgnoreFiredEvents = this._ignoreFiredEvents;
+      this._ignoreFiredEvents = true;
+      try {
+        viewportsAnnotationsToUpdate.forEach((annotation) => {
+          const { data } = annotation;
+          data.handles.toolCenter = center;
 
-        const otherViewport = renderingEngine.getViewport(data.viewportId);
-        const camera = otherViewport.getCamera();
-        const { viewUp, position, focalPoint } = camera;
+          const otherViewport = renderingEngine.getViewport(data.viewportId);
+          const camera = otherViewport.getCamera();
+          const { viewUp, position, focalPoint } = camera;
 
-        viewUp[0] += position[0];
-        viewUp[1] += position[1];
-        viewUp[2] += position[2];
+          viewUp[0] += position[0];
+          viewUp[1] += position[1];
+          viewUp[2] += position[2];
 
-        vec3.transformMat4(focalPoint, focalPoint, matrix);
-        vec3.transformMat4(position, position, matrix);
-        vec3.transformMat4(viewUp, viewUp, matrix);
+          vec3.transformMat4(focalPoint, focalPoint, matrix);
+          vec3.transformMat4(position, position, matrix);
+          vec3.transformMat4(viewUp, viewUp, matrix);
 
-        viewUp[0] -= position[0];
-        viewUp[1] -= position[1];
-        viewUp[2] -= position[2];
+          viewUp[0] -= position[0];
+          viewUp[1] -= position[1];
+          viewUp[2] -= position[2];
 
-        otherViewport.setCamera({
-          position,
-          viewUp,
-          focalPoint,
+          otherViewport.setCamera({
+            position,
+            viewUp,
+            focalPoint,
+          });
+          otherViewportsIds.push(otherViewport.id);
         });
-        otherViewportsIds.push(otherViewport.id);
-      });
+      } finally {
+        this._ignoreFiredEvents = previousIgnoreFiredEvents;
+      }
       renderingEngine.renderViewports(otherViewportsIds);
+      this._recomputeToolCenterFromAbsoluteCameras({
+        emitEvent: true,
+        updateViewportCameras: false,
+      });
     } else if (handles.activeOperation === OPERATION.SLAB) {
       // SLAB THICKNESS
       // this should be just the active one under the mouse,
@@ -2573,7 +2437,20 @@ class CrosshairsTool extends AnnotationTool {
         }
       );
       renderingEngine.renderViewports(viewportsIds);
+      this._recomputeToolCenterFromAbsoluteCameras({
+        emitEvent: true,
+        updateViewportCameras: false,
+      });
     }
+
+    const requireSameOrientation = false;
+    const viewportIdsToRender = getViewportIdsWithToolToRender(
+      element,
+      this.getToolName(),
+      requireSameOrientation
+    );
+
+    triggerAnnotationRenderForViewportIds(viewportIdsToRender);
   };
 
   setSlabThickness(viewport, slabThickness) {
@@ -2607,8 +2484,6 @@ class CrosshairsTool extends AnnotationTool {
     delta
   ) {
     // update camera for the other viewports.
-    // NOTE1: The lines then are rendered by the onCameraModified
-    // NOTE2: crosshair center are automatically updated in the onCameraModified event
     viewportsAnnotationsToUpdate.forEach((annotation) => {
       this._applyDeltaShiftToViewportCamera(renderingEngine, annotation, delta);
     });
@@ -2620,20 +2495,9 @@ class CrosshairsTool extends AnnotationTool {
     delta
   ) {
     // update camera for the other viewports.
-    // NOTE1: The lines then are rendered by the onCameraModified
-    // NOTE2: crosshair center are automatically updated in the onCameraModified event
     const { data } = annotation;
 
     const viewport = renderingEngine.getViewport(data.viewportId);
-
-    if (
-      !viewport ||
-      this.viewportCrosshairsConfig[viewport.id] ===
-        CrosshairsType.SAME_ORIENTATION
-    ) {
-      return;
-    }
-
     const camera = viewport.getCamera();
     const normal = camera.viewPlaneNormal;
 
@@ -2654,10 +2518,16 @@ class CrosshairsTool extends AnnotationTool {
       vtkMath.add(camera.focalPoint, projectedDelta, newFocalPoint);
       vtkMath.add(camera.position, projectedDelta, newPosition);
 
-      viewport.setCamera({
-        focalPoint: newFocalPoint,
-        position: newPosition,
-      });
+      const previousIgnoreFiredEvents = this._ignoreFiredEvents;
+      this._ignoreFiredEvents = true;
+      try {
+        viewport.setCamera({
+          focalPoint: newFocalPoint,
+          position: newPosition,
+        });
+      } finally {
+        this._ignoreFiredEvents = previousIgnoreFiredEvents;
+      }
       viewport.render();
     }
   }
@@ -2981,6 +2851,277 @@ class CrosshairsTool extends AnnotationTool {
 
     return data.handles.activeOperation === OPERATION.DRAG ? true : false;
   }
+
+  _toViewportKey = (renderingEngineId: string, viewportId: string): string => {
+    return `${renderingEngineId}::${viewportId}`;
+  };
+
+  _isFinitePoint3 = (point: Types.Point3): boolean => {
+    if (!point || point.length !== 3) {
+      return false;
+    }
+
+    return (
+      Number.isFinite(point[0]) &&
+      Number.isFinite(point[1]) &&
+      Number.isFinite(point[2])
+    );
+  };
+
+  _bindToolGroupViewportListeners = (): void => {
+    if (!this._toolGroupViewportAddedListener) {
+      this._toolGroupViewportAddedListener = ((evt: CustomEvent) => {
+        if (evt.detail?.toolGroupId !== this.toolGroupId) {
+          return;
+        }
+
+        this._syncVolumeListenersWithToolGroup();
+        this._computeToolCenter(this._getViewportsInfo());
+      }) as EventListener;
+      eventTarget.addEventListener(
+        Events.TOOLGROUP_VIEWPORT_ADDED,
+        this._toolGroupViewportAddedListener
+      );
+    }
+
+    if (!this._toolGroupViewportRemovedListener) {
+      this._toolGroupViewportRemovedListener = ((evt: CustomEvent) => {
+        if (evt.detail?.toolGroupId !== this.toolGroupId) {
+          return;
+        }
+
+        this._syncVolumeListenersWithToolGroup();
+        this._recomputeToolCenterFromAbsoluteCameras({
+          emitEvent: true,
+          updateViewportCameras: false,
+        });
+      }) as EventListener;
+      eventTarget.addEventListener(
+        Events.TOOLGROUP_VIEWPORT_REMOVED,
+        this._toolGroupViewportRemovedListener
+      );
+    }
+  };
+
+  _unbindToolGroupViewportListeners = (): void => {
+    if (this._toolGroupViewportAddedListener) {
+      eventTarget.removeEventListener(
+        Events.TOOLGROUP_VIEWPORT_ADDED,
+        this._toolGroupViewportAddedListener
+      );
+      this._toolGroupViewportAddedListener = null;
+    }
+
+    if (this._toolGroupViewportRemovedListener) {
+      eventTarget.removeEventListener(
+        Events.TOOLGROUP_VIEWPORT_REMOVED,
+        this._toolGroupViewportRemovedListener
+      );
+      this._toolGroupViewportRemovedListener = null;
+    }
+  };
+
+  _syncVolumeListenersWithToolGroup = (): void => {
+    const viewportsInfo = this._getViewportsInfo();
+    const activeViewportKeys = new Set<string>();
+
+    viewportsInfo.forEach((viewportInfo) => {
+      const { viewportId, renderingEngineId } = viewportInfo;
+      const viewportKey = this._toViewportKey(renderingEngineId, viewportId);
+      activeViewportKeys.add(viewportKey);
+
+      const enabledElement = getEnabledElementByIds(
+        viewportId,
+        renderingEngineId
+      );
+      const existingListenerInfo =
+        this._volumeViewportNewVolumeListeners.get(viewportKey);
+
+      if (!enabledElement) {
+        if (existingListenerInfo) {
+          existingListenerInfo.element.removeEventListener(
+            Enums.Events.VOLUME_VIEWPORT_NEW_VOLUME,
+            existingListenerInfo.handler
+          );
+          this._volumeViewportNewVolumeListeners.delete(viewportKey);
+        }
+        return;
+      }
+
+      const { viewport } = enabledElement;
+      const { element } = viewport;
+
+      if (existingListenerInfo && existingListenerInfo.element !== element) {
+        existingListenerInfo.element.removeEventListener(
+          Enums.Events.VOLUME_VIEWPORT_NEW_VOLUME,
+          existingListenerInfo.handler
+        );
+        this._volumeViewportNewVolumeListeners.delete(viewportKey);
+      }
+
+      if (this._volumeViewportNewVolumeListeners.has(viewportKey)) {
+        return;
+      }
+
+      const handler = ((evt: Event) => this._onNewVolume(evt)) as EventListener;
+      element.addEventListener(
+        Enums.Events.VOLUME_VIEWPORT_NEW_VOLUME,
+        handler
+      );
+
+      this._volumeViewportNewVolumeListeners.set(viewportKey, {
+        element,
+        handler,
+      });
+    });
+
+    Array.from(this._volumeViewportNewVolumeListeners.entries()).forEach(
+      ([viewportKey, listenerInfo]) => {
+        if (activeViewportKeys.has(viewportKey)) {
+          return;
+        }
+
+        listenerInfo.element.removeEventListener(
+          Enums.Events.VOLUME_VIEWPORT_NEW_VOLUME,
+          listenerInfo.handler
+        );
+        this._volumeViewportNewVolumeListeners.delete(viewportKey);
+      }
+    );
+  };
+
+  _clearAllVolumeListenersAndViewportState = (): void => {
+    this._volumeViewportNewVolumeListeners.forEach((listenerInfo) => {
+      listenerInfo.element.removeEventListener(
+        Enums.Events.VOLUME_VIEWPORT_NEW_VOLUME,
+        listenerInfo.handler
+      );
+    });
+
+    this._volumeViewportNewVolumeListeners.clear();
+  };
+
+  _calculateToolCenterFromAbsoluteCameras = (): Types.Point3 | null => {
+    const viewportsInfo = this._getViewportsInfo();
+    const uniquePlanes: Array<{
+      normal: Types.Point3;
+      point: Types.Point3;
+    }> = [];
+
+    viewportsInfo.forEach((viewportInfo) => {
+      const enabledElement = getEnabledElementByIds(
+        viewportInfo.viewportId,
+        viewportInfo.renderingEngineId
+      );
+
+      if (!enabledElement) {
+        return;
+      }
+
+      const camera = enabledElement.viewport.getCamera();
+
+      const normal = [...camera.viewPlaneNormal] as Types.Point3;
+      const point = [...camera.focalPoint] as Types.Point3;
+
+      if (!this._isFinitePoint3(normal) || !this._isFinitePoint3(point)) {
+        return;
+      }
+
+      vec3.normalize(normal, normal);
+
+      const alreadyTracked = uniquePlanes.some(
+        (plane) =>
+          csUtils.isEqual(plane.normal, normal, 1e-3) ||
+          csUtils.isOpposite(plane.normal, normal, 1e-3)
+      );
+
+      if (!alreadyTracked) {
+        uniquePlanes.push({ normal, point });
+      }
+    });
+
+    if (uniquePlanes.length < 2) {
+      return null;
+    }
+
+    const firstPlane = csUtils.planar.planeEquation(
+      uniquePlanes[0].normal,
+      uniquePlanes[0].point
+    );
+    const secondPlane = csUtils.planar.planeEquation(
+      uniquePlanes[1].normal,
+      uniquePlanes[1].point
+    );
+
+    let thirdPlane;
+    if (uniquePlanes.length >= 3) {
+      thirdPlane = csUtils.planar.planeEquation(
+        uniquePlanes[2].normal,
+        uniquePlanes[2].point
+      );
+    } else {
+      const thirdNormal = vec3.create() as Types.Point3;
+      vec3.cross(thirdNormal, uniquePlanes[0].normal, uniquePlanes[1].normal);
+
+      if (vec3.length(thirdNormal) < 1e-6) {
+        return null;
+      }
+
+      vec3.normalize(thirdNormal, thirdNormal);
+
+      const thirdPoint = this._isFinitePoint3(this.toolCenter)
+        ? ([...this.toolCenter] as Types.Point3)
+        : ([
+            (uniquePlanes[0].point[0] + uniquePlanes[1].point[0]) * 0.5,
+            (uniquePlanes[0].point[1] + uniquePlanes[1].point[1]) * 0.5,
+            (uniquePlanes[0].point[2] + uniquePlanes[1].point[2]) * 0.5,
+          ] as Types.Point3);
+
+      thirdPlane = csUtils.planar.planeEquation(thirdNormal, thirdPoint);
+    }
+
+    const center = csUtils.planar.threePlaneIntersection(
+      firstPlane,
+      secondPlane,
+      thirdPlane
+    ) as Types.Point3;
+
+    return this._isFinitePoint3(center) ? center : null;
+  };
+
+  _recomputeToolCenterFromAbsoluteCameras = ({
+    emitEvent = true,
+    updateViewportCameras = false,
+  }: {
+    emitEvent?: boolean;
+    updateViewportCameras?: boolean;
+  } = {}): Types.Point3 | null => {
+    const toolCenter = this._calculateToolCenterFromAbsoluteCameras();
+
+    if (!toolCenter) {
+      return null;
+    }
+
+    const hasChanged = !csUtils.isEqual(this.toolCenter, toolCenter, 1e-3);
+    if (!hasChanged) {
+      return toolCenter;
+    }
+
+    if (updateViewportCameras) {
+      this.setToolCenter(toolCenter, !emitEvent);
+    } else {
+      this.toolCenter = toolCenter;
+
+      if (emitEvent) {
+        triggerEvent(eventTarget, Events.CROSSHAIR_TOOL_CENTER_CHANGED, {
+          toolGroupId: this.toolGroupId,
+          toolCenter: this.toolCenter,
+        });
+      }
+    }
+
+    return toolCenter;
+  };
 }
 
 CrosshairsTool.toolName = 'Crosshairs';
